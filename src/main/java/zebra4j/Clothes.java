@@ -12,4 +12,13 @@ public enum Clothes implements Literal {
 		return String.format("с %s дрехи", name().toLowerCase());
 	}
 
+	@Override
+	public int asUniqueInt() {
+		return ordinal();
+	}
+
+	public static Clothes fromUniqueInt(int input) {
+		return Clothes.values()[input];
+	}
+
 }

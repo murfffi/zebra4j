@@ -11,4 +11,13 @@ public enum PersonName implements Literal {
 		return CaseUtils.toCamelCase(name(), true);
 	}
 
+	@Override
+	public int asUniqueInt() {
+		return ordinal();
+	}
+
+	public static PersonName fromUniqueInt(int input) {
+		return PersonName.values()[input];
+	}
+
 }

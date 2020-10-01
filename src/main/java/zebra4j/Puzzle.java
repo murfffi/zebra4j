@@ -11,4 +11,8 @@ public class Puzzle {
 	private final Map<Class<Literal>, Set<Literal>> attributeSets;
 	private final Set<Fact> facts;
 
+	public int numPeople() {
+		return attributeSets.values().iterator().next().size();
+	}
+
 }

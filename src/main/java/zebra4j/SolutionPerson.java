@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public class SolutionPerson {
 
 	private final Map<Class<Literal>, Literal> attributes = new LinkedHashMap<>();
@@ -35,4 +38,10 @@ public class SolutionPerson {
 		newAttributes.add(attribute);
 		return new SolutionPerson(newAttributes);
 	}
+
+	@Override
+	public String toString() {
+		return "SolutionPerson [" + asList() + "]";
+	}
+
 }

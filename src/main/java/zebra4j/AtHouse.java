@@ -12,4 +12,13 @@ public class AtHouse implements Literal {
 		return "в къща " + house;
 	}
 
+	@Override
+	public int asUniqueInt() {
+		return house;
+	}
+
+	public static AtHouse fromUniqueInt(int input) {
+		return new AtHouse(input);
+	}
+
 }

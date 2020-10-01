@@ -6,11 +6,17 @@ public class PuzzleGeneratorTest {
 
 	@Test
 	public void testGenerate() {
+		PuzzleSolution solution = sampleSolution();
+		Puzzle generated = PuzzleGenerator.generate(solution);
+	}
+
+	public static PuzzleSolution sampleSolution() {
 		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder();
 		builder.addWithHouse(PersonName.ПЕТЪР, Clothes.СИНИ);
 		builder.addWithHouse(PersonName.ГЕОРГИ, Clothes.ЖЪЛТИ);
 		builder.addWithHouse(PersonName.ИВАН, Clothes.ЗЕЛЕНИ);
-		Puzzle generated = PuzzleGenerator.generate(builder.build());
+		PuzzleSolution solution = builder.build();
+		return solution;
 	}
 
 }
