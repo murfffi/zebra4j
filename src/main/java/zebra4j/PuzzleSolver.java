@@ -25,7 +25,10 @@ public class PuzzleSolver {
 	private final Puzzle puzzle;
 	private static final Pattern VAR_REGEX = Pattern.compile("person_of_'(\\w+)'_'([0-9]+)'");
 
-	public List<Solution> solveInternal() {
+	/**
+	 * @return a list of choco-solver solutions; useful to count solutions
+	 */
+	List<Solution> solveChoco() {
 		Map<Literal, IntVar> variables = new HashMap<>();
 		Model model = toModel(variables);
 		for (Fact fact : puzzle.getFacts()) {
@@ -41,8 +44,12 @@ public class PuzzleSolver {
 	}
 
 	public List<PuzzleSolution> solve() {
-		List<Solution> solutions = solveInternal();
-		return solutions.stream().map(this::fromChocoSolution).collect(Collectors.toList());
+		List<Solution> solutions = solveChoco();
+		return solutions.stream().map(this::fromChocoSolution).distinct().collect(Collectors.toList());
+	}
+
+	public int countSolutions() {
+		return solve().size();
 	}
 
 	private PuzzleSolution fromChocoSolution(Solution choco) {

@@ -58,7 +58,7 @@ public class PuzzleSolutionBuilder {
 	}
 
 	public PuzzleSolution build() {
-		return new PuzzleSolution(people, attributeSets);
+		return new PuzzleSolution(new LinkedHashSet<>(people), attributeSets);
 	}
 
 }

@@ -1,13 +1,19 @@
 package zebra4j;
 
+import java.util.Collection;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 public class PuzzleGeneratorTest {
 
 	@Test
 	public void testGenerate() {
-		PuzzleSolution solution = sampleSolution();
-		Puzzle generated = PuzzleGenerator.generate(solution);
+		PuzzleSolution startSolution = PuzzleGeneratorTest.sampleSolution();
+		Puzzle puzzle = new PuzzleGenerator().generate(startSolution);
+		Collection<PuzzleSolution> result = new PuzzleSolver(puzzle).solve();
+		Assert.assertTrue(result.contains(startSolution));
+		Assert.assertEquals(1, result.size());
 	}
 
 	public static PuzzleSolution sampleSolution() {
