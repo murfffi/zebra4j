@@ -29,7 +29,7 @@ public class PuzzleSolver {
 	 * @return a list of choco-solver solutions; useful to count solutions
 	 */
 	List<Solution> solveChoco() {
-		Map<Literal, IntVar> variables = new HashMap<>();
+		Map<Attribute, IntVar> variables = new HashMap<>();
 		Model model = toModel(variables);
 		for (Fact fact : puzzle.getFacts()) {
 			fact.postTo(model, variables);
@@ -55,13 +55,13 @@ public class PuzzleSolver {
 	private PuzzleSolution fromChocoSolution(Solution choco) {
 		int numPeople = puzzle.numPeople();
 		@SuppressWarnings("unchecked")
-		List<Literal>[] allAttributes = new List[numPeople];
+		List<Attribute>[] allAttributes = new List[numPeople];
 		for (int i = 0; i < allAttributes.length; ++i) {
 			allAttributes[i] = new ArrayList<>();
 		}
 		for (IntVar var : choco.retrieveIntVars(false)) {
 			int person = choco.getIntVal(var);
-			Literal attribute = toLiteral(var.getName());
+			Attribute attribute = toLiteral(var.getName());
 			allAttributes[person].add(attribute);
 		}
 		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder();
@@ -69,11 +69,11 @@ public class PuzzleSolver {
 		return builder.build();
 	}
 
-	private Model toModel(Map<Literal, IntVar> variables) {
+	private Model toModel(Map<Attribute, IntVar> variables) {
 		Model model = new Model();
-		for (Set<Literal> attributesOfType : puzzle.getAttributeSets().values()) {
+		for (Set<Attribute> attributesOfType : puzzle.getAttributeSets().values()) {
 			List<IntVar> varsForType = new ArrayList<>();
-			for (Literal attr : attributesOfType) {
+			for (Attribute attr : attributesOfType) {
 				IntVar var = model.intVar(varName(attr), 0, attributesOfType.size() - 1);
 				varsForType.add(var);
 				variables.put(attr, var);
@@ -84,17 +84,17 @@ public class PuzzleSolver {
 		return model;
 	}
 
-	private String varName(Literal attr) {
+	private String varName(Attribute attr) {
 		return String.format("person_of_'%s'_'%s'", attr.typeName(), attr.asUniqueInt());
 	}
 
 	@SneakyThrows({ ReflectiveOperationException.class })
-	private Literal toLiteral(String name) {
+	private Attribute toLiteral(String name) {
 		Matcher m = VAR_REGEX.matcher(name);
 		m.matches();
-		Class<?> attributeClass = Class.forName(Literal.class.getPackageName() + "." + m.group(1));
+		Class<?> attributeClass = Class.forName(Attribute.class.getPackageName() + "." + m.group(1));
 		Object result = MethodUtils.invokeStaticMethod(attributeClass, "fromUniqueInt", Integer.parseInt(m.group(2)));
-		return (Literal) result;
+		return (Attribute) result;
 	}
 
 }

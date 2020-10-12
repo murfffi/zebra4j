@@ -3,7 +3,7 @@ package zebra4j;
 import lombok.Value;
 
 @Value
-public class AtHouse implements Literal {
+public class AtHouse implements Attribute {
 
 	private final int house;
 

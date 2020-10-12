@@ -13,28 +13,28 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class SolutionPerson {
 
-	private final Map<Class<Literal>, Literal> attributes = new LinkedHashMap<>();
+	private final Map<Class<Attribute>, Attribute> attributes = new LinkedHashMap<>();
 
-	public SolutionPerson(Literal... attributeList) {
+	public SolutionPerson(Attribute... attributeList) {
 		this(Arrays.asList(attributeList));
 	}
 
-	public SolutionPerson(List<Literal> attributeList) {
-		for (Literal lit : attributeList) {
+	public SolutionPerson(List<Attribute> attributeList) {
+		for (Attribute lit : attributeList) {
 			attributes.put(lit.type(), lit);
 		}
 	}
 
-	public List<Literal> asList() {
+	public List<Attribute> asList() {
 		return new ArrayList<>(attributes.values());
 	}
 
-	public Set<Class<Literal>> attributeTypes() {
+	public Set<Class<Attribute>> attributeTypes() {
 		return Collections.unmodifiableSet(attributes.keySet());
 	}
 
-	public SolutionPerson withAttribute(Literal attribute) {
-		List<Literal> newAttributes = asList();
+	public SolutionPerson withAttribute(Attribute attribute) {
+		List<Attribute> newAttributes = asList();
 		newAttributes.add(attribute);
 		return new SolutionPerson(newAttributes);
 	}

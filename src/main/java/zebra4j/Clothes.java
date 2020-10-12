@@ -1,6 +1,6 @@
 package zebra4j;
 
-public enum Clothes implements Literal {
+public enum Clothes implements Attribute {
 
 	ЧЕРВЕНИ, СИНИ, ЗЕЛЕНИ, ЖЪЛТИ;
 

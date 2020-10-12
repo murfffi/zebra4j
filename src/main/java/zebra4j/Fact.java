@@ -11,7 +11,7 @@ public interface Fact {
 
 	@Value
 	public class BothTrue implements Fact {
-		private final Literal left, right;
+		private final Attribute left, right;
 
 		@Override
 		public String toString() {
@@ -22,11 +22,11 @@ public interface Fact {
 		}
 
 		@Override
-		public void postTo(Model model, Map<Literal, IntVar> variables) {
+		public void postTo(Model model, Map<Attribute, IntVar> variables) {
 			// The person of literal1 is the same as the person of literal2
 			model.arithm(variables.get(left), "=", variables.get(right)).post();
 		}
 	}
 
-	public void postTo(Model model, Map<Literal, IntVar> variables);
+	public void postTo(Model model, Map<Attribute, IntVar> variables);
 }

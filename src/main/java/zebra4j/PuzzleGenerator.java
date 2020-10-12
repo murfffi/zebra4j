@@ -54,7 +54,7 @@ public class PuzzleGenerator {
 	public static Set<BothTrue> generateBothTrue(PuzzleSolution solution) {
 		Set<BothTrue> result = new LinkedHashSet<>();
 		for (SolutionPerson person : solution.getPeople()) {
-			List<Literal> attributes = person.asList();
+			List<Attribute> attributes = person.asList();
 			for (int i = 0; i < attributes.size(); ++i) {
 				for (int j = i + 1; j < attributes.size(); ++j) {
 					result.add(new BothTrue(attributes.get(i), attributes.get(j)));

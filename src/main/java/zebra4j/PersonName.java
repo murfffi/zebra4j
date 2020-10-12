@@ -2,7 +2,7 @@ package zebra4j;
 
 import org.apache.commons.text.CaseUtils;
 
-public enum PersonName implements Literal {
+public enum PersonName implements Attribute {
 
 	ИВАН, ЕЛЕНА, ПЕТЪР, ТЕОДОРА, ГЕОРГИ;
 

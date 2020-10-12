@@ -14,9 +14,9 @@ public class PuzzleSolutionBuilder {
 
 	private final List<SolutionPerson> people = new ArrayList<>();
 
-	private Map<Class<Literal>, Set<Literal>> attributeSets = new LinkedHashMap<>();
+	private Map<Class<Attribute>, Set<Attribute>> attributeSets = new LinkedHashMap<>();
 
-	public PuzzleSolutionBuilder add(Literal... attributes) {
+	public PuzzleSolutionBuilder add(Attribute... attributes) {
 		return add(new SolutionPerson(attributes));
 	}
 
@@ -30,8 +30,8 @@ public class PuzzleSolutionBuilder {
 		return this;
 	}
 
-	private void addAttributes(List<Literal> attributes) {
-		for (Literal attr : attributes) {
+	private void addAttributes(List<Attribute> attributes) {
+		for (Attribute attr : attributes) {
 			attributeSets.putIfAbsent(attr.type(), new LinkedHashSet<>());
 			boolean added = attributeSets.get(attr.type()).add(attr);
 			if (!added) {
@@ -41,11 +41,11 @@ public class PuzzleSolutionBuilder {
 
 	}
 
-	private Set<Class<Literal>> getAttributeTypes() {
+	private Set<Class<Attribute>> getAttributeTypes() {
 		return attributeSets.keySet();
 	}
 
-	public PuzzleSolutionBuilder addWithHouse(Literal... attributes) {
+	public PuzzleSolutionBuilder addWithHouse(Attribute... attributes) {
 		return addWithHouse(new SolutionPerson(attributes));
 	}
 

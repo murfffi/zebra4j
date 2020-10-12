@@ -1,14 +1,14 @@
 package zebra4j;
 
-public interface Literal {
+public interface Attribute {
 
 	String description();
 
 	int asUniqueInt();
 
 	@SuppressWarnings("unchecked")
-	default Class<Literal> type() {
-		return (Class<Literal>) getClass();
+	default Class<Attribute> type() {
+		return (Class<Attribute>) getClass();
 	}
 
 	default String typeName() {

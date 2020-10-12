@@ -12,7 +12,7 @@ import lombok.Value;
 public class PuzzleSolution {
 
 	private final Set<SolutionPerson> people;
-	private final Map<Class<Literal>, Set<Literal>> attributeSets;
+	private final Map<Class<Attribute>, Set<Attribute>> attributeSets;
 
 	@Override
 	public String toString() {
