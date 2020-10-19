@@ -11,7 +11,7 @@ import lombok.Value;
 @Value
 public class Puzzle {
 
-	private final Map<Class<Attribute>, Set<Attribute>> attributeSets;
+	private final Map<AttributeType, Set<Attribute>> attributeSets;
 	private final Set<Fact> facts;
 
 	public int numPeople() {

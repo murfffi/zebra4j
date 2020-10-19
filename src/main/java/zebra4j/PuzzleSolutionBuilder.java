@@ -14,7 +14,7 @@ public class PuzzleSolutionBuilder {
 
 	private final List<SolutionPerson> people = new ArrayList<>();
 
-	private Map<Class<Attribute>, Set<Attribute>> attributeSets = new LinkedHashMap<>();
+	private Map<AttributeType, Set<Attribute>> attributeSets = new LinkedHashMap<>();
 
 	public PuzzleSolutionBuilder add(Attribute... attributes) {
 		return add(new SolutionPerson(attributes));
@@ -41,7 +41,7 @@ public class PuzzleSolutionBuilder {
 
 	}
 
-	private Set<Class<Attribute>> getAttributeTypes() {
+	private Set<AttributeType> getAttributeTypes() {
 		return attributeSets.keySet();
 	}
 
@@ -50,7 +50,7 @@ public class PuzzleSolutionBuilder {
 	}
 
 	public PuzzleSolutionBuilder addWithHouse(SolutionPerson person) {
-		if (person.attributeTypes().contains(AtHouse.class)) {
+		if (person.attributeTypes().contains(AtHouse.TYPE)) {
 			throw new IllegalArgumentException("AtHouse is not allowed to be pre-set in this case.");
 		}
 		SolutionPerson personWithHouse = person.withAttribute(new AtHouse(people.size() + 1));

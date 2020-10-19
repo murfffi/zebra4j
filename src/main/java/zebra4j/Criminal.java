@@ -3,31 +3,27 @@ package zebra4j;
 import lombok.Value;
 
 @Value
-public class AtHouse implements Attribute {
+public class Criminal implements Attribute {
+
+	private final boolean isCriminal;
 
 	public static AttributeType TYPE = new AttributeType() {
 
 		@Override
 		public Attribute fromUniqueInt(int input) {
-			return AtHouse.fromUniqueInt(input);
+			return new Criminal(input == 1);
 		}
 
 	};
 
-	private final int house;
-
 	@Override
 	public String description() {
-		return "в къща " + house;
+		return "е престъпник";
 	}
 
 	@Override
 	public int asUniqueInt() {
-		return house;
-	}
-
-	public static AtHouse fromUniqueInt(int input) {
-		return new AtHouse(input);
+		return isCriminal ? 1 : 0;
 	}
 
 	@Override

@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class SolutionPerson {
 
-	private final Map<Class<Attribute>, Attribute> attributes = new LinkedHashMap<>();
+	private final Map<AttributeType, Attribute> attributes = new LinkedHashMap<>();
 
 	public SolutionPerson(Attribute... attributeList) {
 		this(Arrays.asList(attributeList));
@@ -29,7 +29,7 @@ public class SolutionPerson {
 		return new ArrayList<>(attributes.values());
 	}
 
-	public Set<Class<Attribute>> attributeTypes() {
+	public Set<AttributeType> attributeTypes() {
 		return Collections.unmodifiableSet(attributes.keySet());
 	}
 

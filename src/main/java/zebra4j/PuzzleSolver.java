@@ -10,20 +10,19 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang3.reflect.MethodUtils;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
 
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 
 @AllArgsConstructor
 public class PuzzleSolver {
 
 	private final Puzzle puzzle;
 	private static final Pattern VAR_REGEX = Pattern.compile("person_of_'(\\w+)'_'([0-9]+)'");
+	private final Map<String, AttributeType> typeMap = new HashMap<>();
 
 	/**
 	 * @return a list of choco-solver solutions; useful to count solutions
@@ -85,16 +84,16 @@ public class PuzzleSolver {
 	}
 
 	private String varName(Attribute attr) {
+		typeMap.putIfAbsent(attr.typeName(), attr.type());
 		return String.format("person_of_'%s'_'%s'", attr.typeName(), attr.asUniqueInt());
 	}
 
-	@SneakyThrows({ ReflectiveOperationException.class })
 	private Attribute toLiteral(String name) {
 		Matcher m = VAR_REGEX.matcher(name);
 		m.matches();
-		Class<?> attributeClass = Class.forName(Attribute.class.getPackageName() + "." + m.group(1));
-		Object result = MethodUtils.invokeStaticMethod(attributeClass, "fromUniqueInt", Integer.parseInt(m.group(2)));
-		return (Attribute) result;
+		int attributeId = Integer.parseInt(m.group(2));
+		AttributeType attrType = typeMap.get(m.group(1));
+		return attrType.fromUniqueInt(attributeId);
 	}
 
 }

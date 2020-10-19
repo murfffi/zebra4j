@@ -6,12 +6,9 @@ public interface Attribute {
 
 	int asUniqueInt();
 
-	@SuppressWarnings("unchecked")
-	default Class<Attribute> type() {
-		return (Class<Attribute>) getClass();
-	}
+	AttributeType type();
 
 	default String typeName() {
-		return type().getSimpleName();
+		return getClass().getSimpleName();
 	}
 }

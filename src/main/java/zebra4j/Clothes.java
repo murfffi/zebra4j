@@ -4,6 +4,15 @@ public enum Clothes implements Attribute {
 
 	ЧЕРВЕНИ, СИНИ, ЗЕЛЕНИ, ЖЪЛТИ;
 
+	public static AttributeType TYPE = new AttributeType() {
+
+		@Override
+		public Attribute fromUniqueInt(int input) {
+			return Clothes.fromUniqueInt(input);
+		}
+
+	};
+
 	/**
 	 * As in the sentence "Иван е {description}"
 	 */
@@ -19,6 +28,11 @@ public enum Clothes implements Attribute {
 
 	public static Clothes fromUniqueInt(int input) {
 		return Clothes.values()[input];
+	}
+
+	@Override
+	public AttributeType type() {
+		return TYPE;
 	}
 
 }
