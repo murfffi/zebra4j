@@ -8,20 +8,26 @@ import java.util.Map;
 import java.util.Set;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public class PuzzleSolutionBuilder {
 
 	private final List<SolutionPerson> people = new ArrayList<>();
+	private final Map<AttributeType, Set<Attribute>> attributeSets = new LinkedHashMap<>();
+	private final boolean validating;
 
-	private Map<AttributeType, Set<Attribute>> attributeSets = new LinkedHashMap<>();
+	public PuzzleSolutionBuilder() {
+		this(true);
+	}
 
 	public PuzzleSolutionBuilder add(Attribute... attributes) {
 		return add(new SolutionPerson(attributes));
 	}
 
 	public PuzzleSolutionBuilder add(SolutionPerson person) {
-		if (!attributeSets.isEmpty() && !getAttributeTypes().equals(person.attributeTypes())) {
+		if (validating && !attributeSets.isEmpty() && !getAttributeTypes().equals(person.attributeTypes())) {
 			throw new IllegalArgumentException("People must have the same attributes.");
 		}
 		addAttributes(person.asList());

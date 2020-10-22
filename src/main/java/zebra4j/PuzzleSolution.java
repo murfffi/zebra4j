@@ -20,4 +20,13 @@ public class PuzzleSolution {
 		people.stream().forEach(p -> builder.append(p));
 		return builder.build();
 	}
+
+	public SolutionPerson findPerson(Attribute attr) {
+		for (SolutionPerson person : people) {
+			if (person.asList().contains(attr)) {
+				return person;
+			}
+		}
+		return null;
+	}
 }

@@ -5,7 +5,7 @@ import lombok.Value;
 @Value
 public class AtHouse implements Attribute {
 
-	public static AttributeType TYPE = new AttributeType() {
+	public static AttributeType TYPE = new AllDifferentType() {
 
 		@Override
 		public Attribute fromUniqueInt(int input) {

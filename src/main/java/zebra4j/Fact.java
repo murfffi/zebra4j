@@ -1,15 +1,15 @@
 package zebra4j;
 
-import java.util.Map;
-
-import org.chocosolver.solver.Model;
+import org.chocosolver.solver.constraints.Constraint;
 import org.chocosolver.solver.variables.IntVar;
 
 import lombok.Value;
+import lombok.extern.slf4j.Slf4j;
 
 public interface Fact {
 
 	@Value
+	@Slf4j
 	public class BothTrue implements Fact {
 		private final Attribute left, right;
 
@@ -22,11 +22,18 @@ public interface Fact {
 		}
 
 		@Override
-		public void postTo(Model model, Map<Attribute, IntVar> variables) {
+		public void postTo(ZebraModel model) {
 			// The person of literal1 is the same as the person of literal2
-			model.arithm(variables.get(left), "=", variables.get(right)).post();
+			IntVar leftVar = model.getVariableFor(left);
+			IntVar rightVar = model.getVariableFor(right);
+
+			if (leftVar != null && rightVar != null) {
+				Constraint constraint = model.getChocoModel().arithm(leftVar, "=", rightVar);
+				log.debug("Adding choco contraint: {}", constraint);
+				constraint.post();
+			}
 		}
 	}
 
-	public void postTo(Model model, Map<Attribute, IntVar> variables);
+	public void postTo(ZebraModel model);
 }

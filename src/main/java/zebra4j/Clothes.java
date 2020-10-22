@@ -4,7 +4,7 @@ public enum Clothes implements Attribute {
 
 	ЧЕРВЕНИ, СИНИ, ЗЕЛЕНИ, ЖЪЛТИ;
 
-	public static AttributeType TYPE = new AttributeType() {
+	public static AttributeType TYPE = new AllDifferentType() {
 
 		@Override
 		public Attribute fromUniqueInt(int input) {

@@ -1,29 +1,41 @@
 package zebra4j;
 
-import lombok.Value;
+import java.util.Set;
 
-@Value
-public class Criminal implements Attribute {
+import org.apache.commons.lang3.Validate;
+import org.chocosolver.solver.Model;
+import org.chocosolver.solver.variables.IntVar;
 
-	private final boolean isCriminal;
+public enum Criminal implements Attribute {
+
+	NO, YES;
 
 	public static AttributeType TYPE = new AttributeType() {
 
 		@Override
 		public Attribute fromUniqueInt(int input) {
-			return new Criminal(input == 1);
+			return input == 1 ? YES : NO;
+		}
+
+		@Override
+		public void addToModel(ZebraModel zebraModel, Set<Attribute> attributesOfType) {
+			Model model = zebraModel.getChocoModel();
+			Attribute attr = YES;
+			Validate.isTrue(attributesOfType.contains(attr));
+			IntVar var = model.intVar(zebraModel.varName(attr), 0, attributesOfType.size() - 1);
+			zebraModel.addUniqueVariable(attr, var);
 		}
 
 	};
 
 	@Override
 	public String description() {
-		return "е престъпник";
+		return this == NO ? "невинен" : "престъпник";
 	}
 
 	@Override
 	public int asUniqueInt() {
-		return isCriminal ? 1 : 0;
+		return ordinal();
 	}
 
 	@Override

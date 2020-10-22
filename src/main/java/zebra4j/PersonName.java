@@ -6,7 +6,7 @@ public enum PersonName implements Attribute {
 
 	ИВАН, ЕЛЕНА, ПЕТЪР, ТЕОДОРА, ГЕОРГИ;
 
-	public static AttributeType TYPE = new AttributeType() {
+	public static AttributeType TYPE = new AllDifferentType() {
 
 		@Override
 		public Attribute fromUniqueInt(int input) {

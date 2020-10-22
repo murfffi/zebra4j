@@ -17,9 +17,11 @@ public class PuzzleSolverTest {
 	}
 
 	@Test
-	public void testSolverInternal() {
-		Puzzle puzzle = new PuzzleGenerator().generate(PuzzleGeneratorTest.sampleSolution());
-		Assert.assertTrue(new PuzzleSolver(puzzle).solveChoco().size() > 0);
+	public void testCriminal() {
+		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
+		Puzzle puzzle = new PuzzleGenerator().generate(startSolution);
+		List<PuzzleSolution> result = new PuzzleSolver(puzzle).solve();
+		Assert.assertEquals(result.size(), new HashSet<>(result).size());
 	}
 
 }
