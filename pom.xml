@@ -133,7 +133,7 @@
 	</build>
 	<scm>
 		<url>https://github.com/murfffi/zebra4j</url>
-		<connection>scm:git:ssh://git@github.com:murfffi/zebra4j.git</connection>
+		<connection>scm:git:ssh://git@github.com/murfffi/zebra4j.git</connection>
 	</scm>
 	<distributionManagement>
 		<repository>
