@@ -3,7 +3,7 @@ package zebra4j;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class QuestionPuzzleSolver {
+public class QuestionPuzzleSolver implements CountingSolver {
 
 	private final QuestionPuzzle qPuzzle;
 	private final PuzzleSolver solver;
@@ -18,6 +18,7 @@ public class QuestionPuzzleSolver {
 				.map(person -> person.findAttribute(qPuzzle.getId())).distinct().collect(Collectors.toList());
 	}
 
+	@Override
 	public int countSolutions() {
 		return solve().size();
 	}

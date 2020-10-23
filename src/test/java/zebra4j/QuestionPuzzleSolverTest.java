@@ -15,7 +15,7 @@ public class QuestionPuzzleSolverTest {
 		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(questionPuzzle);
 		List<Attribute> solutionNames = solver.solve();
 		assertEquals(1, solutionNames.size());
-		solutionNames.forEach(name -> assertEquals(PersonName.TYPE, name.type()));
+		assertEquals(PersonName.TYPE, solutionNames.get(0).type());
 	}
 
 }

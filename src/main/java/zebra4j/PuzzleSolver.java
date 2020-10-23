@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
 @Slf4j
-public class PuzzleSolver {
+public class PuzzleSolver implements CountingSolver {
 
 	private final Puzzle puzzle;
 
@@ -51,6 +51,7 @@ public class PuzzleSolver {
 		return zebraSolutions;
 	}
 
+	@Override
 	public int countSolutions() {
 		return solve().size();
 	}

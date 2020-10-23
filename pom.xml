@@ -61,7 +61,8 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.2.3</version>
 			<scope>test</scope>
-		</dependency>		
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<build>

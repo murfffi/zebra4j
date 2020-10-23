@@ -21,4 +21,9 @@ public abstract class AllDifferentType implements AttributeType {
 		// The person for each attribute of a type is different.
 		model.allDifferent(varsForType.toArray(new IntVar[0])).post();
 	}
+
+	@Override
+	public boolean checkDifferent() {
+		return true;
+	}
 }
