@@ -49,20 +49,24 @@ public abstract class AbstractPuzzleGenerator<P> {
 
 	protected abstract CountingSolver createSolver(P puzzle);
 
-	public Set<BothTrue> generateBothTrue(PuzzleSolution solution) {
-		Set<BothTrue> result = new LinkedHashSet<>();
+	public Set<Fact> generateBothTrue(PuzzleSolution solution) {
+		Set<Fact> result = new LinkedHashSet<>();
 		for (SolutionPerson person : solution.getPeople()) {
 			List<Attribute> attributes = person.asList();
 			for (int i = 0; i < attributes.size(); ++i) {
 				for (int j = i + 1; j < attributes.size(); ++j) {
 					BothTrue fact = new BothTrue(attributes.get(i), attributes.get(j));
-					if (acceptFact(fact)) {
-						result.add(fact);
-					}
+					checkAndAdd(result, fact);
 				}
 			}
 		}
 		return result;
+	}
+
+	private void checkAndAdd(Set<Fact> result, Fact fact) {
+		if (!rejectFact(fact)) {
+			result.add(fact);
+		}
 	}
 
 	public Set<Fact> generateDifferent(PuzzleSolution solution) {
@@ -74,7 +78,7 @@ public abstract class AbstractPuzzleGenerator<P> {
 					Attribute other = attributes.get(j);
 					for (Attribute different : solution.getAttributeSets().get(other.type())) {
 						if (!different.equals(other)) {
-							result.add(new Fact.Different(attributes.get(i), different));
+							checkAndAdd(result, new Fact.Different(attributes.get(i), different));
 						}
 					}
 				}
@@ -83,7 +87,7 @@ public abstract class AbstractPuzzleGenerator<P> {
 		return result;
 	}
 
-	protected boolean acceptFact(BothTrue fact) {
-		return true;
+	protected boolean rejectFact(Fact fact) {
+		return false;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import zebra4j.Fact.BothTrue;
+import zebra4j.Fact.Different;
 
 public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuzzle> {
 
@@ -31,8 +32,32 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	}
 
 	@Override
-	protected boolean acceptFact(BothTrue fact) {
-		return !fact.getLeft().equals(Criminal.YES) && !fact.getRight().equals(Criminal.YES);
+	protected boolean rejectFact(Fact fact) {
+		if (fact instanceof BothTrue && rejectBothTrue((BothTrue) fact)) {
+			return true;
+		}
+
+		if (fact instanceof Different && rejectDifferent((Different) fact)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean rejectDifferent(Different fact) {
+		if (fact.getRight().equals(Criminal.YES)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean rejectBothTrue(BothTrue fact) {
+		if (fact.getLeft().equals(Criminal.YES) || fact.getRight().equals(Criminal.YES)) {
+			return true;
+		}
+
+		return false;
 	}
 
 }
