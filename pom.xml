@@ -7,7 +7,7 @@
 
 	<groupId>zebra4j</groupId>
 	<artifactId>zebra4j</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.1-SNAPSHOT</version>
 
 	<name>zebra4j</name>
 	<url>https://github.com/murfffi/zebra4j</url>
@@ -133,6 +133,13 @@
 	</build>
 	<scm>
 		<url>https://github.com/murfffi/zebra4j</url>
-		<connection>git@github.com:murfffi/zebra4j.git</connection>
+		<connection>scm:git:ssh://git@github.com:murfffi/zebra4j.git</connection>
 	</scm>
+	<distributionManagement>
+		<repository>
+			<id>bintray-marin-nozhchev-marin-nozhchev</id>
+			<name>marin-nozhchev-marin-nozhchev</name>
+			<url>https://api.bintray.com/maven/marin-nozhchev/marin-nozhchev/zebra4j/;publish=1</url>
+		</repository>
+	</distributionManagement>
 </project>
