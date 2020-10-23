@@ -9,8 +9,13 @@
 	<artifactId>zebra4j</artifactId>
 	<version>1.0-SNAPSHOT</version>
 
-	<name>zebralib</name>
+	<name>zebra4j</name>
 	<url>https://github.com/murfffi/zebra4j</url>
+	<organization>
+		<name>Marin Nozhchev</name>
+		<url>https://github.com/murfffi</url>
+	</organization>
+	<inceptionYear>2020</inceptionYear>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -50,7 +55,7 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-collections4</artifactId>
 			<version>4.4</version>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -101,6 +106,30 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>2.0.0</version>
+				<configuration>
+					<addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+					<licenseName>agpl_v3</licenseName>
+				</configuration>
+				<executions>
+					<execution>
+						<id>first</id>
+						<goals>
+							<goal>check-file-header</goal>
+						</goals>
+						<phase>process-sources</phase>
+						<configuration>
+							<failOnNotUptodateHeader>true</failOnNotUptodateHeader>
+							<failOnMissingHeader>true</failOnMissingHeader>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 	<scm>
 		<url>https://github.com/murfffi/zebra4j</url>
