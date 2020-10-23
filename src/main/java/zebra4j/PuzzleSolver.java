@@ -73,7 +73,7 @@ public class PuzzleSolver {
 	}
 
 	private List<IntVar> retrieveVars(Solution choco) {
-		// If people are two, all vars become boolean
+		// If people are two, all vars become boolean.
 		return choco.retrieveIntVars(true);
 	}
 

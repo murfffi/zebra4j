@@ -39,6 +39,10 @@ public class SolutionPerson {
 		return new SolutionPerson(newAttributes);
 	}
 
+	public Attribute findAttribute(AttributeType type) {
+		return attributes.get(type);
+	}
+
 	@Override
 	public String toString() {
 		return "SolutionPerson [" + asList() + "]";

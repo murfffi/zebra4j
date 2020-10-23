@@ -6,9 +6,13 @@ import java.util.Set;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@Value
+@Getter
+@AllArgsConstructor
+@EqualsAndHashCode
 public class Puzzle {
 
 	private final Map<AttributeType, Set<Attribute>> attributeSets;
