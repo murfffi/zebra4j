@@ -49,7 +49,7 @@ public interface Fact {
 
 			if (leftVar != null && rightVar != null) {
 				Constraint constraint = model.getChocoModel().arithm(leftVar, "=", rightVar);
-				log.debug("Adding choco contraint: {}", constraint);
+				log.trace("Adding choco contraint: {}", constraint);
 				constraint.post();
 			}
 		}
@@ -76,7 +76,7 @@ public interface Fact {
 
 			if (leftVar != null && rightVar != null) {
 				Constraint constraint = model.getChocoModel().arithm(leftVar, "!=", rightVar);
-				log.debug("Adding choco contraint: {}", constraint);
+				log.trace("Adding choco contraint: {}", constraint);
 				constraint.post();
 			}
 		}

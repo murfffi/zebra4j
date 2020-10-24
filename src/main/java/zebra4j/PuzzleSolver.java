@@ -67,7 +67,7 @@ public class PuzzleSolver implements CountingSolver {
 		List<Solution> solutions = solveChoco(zebraModel);
 		List<PuzzleSolution> zebraSolutions = solutions.stream().map(choco -> fromChocoSolution(choco, zebraModel))
 				.distinct().collect(Collectors.toList());
-		log.debug("Found {} distinct solutions", zebraSolutions.size());
+		log.trace("Found {} distinct solutions", zebraSolutions.size());
 		return zebraSolutions;
 	}
 
