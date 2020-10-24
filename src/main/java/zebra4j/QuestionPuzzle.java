@@ -20,6 +20,9 @@
  */
 package zebra4j;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import lombok.Value;
 
 @Value
@@ -29,7 +32,17 @@ public class QuestionPuzzle {
 	private final AttributeType id;
 	private final Puzzle puzzle;
 
+	public String describeQuestion() {
+		return id.questionSentencePart() + " " + question.description() + "?";
+	}
+
 	public static QuestionPuzzle nameOfCriminal(Puzzle puzzle) {
 		return new QuestionPuzzle(Criminal.YES, PersonName.TYPE, puzzle);
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append(puzzle).append(describeQuestion())
+				.build();
 	}
 }

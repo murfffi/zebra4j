@@ -46,7 +46,6 @@ public class App {
 		QuestionPuzzleGenerator generator = QuestionPuzzleGenerator.nameOfCriminal();
 		QuestionPuzzle puzzle = generator.generate(App.sampleSolution());
 		System.out.println(puzzle);
-		System.out.println("Кой е престъпник?");
 		System.out.println(new QuestionPuzzleSolver(puzzle).solve());
 	}
 

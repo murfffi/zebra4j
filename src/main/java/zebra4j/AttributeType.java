@@ -31,4 +31,8 @@ public interface AttributeType {
 	default boolean checkDifferent() {
 		return false;
 	}
+
+	default String questionSentencePart() {
+		return "???";
+	}
 }

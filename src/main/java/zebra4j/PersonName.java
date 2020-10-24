@@ -33,6 +33,11 @@ public enum PersonName implements Attribute {
 			return PersonName.fromUniqueInt(input);
 		}
 
+		@Override
+		public String questionSentencePart() {
+			return "Кой е";
+		}
+
 	};
 
 	@Override
