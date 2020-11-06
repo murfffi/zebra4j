@@ -34,8 +34,9 @@ public class QuestionPuzzleSolver implements CountingSolver {
 	}
 
 	public List<Attribute> solve() {
-		return this.solver.solve().stream().map(solution -> solution.findPerson(qPuzzle.getQuestion()))
-				.map(person -> person.findAttribute(qPuzzle.getId())).distinct().collect(Collectors.toList());
+		return this.solver.solve().stream().map(solution -> solution.findPerson(qPuzzle.getQuestion().getTowards()))
+				.map(person -> person.findAttribute(qPuzzle.getQuestion().getAbout())).distinct()
+				.collect(Collectors.toList());
 	}
 
 	@Override

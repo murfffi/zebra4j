@@ -23,27 +23,28 @@ package zebra4j;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.lang3.Validate;
+
 import zebra4j.Fact.BothTrue;
 import zebra4j.Fact.Different;
 
 public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuzzle> {
 
-	private final Attribute question;
-	private final AttributeType id;
+	private final Question question;
 
 	public static QuestionPuzzleGenerator nameOfCriminal() {
-		return new QuestionPuzzleGenerator(Criminal.YES, PersonName.TYPE);
+		return new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL);
 	}
 
-	public QuestionPuzzleGenerator(Attribute question, AttributeType id) {
+	public QuestionPuzzleGenerator(Question question) {
 		super(new Random());
 		this.question = question;
-		this.id = id;
 	}
 
 	@Override
 	protected QuestionPuzzle toPuzzle(PuzzleSolution solution, List<Fact> facts) {
-		return new QuestionPuzzle(question, id, PuzzleGenerator.toBasicPuzzle(solution, facts));
+		Validate.isTrue(question.appliesTo(solution), "Question %s does not apply to solution %s", question, solution);
+		return new QuestionPuzzle(question, PuzzleGenerator.toBasicPuzzle(solution, facts));
 	}
 
 	@Override

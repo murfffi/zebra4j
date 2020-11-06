@@ -39,11 +39,11 @@ With Maven, you can add it as a dependency like this:
   ...
   <dependencies>
    ...
-	<dependency>
-		<groupId>zebra4j</groupId>
-		<artifactId>zebra4j</artifactId>
-		<version>0.1</version>
-	</dependency>  
+    <dependency>
+      <groupId>zebra4j</groupId>
+      <artifactId>zebra4j</artifactId>
+      <version>0.1</version>
+    </dependency>
   ...
 ```
 

@@ -20,6 +20,7 @@
  */
 package zebra4j;
 
+import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -28,21 +29,23 @@ import lombok.Value;
 @Value
 public class QuestionPuzzle {
 
-	private final Attribute question;
-	private final AttributeType id;
+	private final Question question;
 	private final Puzzle puzzle;
 
-	public String describeQuestion() {
-		return id.questionSentencePart() + " " + question.description() + "?";
+	public QuestionPuzzle(Question question, Puzzle puzzle) {
+		Validate.isTrue(question.appliesTo(puzzle), "Question %s does not apply to puzzle %s", question, puzzle);
+		this.question = question;
+		this.puzzle = puzzle;
 	}
 
 	public static QuestionPuzzle nameOfCriminal(Puzzle puzzle) {
-		return new QuestionPuzzle(Criminal.YES, PersonName.TYPE, puzzle);
+		return new QuestionPuzzle(Question.NAME_OF_CRIMINAL, puzzle);
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append(puzzle).append(describeQuestion())
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append(puzzle).append(question.toSentence())
 				.build();
 	}
+
 }
