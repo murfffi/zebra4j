@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class App {
 	public static void main(String[] args) {
 		basicPuzzle();
-		whoIsCriminal();
+		questionPuzzle();
 	}
 
 	public static void basicPuzzle() {
@@ -41,10 +41,11 @@ public class App {
 		System.out.println(new PuzzleSolver(puzzle).solve());
 	}
 
-	public static void whoIsCriminal() {
-		System.out.println("Who is criminal puzzle:");
-		QuestionPuzzleGenerator generator = QuestionPuzzleGenerator.nameOfCriminal();
-		QuestionPuzzle puzzle = generator.generate(App.sampleSolution());
+	public static void questionPuzzle() {
+		System.out.println("Question puzzle:");
+		PuzzleSolution sampleSolution = App.sampleSolution();
+		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(Question.generate(sampleSolution));
+		QuestionPuzzle puzzle = generator.generate(sampleSolution);
 		System.out.println(puzzle);
 		System.out.println(new QuestionPuzzleSolver(puzzle).solve());
 	}

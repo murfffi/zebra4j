@@ -48,7 +48,7 @@ public class PuzzleGeneratorTest {
 		Assert.assertEquals(1, result.size());
 		PuzzleSolution solution = result.iterator().next();
 		Assert.assertEquals(solution.toString(), 2, solution.getPeople().size());
-		Assert.assertTrue(solution.getPeople().contains(startSolution.findPerson(Criminal.YES)));
+		Assert.assertTrue(solution.getPeople().contains(startSolution.findPerson(Criminal.YES).get()));
 	}
 
 	public static PuzzleSolution sampleSolution() {

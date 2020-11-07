@@ -32,6 +32,11 @@ public class AtHouse implements Attribute {
 			return AtHouse.fromUniqueInt(input);
 		}
 
+		@Override
+		public String questionSentencePart() {
+			return "В коя къща е";
+		}
+
 	};
 
 	private final int house;

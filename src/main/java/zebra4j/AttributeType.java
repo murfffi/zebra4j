@@ -32,7 +32,5 @@ public interface AttributeType {
 		return false;
 	}
 
-	default String questionSentencePart() {
-		return "???";
-	}
+	String questionSentencePart();
 }

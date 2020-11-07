@@ -21,6 +21,7 @@
 package zebra4j;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -41,12 +42,7 @@ public class PuzzleSolution {
 		return builder.build();
 	}
 
-	public SolutionPerson findPerson(Attribute attr) {
-		for (SolutionPerson person : people) {
-			if (person.asList().contains(attr)) {
-				return person;
-			}
-		}
-		return null;
+	public Optional<SolutionPerson> findPerson(Attribute attr) {
+		return people.stream().filter(person -> person.asList().contains(attr)).findAny();
 	}
 }

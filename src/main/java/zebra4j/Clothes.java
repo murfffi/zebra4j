@@ -31,6 +31,11 @@ public enum Clothes implements Attribute {
 			return Clothes.fromUniqueInt(input);
 		}
 
+		@Override
+		public String questionSentencePart() {
+			return "Какъв цвят дрехи носи";
+		}
+
 	};
 
 	@Override

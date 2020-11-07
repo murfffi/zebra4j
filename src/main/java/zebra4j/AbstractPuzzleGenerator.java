@@ -39,12 +39,13 @@ public abstract class AbstractPuzzleGenerator<P> {
 		List<Fact> facts = new ArrayList<>();
 		facts.addAll(generateBothTrue(solution));
 		facts.addAll(generateDifferent(solution));
+		P puzzle = toPuzzle(solution, facts);
 		if (!hasUniqueSolution(solution, facts)) {
-			throw new RuntimeException(String.format("Incomplete rule generation. Puzzle has %s solutions.",
-					createSolver(toPuzzle(solution, facts)).countSolutions()));
+			throw new RuntimeException(String.format("Incomplete rule generation. Puzzle %s has %s solutions.", puzzle,
+					createSolver(puzzle).countSolutions()));
 		}
 		removeFacts(facts, solution);
-		return toPuzzle(solution, facts);
+		return puzzle;
 	}
 
 	protected abstract P toPuzzle(PuzzleSolution solution, List<Fact> facts);

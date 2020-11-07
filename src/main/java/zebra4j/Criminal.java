@@ -46,6 +46,11 @@ public enum Criminal implements Attribute {
 			zebraModel.addUniqueVariable(attr, var);
 		}
 
+		@Override
+		public String questionSentencePart() {
+			return "Престъпник ли е";
+		}
+
 	};
 
 	@Override
