@@ -63,7 +63,7 @@ public class Question {
 		}
 	}
 
-	public static Stream<AttributeType> aboutTypeStream(List<AttributeType> types) {
+	private static Stream<AttributeType> aboutTypeStream(List<AttributeType> types) {
 		return types.stream().filter(t -> t instanceof AllDifferentType);
 	}
 
