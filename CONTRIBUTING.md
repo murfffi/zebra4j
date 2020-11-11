@@ -4,6 +4,12 @@ After adding new files, run:
 
 ```bash
 ./mvnw license:update-file-header
-``` 
+```
+
+Before merging, run:
+
+```bash
+./mvnw install
+```
 
 TODO

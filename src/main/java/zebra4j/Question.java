@@ -58,7 +58,7 @@ public class Question {
 	}
 
 	private static void validate(Optional<AttributeType> type) {
-		if (type.isEmpty()) {
+		if (!type.isPresent()) {
 			throw new IllegalArgumentException("Not enough suitable attributes.");
 		}
 	}

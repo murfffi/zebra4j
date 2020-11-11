@@ -21,7 +21,9 @@
 package zebra4j;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class QuestionPuzzleSolver implements CountingSolver {
 
@@ -35,7 +37,7 @@ public class QuestionPuzzleSolver implements CountingSolver {
 
 	public List<Attribute> solve() {
 		return this.solver.solve().stream()
-				.flatMap(solution -> solution.findPerson(qPuzzle.getQuestion().getTowards()).stream())
+				.flatMap(solution -> toStream(solution.findPerson(qPuzzle.getQuestion().getTowards())))
 				.map(person -> person.findAttribute(qPuzzle.getQuestion().getAbout())).distinct()
 				.collect(Collectors.toList());
 	}
@@ -45,4 +47,13 @@ public class QuestionPuzzleSolver implements CountingSolver {
 		return solve().size();
 	}
 
+	/**
+	 * This method is available in Java 9+
+	 */
+	static <T> Stream<T> toStream(Optional<T> opt) {
+		if (opt.isPresent())
+			return Stream.of(opt.get());
+		else
+			return Stream.empty();
+	}
 }
