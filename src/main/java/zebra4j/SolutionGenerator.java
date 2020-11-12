@@ -20,9 +20,13 @@
  */
 package zebra4j;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.SetUtils;
 
@@ -31,16 +35,40 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SolutionGenerator implements Supplier<PuzzleSolution> {
 
-	public static final Set<AttributeType> DEFAULT_TYPES = SetUtils.unmodifiableSet(AtHouse.TYPE, Clothes.TYPE,
-			PersonName.TYPE, Criminal.TYPE);
+	public static final Set<AttributeType> DEFAULT_TYPES = SetUtils.unmodifiableSet(PersonName.TYPE, AtHouse.TYPE,
+			Clothes.TYPE, Criminal.TYPE);
 
 	private final Set<AttributeType> attributeTypes;
+	private final int numPeople;
 	private final Random rnd;
+
+	public SolutionGenerator() {
+		this(DEFAULT_TYPES.size());
+	}
+
+	public SolutionGenerator(int numPeople) {
+		// TODO Generate random subset given number of people
+		this(DEFAULT_TYPES, numPeople, new Random());
+	}
 
 	@Override
 	public PuzzleSolution get() {
-		// TODO Auto-generated method stub
-		return null;
+		List<List<Attribute>> attributesByPersonAndType = new ArrayList<>();
+		List<AttributeType> attributeTypesSorted = new ArrayList<>(attributeTypes);
+		Collections.swap(attributeTypesSorted, 0, attributeTypesSorted.indexOf(PersonName.TYPE));
+		for (AttributeType type : attributeTypesSorted) {
+			List<Attribute> attributes = type.solutionSet(numPeople);
+			Collections.shuffle(attributes, rnd);
+			attributesByPersonAndType.add(attributes);
+		}
+		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder(true);
+		for (int i = 0; i < numPeople; ++i) {
+			final int person = i;
+			List<Attribute> attributeList = attributesByPersonAndType.stream().map(l -> l.get(person))
+					.collect(Collectors.toList());
+			builder.add(new SolutionPerson(attributeList));
+		}
+		return builder.build();
 	}
 
 	public PuzzleSolution generate() {

@@ -20,6 +20,8 @@
  */
 package zebra4j;
 
+import java.util.List;
+
 import org.apache.commons.text.CaseUtils;
 
 public enum PersonName implements Attribute {
@@ -36,6 +38,11 @@ public enum PersonName implements Attribute {
 		@Override
 		public String questionSentencePart() {
 			return "Кой е";
+		}
+
+		@Override
+		public List<Attribute> solutionSet(int numPeople) {
+			return toSolutionSet(PersonName.values(), numPeople);
 		}
 
 	};

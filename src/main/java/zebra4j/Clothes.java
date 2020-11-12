@@ -20,6 +20,8 @@
  */
 package zebra4j;
 
+import java.util.List;
+
 public enum Clothes implements Attribute {
 
 	ЧЕРВЕНИ, СИНИ, ЗЕЛЕНИ, ЖЪЛТИ;
@@ -34,6 +36,11 @@ public enum Clothes implements Attribute {
 		@Override
 		public String questionSentencePart() {
 			return "Какъв цвят дрехи носи";
+		}
+
+		@Override
+		public List<Attribute> solutionSet(int numPeople) {
+			return toSolutionSet(Clothes.values(), numPeople);
 		}
 
 	};

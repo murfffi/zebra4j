@@ -20,6 +20,7 @@
  */
 package zebra4j;
 
+import java.util.List;
 import java.util.Set;
 
 public interface AttributeType {
@@ -33,4 +34,6 @@ public interface AttributeType {
 	}
 
 	String questionSentencePart();
+
+	List<Attribute> solutionSet(int numPeople);
 }

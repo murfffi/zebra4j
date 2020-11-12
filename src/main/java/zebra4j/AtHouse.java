@@ -20,6 +20,10 @@
  */
 package zebra4j;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import lombok.Value;
 
 @Value
@@ -35,6 +39,11 @@ public class AtHouse implements Attribute {
 		@Override
 		public String questionSentencePart() {
 			return "В коя къща е";
+		}
+
+		@Override
+		public List<Attribute> solutionSet(int numPeople) {
+			return Stream.iterate(1, f -> f + 1).map(AtHouse::new).limit(numPeople).collect(Collectors.toList());
 		}
 
 	};

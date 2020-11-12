@@ -21,6 +21,7 @@
 package zebra4j;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -45,5 +46,14 @@ public abstract class AllDifferentType implements AttributeType {
 	@Override
 	public boolean checkDifferent() {
 		return true;
+	}
+
+	public static List<Attribute> toSolutionSet(Attribute[] allValues, int numPeople) {
+		if (numPeople > allValues.length) {
+			throw new IllegalArgumentException(
+					String.format("%s has less elements - %s - then number of people requested: %s",
+							allValues.getClass().getComponentType(), allValues.length, numPeople));
+		}
+		return Arrays.asList(Arrays.copyOfRange(allValues, 0, numPeople));
 	}
 }

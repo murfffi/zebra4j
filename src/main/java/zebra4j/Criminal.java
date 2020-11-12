@@ -20,6 +20,8 @@
  */
 package zebra4j;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
@@ -49,6 +51,14 @@ public enum Criminal implements Attribute {
 		@Override
 		public String questionSentencePart() {
 			return "Престъпник ли е";
+		}
+
+		@Override
+		public List<Attribute> solutionSet(int numPeople) {
+			Criminal[] set = new Criminal[numPeople];
+			Arrays.fill(set, Criminal.NO);
+			set[0] = Criminal.YES;
+			return Arrays.asList(set);
 		}
 
 	};

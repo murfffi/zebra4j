@@ -1,6 +1,8 @@
 # zebra4j - Zebra puzzle generator and solver
 
 [![Build Status](https://travis-ci.org/murfffi/zebra4j.svg?branch=main)](https://travis-ci.org/murfffi/zebra4j)
+[![License](https://img.shields.io/github/license/murfffi/zebra4j)](/LICENSE)
+[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/murfffi/zebra4j?include_prereleases)](https://github.com/murfffi/zebra4j/releases)
 
 ## Overview
 
@@ -68,4 +70,4 @@ The library uses slf4j-api as logging API and does not include or enforce any pa
 
 ## Contributing
 
-See CONTRIBUTING.md .
+See /CONTRIBUTING.md .
