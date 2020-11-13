@@ -21,6 +21,7 @@
 package zebra4j;
 
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,9 +31,19 @@ public class QuestionPuzzleGeneratorTest {
 	@Test
 	public void testGenerate() {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
-		QuestionPuzzle puzzle = QuestionPuzzleGenerator.nameOfCriminal().generate(startSolution);
+		QuestionPuzzle puzzle = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution).generate();
 		List<Attribute> result = new QuestionPuzzleSolver(puzzle).solve();
 		Assert.assertEquals(1, result.size());
+	}
+
+	@Test
+	public void testGenerate_Stable() {
+		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
+		QuestionPuzzle puzzle1 = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution, new Random(1))
+				.generate();
+		QuestionPuzzle puzzle2 = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution, new Random(1))
+				.generate();
+		Assert.assertEquals(puzzle1, puzzle2);
 	}
 
 }

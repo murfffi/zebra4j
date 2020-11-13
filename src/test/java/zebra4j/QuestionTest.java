@@ -20,6 +20,7 @@
  */
 package zebra4j;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
@@ -33,6 +34,13 @@ public class QuestionTest {
 		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
 		Question question = Question.generate(solution.getAttributeSets(), new Random(1));
 		assertTrue(String.format("Solution: %s, Question: %s", solution, question), question.appliesTo(solution));
+	}
+
+	@Test
+	public void testGenerate_Stable() {
+		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
+		Question question = Question.generate(solution.getAttributeSets(), new Random(1));
+		assertEquals(question, Question.generate(solution.getAttributeSets(), new Random(1)));
 	}
 
 }

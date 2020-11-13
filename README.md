@@ -9,7 +9,7 @@
 zebra4j is a pure Java generator and solver for [Zebra puzzles](https://en.wikipedia.org/wiki/Zebra_Puzzle),
 also knows as "logic grid puzzles".
 
-The library requires Java 8+. `/zebra4j/src/main/java/zebra4j/App.java`
+The library requires Java 8+. `/zebra4j/src/main/java/zebra4j/Demo.java`
 and unit tests demonstrate how to use it.
 
 ## Download a release

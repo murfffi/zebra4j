@@ -26,12 +26,21 @@ import java.util.Random;
 
 public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 
-	public PuzzleGenerator() {
-		super(new Random());
+	public static Puzzle randomPuzzle(int numPeople) {
+		PuzzleGenerator generator = new PuzzleGenerator(new SolutionGenerator(numPeople).generate());
+		return generator.generate();
+	}
+
+	public PuzzleGenerator(PuzzleSolution solution) {
+		this(new Random(), solution);
+	}
+
+	public PuzzleGenerator(Random rnd, PuzzleSolution solution) {
+		super(rnd, solution);
 	}
 
 	@Override
-	protected Puzzle toPuzzle(PuzzleSolution solution, List<Fact> facts) {
+	protected Puzzle toPuzzle(List<Fact> facts) {
 		return toBasicPuzzle(solution, facts);
 	}
 

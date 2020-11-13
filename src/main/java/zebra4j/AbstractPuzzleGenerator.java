@@ -34,28 +34,29 @@ import zebra4j.Fact.BothTrue;
 public abstract class AbstractPuzzleGenerator<P> {
 
 	private final Random rnd;
+	protected final PuzzleSolution solution;
 
-	public P generate(PuzzleSolution solution) {
+	public P generate() {
 		List<Fact> facts = new ArrayList<>();
-		facts.addAll(generateBothTrue(solution));
-		facts.addAll(generateDifferent(solution));
-		P puzzle = toPuzzle(solution, facts);
-		if (!hasUniqueSolution(solution, facts)) {
+		facts.addAll(generateBothTrue());
+		facts.addAll(generateDifferent());
+		P puzzle = toPuzzle(facts);
+		if (!hasUniqueSolution(facts)) {
 			throw new RuntimeException(String.format("Incomplete rule generation. Puzzle %s has %s solutions.", puzzle,
 					createSolver(puzzle).countSolutions()));
 		}
-		removeFacts(facts, solution);
-		return puzzle;
+		removeFacts(facts);
+		return toPuzzle(facts);
 	}
 
-	protected abstract P toPuzzle(PuzzleSolution solution, List<Fact> facts);
+	protected abstract P toPuzzle(List<Fact> facts);
 
-	private void removeFacts(List<Fact> facts, PuzzleSolution solution) {
+	private void removeFacts(List<Fact> facts) {
 		Collections.shuffle(facts, rnd);
 		for (int i = 0; i < facts.size(); ++i) {
 			List<Fact> factsCopy = new ArrayList<>(facts);
 			factsCopy.remove(i);
-			if (hasUniqueSolution(solution, factsCopy)) {
+			if (hasUniqueSolution(factsCopy)) {
 				facts.remove(i);
 				--i;
 			}
@@ -63,14 +64,14 @@ public abstract class AbstractPuzzleGenerator<P> {
 
 	}
 
-	public boolean hasUniqueSolution(PuzzleSolution solution, List<Fact> facts) {
-		P puzzle = toPuzzle(solution, facts);
+	public boolean hasUniqueSolution(List<Fact> facts) {
+		P puzzle = toPuzzle(facts);
 		return createSolver(puzzle).countSolutions() == 1;
 	}
 
 	protected abstract CountingSolver createSolver(P puzzle);
 
-	public Set<Fact> generateBothTrue(PuzzleSolution solution) {
+	private Set<Fact> generateBothTrue() {
 		Set<Fact> result = new LinkedHashSet<>();
 		for (SolutionPerson person : solution.getPeople()) {
 			List<Attribute> attributes = person.asList();
@@ -90,7 +91,7 @@ public abstract class AbstractPuzzleGenerator<P> {
 		}
 	}
 
-	public Set<Fact> generateDifferent(PuzzleSolution solution) {
+	private Set<Fact> generateDifferent() {
 		Set<Fact> result = new LinkedHashSet<>();
 		for (SolutionPerson person : solution.getPeople()) {
 			List<Attribute> attributes = person.asList();
@@ -98,7 +99,7 @@ public abstract class AbstractPuzzleGenerator<P> {
 				for (int j = i + 1; j < attributes.size(); ++j) {
 					Attribute other = attributes.get(j);
 					for (Attribute different : solution.getAttributeSets().get(other.type())) {
-						if (!different.equals(other)) {
+						if (!Criminal.NO.equals(different) && !different.equals(other)) {
 							checkAndAdd(result, new Fact.Different(attributes.get(i), different));
 						}
 					}

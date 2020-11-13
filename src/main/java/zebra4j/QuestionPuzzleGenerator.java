@@ -30,19 +30,27 @@ import zebra4j.Fact.Different;
 
 public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuzzle> {
 
-	private final Question question;
-
-	public static QuestionPuzzleGenerator nameOfCriminal() {
-		return new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL);
+	public static QuestionPuzzle randomPuzzle(int numPeople) {
+		PuzzleSolution sampleSolution = new SolutionGenerator(numPeople).generate();
+		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(Question.generate(sampleSolution),
+				sampleSolution);
+		return generator.generate();
 	}
 
-	public QuestionPuzzleGenerator(Question question) {
-		super(new Random());
+	private final Question question;
+
+	public QuestionPuzzleGenerator(Question question, PuzzleSolution solution) {
+		this(question, solution, new Random());
+	}
+
+	public QuestionPuzzleGenerator(Question question, PuzzleSolution solution, Random rnd) {
+		super(rnd, solution);
+		Validate.isTrue(question.appliesTo(solution), "Question %s does not apply to solution %s", question, solution);
 		this.question = question;
 	}
 
 	@Override
-	protected QuestionPuzzle toPuzzle(PuzzleSolution solution, List<Fact> facts) {
+	protected QuestionPuzzle toPuzzle(List<Fact> facts) {
 		Validate.isTrue(question.appliesTo(solution), "Question %s does not apply to solution %s", question, solution);
 		return new QuestionPuzzle(question, PuzzleGenerator.toBasicPuzzle(solution, facts));
 	}
@@ -66,15 +74,11 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	}
 
 	private boolean rejectDifferent(Different fact) {
-		if (fact.getRight().equals(Criminal.YES)) {
-			return true;
-		}
-
 		return false;
 	}
 
 	private boolean rejectBothTrue(BothTrue fact) {
-		if (fact.getLeft().equals(Criminal.YES) || fact.getRight().equals(Criminal.YES)) {
+		if (fact.getLeft().equals(question.getTowards()) || fact.getRight().equals(question.getTowards())) {
 			return true;
 		}
 

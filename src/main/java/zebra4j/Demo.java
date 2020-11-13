@@ -20,14 +20,12 @@
  */
 package zebra4j;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Sample app
  */
-@SuppressWarnings("unused")
-@Slf4j
-public class App {
+public class Demo {
+	private static final int NUM_PEOPLE = 3;
+
 	public static void main(String[] args) {
 		basicPuzzle();
 		questionPuzzle();
@@ -35,26 +33,17 @@ public class App {
 
 	public static void basicPuzzle() {
 		System.out.println("Basic puzzle:");
-		PuzzleGenerator generator = new PuzzleGenerator();
-		Puzzle puzzle = generator.generate(new SolutionGenerator(3).generate());
+		int numPeople = 3;
+		Puzzle puzzle = PuzzleGenerator.randomPuzzle(numPeople);
 		System.out.println(puzzle);
 		System.out.println(new PuzzleSolver(puzzle).solve());
 	}
 
 	public static void questionPuzzle() {
 		System.out.println("Question puzzle:");
-		PuzzleSolution sampleSolution = new SolutionGenerator(3).generate();
-		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(Question.generate(sampleSolution));
-		QuestionPuzzle puzzle = generator.generate(sampleSolution);
+		QuestionPuzzle puzzle = QuestionPuzzleGenerator.randomPuzzle(NUM_PEOPLE);
 		System.out.println(puzzle);
-		System.out.println(new QuestionPuzzleSolver(puzzle).solve());
+		System.out.println(new QuestionPuzzleSolver(puzzle).solve().get(0).description());
 	}
 
-	public static PuzzleSolution sampleSolution() {
-		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder();
-		builder.addWithHouse(PersonName.ПЕТЪР, Clothes.СИНИ, Criminal.YES);
-		builder.addWithHouse(PersonName.ГЕОРГИ, Clothes.ЖЪЛТИ, Criminal.NO);
-		builder.addWithHouse(PersonName.ИВАН, Clothes.ЗЕЛЕНИ, Criminal.NO);
-		return builder.build();
-	}
 }
