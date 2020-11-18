@@ -29,6 +29,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import zebra4j.fact.Fact;
 
 @Getter
 @AllArgsConstructor

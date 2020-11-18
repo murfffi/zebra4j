@@ -30,7 +30,8 @@ public class QuestionPuzzleSolverTest {
 
 	@Test
 	public void testSolve() {
-		Puzzle basicPuzzle = new PuzzleGenerator(PuzzleGeneratorTest.simpleSolutionWithCriminal()).generate();
+		Puzzle basicPuzzle = new PuzzleGenerator(PuzzleGeneratorTest.simpleSolutionWithCriminal(),
+				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		QuestionPuzzle questionPuzzle = QuestionPuzzle.nameOfCriminal(basicPuzzle);
 		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(questionPuzzle);
 		List<Attribute> solutionNames = solver.solve();

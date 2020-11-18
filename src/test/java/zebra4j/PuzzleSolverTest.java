@@ -31,7 +31,7 @@ public class PuzzleSolverTest {
 	@Test
 	public void testUnique() {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.sampleSolution();
-		Puzzle puzzle = new PuzzleGenerator(startSolution).generate();
+		Puzzle puzzle = new PuzzleGenerator(startSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		List<PuzzleSolution> result = new PuzzleSolver(puzzle).solve();
 		Assert.assertEquals(result.size(), new HashSet<>(result).size());
 	}
@@ -39,7 +39,7 @@ public class PuzzleSolverTest {
 	@Test
 	public void testCriminal() {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
-		Puzzle puzzle = new PuzzleGenerator(startSolution).generate();
+		Puzzle puzzle = new PuzzleGenerator(startSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		List<PuzzleSolution> result = new PuzzleSolver(puzzle).solve();
 		Assert.assertEquals(result.size(), new HashSet<>(result).size());
 	}

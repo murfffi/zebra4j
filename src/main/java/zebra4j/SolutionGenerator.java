@@ -20,6 +20,8 @@
  */
 package zebra4j;
 
+import static zebra4j.Attributes.DEFAULT_TYPES;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,15 +30,10 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.SetUtils;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class SolutionGenerator implements Supplier<PuzzleSolution> {
-
-	public static final Set<AttributeType> DEFAULT_TYPES = SetUtils.unmodifiableSet(PersonName.TYPE, AtHouse.TYPE,
-			Clothes.TYPE, Criminal.TYPE);
 
 	private final Set<AttributeType> attributeTypes;
 	private final int numPeople;

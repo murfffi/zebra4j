@@ -18,33 +18,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-package zebra4j;
+package zebra4j.fact;
 
-/**
- * A known attribute for a person like a specific "name", "pet" or if the person
- * is criminal
- * 
- * @see Attributes
- */
-public interface Attribute {
+import org.junit.Test;
 
-	/**
-	 * As in the sentence "Ivan is {description}"
-	 */
-	String description();
+public class DifferentTest {
 
-	int asUniqueInt();
-
-	/**
-	 * @return the type of attribute, not null
-	 */
-	AttributeType type();
-
-	default String typeName() {
-		return getClass().getSimpleName();
-	}
-
-	default String language() {
-		return "bulgarian";
+	@Test
+	public void testGenerate() {
+		BothTrueTest.testGenerate(Different.TYPE);
 	}
 }

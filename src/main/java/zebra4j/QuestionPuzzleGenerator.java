@@ -22,29 +22,31 @@ package zebra4j;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
 
-import zebra4j.Fact.BothTrue;
-import zebra4j.Fact.Different;
+import zebra4j.fact.BothTrue;
+import zebra4j.fact.Different;
+import zebra4j.fact.Fact;
 
 public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuzzle> {
 
 	public static QuestionPuzzle randomPuzzle(int numPeople) {
 		PuzzleSolution sampleSolution = new SolutionGenerator(numPeople).generate();
 		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(Question.generate(sampleSolution),
-				sampleSolution);
+				sampleSolution, DEFAULT_FACT_TYPES);
 		return generator.generate();
 	}
 
 	private final Question question;
 
-	public QuestionPuzzleGenerator(Question question, PuzzleSolution solution) {
-		this(question, solution, new Random());
+	public QuestionPuzzleGenerator(Question question, PuzzleSolution solution, Set<Fact.Type> factTypes) {
+		this(question, solution, new Random(), factTypes);
 	}
 
-	public QuestionPuzzleGenerator(Question question, PuzzleSolution solution, Random rnd) {
-		super(rnd, solution);
+	public QuestionPuzzleGenerator(Question question, PuzzleSolution solution, Random rnd, Set<Fact.Type> factTypes) {
+		super(rnd, solution, factTypes);
 		Validate.isTrue(question.appliesTo(solution), "Question %s does not apply to solution %s", question, solution);
 		this.question = question;
 	}

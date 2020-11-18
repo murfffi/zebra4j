@@ -28,6 +28,9 @@ import java.util.Set;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.variables.IntVar;
 
+/**
+ * A type of attribute that is guaranteed to be different for all people
+ */
 public abstract class AllDifferentType implements AttributeType {
 
 	@Override

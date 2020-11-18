@@ -23,6 +23,12 @@ package zebra4j;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * A type attribute for a person like a "name", "pet" or if the person is
+ * criminal
+ * 
+ * @see Attribute
+ */
 public interface AttributeType {
 
 	Attribute fromUniqueInt(int input);

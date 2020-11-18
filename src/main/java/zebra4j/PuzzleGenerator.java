@@ -23,20 +23,24 @@ package zebra4j;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+
+import zebra4j.fact.Fact;
 
 public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 
 	public static Puzzle randomPuzzle(int numPeople) {
-		PuzzleGenerator generator = new PuzzleGenerator(new SolutionGenerator(numPeople).generate());
+		PuzzleGenerator generator = new PuzzleGenerator(new SolutionGenerator(numPeople).generate(),
+				DEFAULT_FACT_TYPES);
 		return generator.generate();
 	}
 
-	public PuzzleGenerator(PuzzleSolution solution) {
-		this(new Random(), solution);
+	public PuzzleGenerator(PuzzleSolution solution, Set<Fact.Type> factTypes) {
+		this(new Random(), solution, factTypes);
 	}
 
-	public PuzzleGenerator(Random rnd, PuzzleSolution solution) {
-		super(rnd, solution);
+	public PuzzleGenerator(Random rnd, PuzzleSolution solution, Set<Fact.Type> factTypes) {
+		super(rnd, solution, factTypes);
 	}
 
 	@Override

@@ -34,6 +34,7 @@ import org.chocosolver.solver.variables.IntVar;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import zebra4j.fact.Fact;
 
 @AllArgsConstructor
 @Slf4j

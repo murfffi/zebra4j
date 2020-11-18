@@ -31,7 +31,8 @@ public class QuestionPuzzleGeneratorTest {
 	@Test
 	public void testGenerate() {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
-		QuestionPuzzle puzzle = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution).generate();
+		QuestionPuzzle puzzle = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution,
+				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		List<Attribute> result = new QuestionPuzzleSolver(puzzle).solve();
 		Assert.assertEquals(1, result.size());
 	}
@@ -39,10 +40,10 @@ public class QuestionPuzzleGeneratorTest {
 	@Test
 	public void testGenerate_Stable() {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
-		QuestionPuzzle puzzle1 = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution, new Random(1))
-				.generate();
-		QuestionPuzzle puzzle2 = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution, new Random(1))
-				.generate();
+		QuestionPuzzle puzzle1 = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution, new Random(1),
+				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
+		QuestionPuzzle puzzle2 = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution, new Random(1),
+				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		Assert.assertEquals(puzzle1, puzzle2);
 	}
 

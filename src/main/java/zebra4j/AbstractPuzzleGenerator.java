@@ -22,24 +22,30 @@ package zebra4j;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.apache.commons.collections4.SetUtils;
 
 import lombok.AllArgsConstructor;
-import zebra4j.Fact.BothTrue;
+import zebra4j.fact.BothTrue;
+import zebra4j.fact.Different;
+import zebra4j.fact.Fact;
 
 @AllArgsConstructor
 public abstract class AbstractPuzzleGenerator<P> {
 
+	public static final Set<Fact.Type> DEFAULT_FACT_TYPES = SetUtils.unmodifiableSet(BothTrue.TYPE, Different.TYPE);
+
 	private final Random rnd;
 	protected final PuzzleSolution solution;
+	private final Set<Fact.Type> factTypes;
 
 	public P generate() {
-		List<Fact> facts = new ArrayList<>();
-		facts.addAll(generateBothTrue());
-		facts.addAll(generateDifferent());
+		List<Fact> facts = factTypes.stream().flatMap(type -> type.generate(solution).stream())
+				.filter(fact -> !rejectFact(fact)).collect(Collectors.toList());
 		P puzzle = toPuzzle(facts);
 		if (!hasUniqueSolution(facts)) {
 			throw new RuntimeException(String.format("Incomplete rule generation. Puzzle %s has %s solutions.", puzzle,
@@ -64,50 +70,12 @@ public abstract class AbstractPuzzleGenerator<P> {
 
 	}
 
-	public boolean hasUniqueSolution(List<Fact> facts) {
+	protected boolean hasUniqueSolution(List<Fact> facts) {
 		P puzzle = toPuzzle(facts);
 		return createSolver(puzzle).countSolutions() == 1;
 	}
 
 	protected abstract CountingSolver createSolver(P puzzle);
-
-	private Set<Fact> generateBothTrue() {
-		Set<Fact> result = new LinkedHashSet<>();
-		for (SolutionPerson person : solution.getPeople()) {
-			List<Attribute> attributes = person.asList();
-			for (int i = 0; i < attributes.size(); ++i) {
-				for (int j = i + 1; j < attributes.size(); ++j) {
-					BothTrue fact = new BothTrue(attributes.get(i), attributes.get(j));
-					checkAndAdd(result, fact);
-				}
-			}
-		}
-		return result;
-	}
-
-	private void checkAndAdd(Set<Fact> result, Fact fact) {
-		if (!rejectFact(fact)) {
-			result.add(fact);
-		}
-	}
-
-	private Set<Fact> generateDifferent() {
-		Set<Fact> result = new LinkedHashSet<>();
-		for (SolutionPerson person : solution.getPeople()) {
-			List<Attribute> attributes = person.asList();
-			for (int i = 0; i < attributes.size(); ++i) {
-				for (int j = i + 1; j < attributes.size(); ++j) {
-					Attribute other = attributes.get(j);
-					for (Attribute different : solution.getAttributeSets().get(other.type())) {
-						if (!Criminal.NO.equals(different) && !different.equals(other)) {
-							checkAndAdd(result, new Fact.Different(attributes.get(i), different));
-						}
-					}
-				}
-			}
-		}
-		return result;
-	}
 
 	protected boolean rejectFact(Fact fact) {
 		return false;

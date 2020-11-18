@@ -18,33 +18,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-package zebra4j;
+package zebra4j.fact;
 
-/**
- * A known attribute for a person like a specific "name", "pet" or if the person
- * is criminal
- * 
- * @see Attributes
- */
-public interface Attribute {
+import static org.junit.Assert.assertTrue;
 
-	/**
-	 * As in the sentence "Ivan is {description}"
-	 */
-	String description();
+import java.util.List;
 
-	int asUniqueInt();
+import org.junit.Test;
 
-	/**
-	 * @return the type of attribute, not null
-	 */
-	AttributeType type();
+import zebra4j.PuzzleGeneratorTest;
+import zebra4j.PuzzleSolution;
 
-	default String typeName() {
-		return getClass().getSimpleName();
+public class BothTrueTest {
+
+	@Test
+	public void testGenerate() {
+		testGenerate(BothTrue.TYPE);
 	}
 
-	default String language() {
-		return "bulgarian";
+	public static void testGenerate(Fact.Type type) {
+		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
+		List<Fact> facts = type.generate(solution);
+		facts.stream().forEach(f -> assertTrue(f.appliesTo(solution)));
 	}
+
 }

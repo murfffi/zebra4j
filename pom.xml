@@ -7,7 +7,7 @@
 
 	<groupId>zebra4j</groupId>
 	<artifactId>zebra4j</artifactId>
-	<version>0.2</version>
+	<version>0.3-SNAPSHOT</version>
 
 	<name>zebra4j</name>
 	<url>https://github.com/murfffi/zebra4j</url>
@@ -71,7 +71,7 @@
 	</dependencies>
 
 	<build>
-		<pluginManagement><!-- lock down plugins versions to avoid using Maven 
+		<pluginManagement><!-- lock down plugins versions to avoid using Maven
 				defaults (may be moved to parent pom) -->
 			<plugins>
 				<plugin>
@@ -165,7 +165,6 @@
 	<scm>
 		<url>https://github.com/murfffi/zebra4j</url>
 		<connection>scm:git:ssh://git@github.com/murfffi/zebra4j.git</connection>
-		<tag>v0.2</tag>
 	</scm>
 	<distributionManagement>
 		<repository>

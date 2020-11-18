@@ -20,6 +20,10 @@
  */
 package zebra4j;
 
+import java.util.Random;
+
+import org.apache.commons.collections4.SetUtils;
+
 /**
  * Sample app
  */
@@ -29,6 +33,7 @@ public class Demo {
 	public static void main(String[] args) {
 		basicPuzzle();
 		questionPuzzle();
+		customQuestionPuzzle();
 	}
 
 	public static void basicPuzzle() {
@@ -42,6 +47,19 @@ public class Demo {
 	public static void questionPuzzle() {
 		System.out.println("Question puzzle:");
 		QuestionPuzzle puzzle = QuestionPuzzleGenerator.randomPuzzle(NUM_PEOPLE);
+		System.out.println(puzzle);
+		System.out.println(new QuestionPuzzleSolver(puzzle).solve().get(0).description());
+	}
+
+	public static void customQuestionPuzzle() {
+		System.out.println("Question puzzle:");
+		// Check out the definition of Attributes.PET to learn the easiest way to define
+		// your own attributes.
+		PuzzleSolution sampleSolution = new SolutionGenerator(SetUtils.unmodifiableSet(Attributes.PET, Attributes.NAME),
+				2, new Random()).generate();
+		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(Question.generate(sampleSolution),
+				sampleSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES);
+		QuestionPuzzle puzzle = generator.generate();
 		System.out.println(puzzle);
 		System.out.println(new QuestionPuzzleSolver(puzzle).solve().get(0).description());
 	}

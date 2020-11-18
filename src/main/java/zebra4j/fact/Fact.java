@@ -18,33 +18,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-package zebra4j;
+package zebra4j.fact;
 
-/**
- * A known attribute for a person like a specific "name", "pet" or if the person
- * is criminal
- * 
- * @see Attributes
- */
-public interface Attribute {
+import java.util.List;
 
-	/**
-	 * As in the sentence "Ivan is {description}"
-	 */
-	String description();
+import zebra4j.PuzzleSolution;
+import zebra4j.ZebraModel;
 
-	int asUniqueInt();
+public interface Fact {
 
-	/**
-	 * @return the type of attribute, not null
-	 */
-	AttributeType type();
-
-	default String typeName() {
-		return getClass().getSimpleName();
+	interface Type {
+		List<Fact> generate(PuzzleSolution solution);
 	}
 
-	default String language() {
-		return "bulgarian";
-	}
+	void postTo(ZebraModel model);
+
+	boolean appliesTo(PuzzleSolution solution);
 }
