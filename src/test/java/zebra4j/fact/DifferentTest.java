@@ -28,4 +28,9 @@ public class DifferentTest {
 	public void testGenerate() {
 		BothTrueTest.testGenerate(Different.TYPE);
 	}
+
+	@Test
+	public void testPostTo() {
+		BothTrueTest.testPostTo(Different.TYPE);
+	}
 }

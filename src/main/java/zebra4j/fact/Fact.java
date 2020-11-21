@@ -25,12 +25,36 @@ import java.util.List;
 import zebra4j.PuzzleSolution;
 import zebra4j.ZebraModel;
 
+/**
+ * A fact given as clus to the players
+ *
+ * <p>
+ * Facts are used as members of sets so they must implement equals and hashCode
+ * correctly.
+ */
 public interface Fact {
 
+	/**
+	 * A type of facts
+	 * 
+	 * <p>
+	 * Used as members of sets so they must implement equals and hashCode correctly.
+	 */
 	interface Type {
+
+		/**
+		 * Generates all facts of that type that apply to the given solution
+		 * 
+		 * @param solution required, not empty
+		 * @return a list of facts, empty if the type of facts does not apply to the
+		 *         attribute types in the solution
+		 */
 		List<Fact> generate(PuzzleSolution solution);
 	}
 
+	/**
+	 * @param model
+	 */
 	void postTo(ZebraModel model);
 
 	boolean appliesTo(PuzzleSolution solution);

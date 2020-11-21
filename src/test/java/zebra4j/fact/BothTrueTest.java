@@ -22,12 +22,15 @@ package zebra4j.fact;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
 
+import zebra4j.Puzzle;
 import zebra4j.PuzzleGeneratorTest;
 import zebra4j.PuzzleSolution;
+import zebra4j.PuzzleSolver;
 
 public class BothTrueTest {
 
@@ -36,10 +39,29 @@ public class BothTrueTest {
 		testGenerate(BothTrue.TYPE);
 	}
 
+	@Test
+	public void testPostTo() {
+		testPostTo(BothTrue.TYPE);
+	}
+
 	public static void testGenerate(Fact.Type type) {
 		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
 		List<Fact> facts = type.generate(solution);
+		assertTrue(!facts.isEmpty());
 		facts.stream().forEach(f -> assertTrue(f.appliesTo(solution)));
 	}
 
+	public static void testPostTo(Fact.Type type) {
+		// must not contain Criminal
+		PuzzleSolution solution = PuzzleGeneratorTest.sampleSolution();
+		List<Fact> facts = type.generate(solution);
+		testPostTo(facts.get(0), solution);
+	}
+
+	public static void testPostTo(Fact fact, PuzzleSolution solution) {
+		assertTrue(fact.appliesTo(solution));
+		Puzzle puzzle = new Puzzle(solution.getAttributeSets(), Collections.singleton(fact));
+		new PuzzleSolver(puzzle).solve().stream()
+				.forEach(anySolution -> assertTrue(anySolution.toString(), fact.appliesTo(anySolution)));
+	}
 }

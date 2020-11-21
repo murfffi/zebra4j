@@ -20,11 +20,17 @@
  */
 package zebra4j;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
-import org.junit.Assert;
 import org.junit.Test;
+
+import zebra4j.fact.BothTrue;
+import zebra4j.fact.Fact;
 
 public class QuestionPuzzleGeneratorTest {
 
@@ -34,7 +40,18 @@ public class QuestionPuzzleGeneratorTest {
 		QuestionPuzzle puzzle = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution,
 				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		List<Attribute> result = new QuestionPuzzleSolver(puzzle).solve();
-		Assert.assertEquals(1, result.size());
+		assertEquals(1, result.size());
+	}
+
+	@Test
+	public void testGenerate_FactsDontAnswerDirectly() {
+		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
+		QuestionPuzzle puzzle = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution, new Random(1),
+				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
+		Attribute nameOfCriminal = startSolution.findPerson(Criminal.YES).get().findAttribute(PersonName.TYPE);
+		Set<Fact> facts = puzzle.getPuzzle().getFacts();
+		assertFalse(facts.contains(new BothTrue(nameOfCriminal, Criminal.YES)));
+		assertFalse(facts.contains(new BothTrue(Criminal.YES, nameOfCriminal)));
 	}
 
 	@Test
@@ -44,7 +61,7 @@ public class QuestionPuzzleGeneratorTest {
 				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		QuestionPuzzle puzzle2 = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution, new Random(1),
 				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
-		Assert.assertEquals(puzzle1, puzzle2);
+		assertEquals(puzzle1, puzzle2);
 	}
 
 }
