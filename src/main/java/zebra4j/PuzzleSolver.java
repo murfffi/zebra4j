@@ -86,8 +86,7 @@ public class PuzzleSolver implements CountingSolver {
 		}
 		for (IntVar var : retrieveVars(choco)) {
 			int person = choco.getIntVal(var);
-			Attribute attribute = model.toAttribute(var.getName());
-			allAttributes[person].add(attribute);
+			model.toOptionalAttribute(var.getName()).ifPresent(attr -> allAttributes[person].add(attr));
 		}
 		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder(false);
 		Stream.of(allAttributes).forEach(list -> builder.add(new SolutionPerson(list)));

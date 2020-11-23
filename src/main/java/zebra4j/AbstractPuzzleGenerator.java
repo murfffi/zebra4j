@@ -33,11 +33,13 @@ import lombok.AllArgsConstructor;
 import zebra4j.fact.BothTrue;
 import zebra4j.fact.Different;
 import zebra4j.fact.Fact;
+import zebra4j.fact.NearbyHouse;
 
 @AllArgsConstructor
 public abstract class AbstractPuzzleGenerator<P> {
 
-	public static final Set<Fact.Type> DEFAULT_FACT_TYPES = SetUtils.unmodifiableSet(BothTrue.TYPE, Different.TYPE);
+	public static final Set<Fact.Type> DEFAULT_FACT_TYPES = SetUtils.unmodifiableSet(BothTrue.TYPE, Different.TYPE,
+			NearbyHouse.TYPE);
 
 	private final Random rnd;
 	protected final PuzzleSolution solution;

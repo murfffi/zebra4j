@@ -22,6 +22,7 @@ package zebra4j;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,10 +56,16 @@ public class ZebraModel {
 	}
 
 	public Attribute toAttribute(String name) {
+		return toOptionalAttribute(name).get();
+	}
+
+	public Optional<Attribute> toOptionalAttribute(String name) {
 		Matcher m = VAR_REGEX.matcher(name);
-		m.matches();
+		if (!m.matches()) {
+			return Optional.empty();
+		}
 		int attributeId = Integer.parseInt(m.group(2));
 		AttributeType attrType = typeMap.get(m.group(1));
-		return attrType.fromUniqueInt(attributeId);
+		return Optional.of(attrType.fromUniqueInt(attributeId));
 	}
 }

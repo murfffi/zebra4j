@@ -55,13 +55,14 @@ public class BothTrueTest {
 		// must not contain Criminal
 		PuzzleSolution solution = PuzzleGeneratorTest.sampleSolution();
 		List<Fact> facts = type.generate(solution);
-		testPostTo(facts.get(0), solution);
+		assertTrue(!facts.isEmpty());
+		facts.stream().forEach(fact -> testPostTo(fact, solution));
 	}
 
 	public static void testPostTo(Fact fact, PuzzleSolution solution) {
 		assertTrue(fact.appliesTo(solution));
 		Puzzle puzzle = new Puzzle(solution.getAttributeSets(), Collections.singleton(fact));
-		new PuzzleSolver(puzzle).solve().stream()
-				.forEach(anySolution -> assertTrue(anySolution.toString(), fact.appliesTo(anySolution)));
+		new PuzzleSolver(puzzle).solve().stream().forEach(
+				anySolution -> assertTrue(fact + " \n " + anySolution.toString(), fact.appliesTo(anySolution)));
 	}
 }
