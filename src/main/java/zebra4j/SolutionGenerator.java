@@ -54,7 +54,7 @@ public class SolutionGenerator implements Supplier<PuzzleSolution> {
 		List<AttributeType> attributeTypesSorted = new ArrayList<>(attributeTypes);
 		Collections.swap(attributeTypesSorted, 0, attributeTypesSorted.indexOf(PersonName.TYPE));
 		for (AttributeType type : attributeTypesSorted) {
-			List<Attribute> attributes = type.solutionSet(numPeople);
+			List<Attribute> attributes = type.getAttributes(numPeople);
 			Collections.shuffle(attributes, rnd);
 			attributesByPersonAndType.add(attributes);
 		}

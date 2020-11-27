@@ -27,6 +27,15 @@ import java.util.Set;
 
 import zebra4j.fact.Fact;
 
+/**
+ * A generator for {@link Puzzle}
+ * 
+ * <p>
+ * You can use the same generator to create multiple different puzzles by
+ * calling the {@link #generate()} method multiple times. All generated puzzles
+ * will have the same attributes and solution but will have different facts
+ * (clues).
+ */
 public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 
 	public static Puzzle randomPuzzle(int numPeople) {
@@ -53,8 +62,8 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 	}
 
 	@Override
-	protected CountingSolver createSolver(Puzzle puzzle) {
-		return new PuzzleSolver(puzzle);
+	protected int countSolutions(Puzzle puzzle) {
+		return new PuzzleSolver(puzzle).solve().size();
 	}
 
 }

@@ -60,7 +60,7 @@ public class PuzzleSolutionBuilder {
 		for (Attribute attr : attributes) {
 			attributeSets.putIfAbsent(attr.type(), new LinkedHashSet<>());
 			boolean added = attributeSets.get(attr.type()).add(attr);
-			if (!added && attr.type().checkDifferent()) {
+			if (!added && attr.type() instanceof AllDifferentType) {
 				throw new IllegalArgumentException("Attributes must be different.");
 			}
 		}

@@ -45,19 +45,48 @@ public abstract class AbstractPuzzleGenerator<P> {
 	protected final PuzzleSolution solution;
 	private final Set<Fact.Type> factTypes;
 
+	/**
+	 * @return a new puzzle generated from the seed solution and randomness source;
+	 *         each generated puzzle is different and has a minimal set of facts
+	 */
 	public P generate() {
 		List<Fact> facts = factTypes.stream().flatMap(type -> type.generate(solution).stream())
 				.filter(fact -> !rejectFact(fact)).collect(Collectors.toList());
 		P puzzle = toPuzzle(facts);
 		if (!hasUniqueSolution(facts)) {
 			throw new RuntimeException(String.format("Incomplete rule generation. Puzzle %s has %s solutions.", puzzle,
-					createSolver(puzzle).countSolutions()));
+					countSolutions(puzzle)));
 		}
 		removeFacts(facts);
 		return toPuzzle(facts);
 	}
 
+	/**
+	 * Create a puzzle using the seed solution and the given facts
+	 * 
+	 * @param facts, not empty
+	 * @return
+	 */
 	protected abstract P toPuzzle(List<Fact> facts);
+
+	/**
+	 * @param puzzle
+	 * @return number of unique solutions of the given puzzle
+	 */
+	protected abstract int countSolutions(P puzzle);
+
+	/**
+	 * Checks if the fact is not compatible with the specific puzzle being generated
+	 * 
+	 * <p>
+	 * By default, all facts are compatible and none are rejected.
+	 * 
+	 * @param fact
+	 * @return if the fact is rejected
+	 */
+	protected boolean rejectFact(Fact fact) {
+		return false;
+	}
 
 	private void removeFacts(List<Fact> facts) {
 		Collections.shuffle(facts, rnd);
@@ -72,14 +101,8 @@ public abstract class AbstractPuzzleGenerator<P> {
 
 	}
 
-	protected boolean hasUniqueSolution(List<Fact> facts) {
+	private boolean hasUniqueSolution(List<Fact> facts) {
 		P puzzle = toPuzzle(facts);
-		return createSolver(puzzle).countSolutions() == 1;
-	}
-
-	protected abstract CountingSolver createSolver(P puzzle);
-
-	protected boolean rejectFact(Fact fact) {
-		return false;
+		return countSolutions(puzzle) == 1;
 	}
 }

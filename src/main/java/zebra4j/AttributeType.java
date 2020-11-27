@@ -31,15 +31,42 @@ import java.util.Set;
  */
 public interface AttributeType {
 
+	/**
+	 * The inverse operation of {@link Attribute#asUniqueInt()}
+	 * 
+	 * @param input
+	 * @return an attribute, not null
+	 * @throws IllegalArgumentException if the input does not match an attribute
+	 */
 	Attribute fromUniqueInt(int input);
 
+	/**
+	 * Adds rules related to the subset of attributes of this type used in a puzzle
+	 * to the model describing the puzzle
+	 * 
+	 * @param model
+	 * @param attributesOfType
+	 */
 	void addToModel(ZebraModel model, Set<Attribute> attributesOfType);
 
-	default boolean checkDifferent() {
-		return false;
-	}
-
+	/**
+	 * @return part of a question sentence in natural language which asks about this
+	 *         attribute type
+	 * 
+	 * @see Question
+	 */
 	String questionSentencePart();
 
-	List<Attribute> solutionSet(int numPeople);
+	/**
+	 * Return some attributes of this type.
+	 * 
+	 * <p>
+	 * Used when generating solutions.
+	 * 
+	 * @param count how many attributes to return
+	 * @return A subset of the attributes of this type
+	 * @throws IllegalArgumentException if count is larger than the number of all
+	 *                                  possible attributes of this type
+	 */
+	List<Attribute> getAttributes(int count);
 }

@@ -28,6 +28,7 @@ import org.apache.commons.collections4.SetUtils;
  * Sample app
  */
 public class Demo {
+
 	private static final int NUM_PEOPLE = 3;
 
 	public static void main(String[] args) {
@@ -38,8 +39,7 @@ public class Demo {
 
 	public static void basicPuzzle() {
 		System.out.println("Basic puzzle:");
-		int numPeople = 3;
-		Puzzle puzzle = PuzzleGenerator.randomPuzzle(numPeople);
+		Puzzle puzzle = PuzzleGenerator.randomPuzzle(NUM_PEOPLE);
 		System.out.println(puzzle);
 		System.out.println(new PuzzleSolver(puzzle).solve());
 	}
@@ -52,11 +52,12 @@ public class Demo {
 	}
 
 	public static void customQuestionPuzzle() {
-		System.out.println("Question puzzle:");
+		System.out.println("Custom question puzzle:");
 		// Check out the definition of Attributes.PET to learn the easiest way to define
 		// your own attributes.
-		PuzzleSolution sampleSolution = new SolutionGenerator(SetUtils.unmodifiableSet(Attributes.PET, Attributes.NAME),
-				2, new Random()).generate();
+		PuzzleSolution sampleSolution = new SolutionGenerator(
+				SetUtils.unmodifiableSet(Attributes.PET, Attributes.NAME, Attributes.AT_HOUSE), NUM_PEOPLE,
+				new Random()).generate();
 		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(Question.generate(sampleSolution),
 				sampleSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES);
 		QuestionPuzzle puzzle = generator.generate();

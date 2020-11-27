@@ -51,8 +51,13 @@ public class ZebraModel {
 	}
 
 	public String varName(Attribute attr) {
-		typeMap.putIfAbsent(attr.typeName(), attr.type());
-		return String.format("person_of_'%s'_'%s'", attr.typeName(), attr.asUniqueInt());
+		typeMap.putIfAbsent(getTypeId(attr), attr.type());
+		return String.format("person_of_'%s'_'%s'", getTypeId(attr), attr.asUniqueInt());
+	}
+
+	private String getTypeId(Attribute attr) {
+		AttributeType type = attr.type();
+		return type.getClass().getSimpleName() + type.hashCode();
 	}
 
 	public Attribute toAttribute(String name) {

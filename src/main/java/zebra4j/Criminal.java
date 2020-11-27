@@ -54,7 +54,7 @@ public enum Criminal implements Attribute {
 		}
 
 		@Override
-		public List<Attribute> solutionSet(int numPeople) {
+		public List<Attribute> getAttributes(int numPeople) {
 			Criminal[] set = new Criminal[numPeople];
 			Arrays.fill(set, Criminal.NO);
 			set[0] = Criminal.YES;

@@ -31,6 +31,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import zebra4j.fact.Fact;
 
+/**
+ * A puzzle that asks all attributes in {@link #getAttributeSets()} to be
+ * assigned to people, satisfying rules defined by the attribute sets used in
+ * the puzzle (e.g. all people have different name and the name may be Liza,
+ * John or Mary). The assignment must also satisfy the given set of
+ * {@link Fact}s.
+ */
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode

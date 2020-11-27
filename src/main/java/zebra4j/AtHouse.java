@@ -42,7 +42,7 @@ public class AtHouse implements Attribute {
 		}
 
 		@Override
-		public List<Attribute> solutionSet(int numPeople) {
+		public List<Attribute> getAttributes(int numPeople) {
 			return Stream.iterate(1, f -> f + 1).map(AtHouse::new).limit(numPeople).collect(Collectors.toList());
 		}
 

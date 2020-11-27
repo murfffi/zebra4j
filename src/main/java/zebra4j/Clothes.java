@@ -39,7 +39,7 @@ public enum Clothes implements Attribute {
 		}
 
 		@Override
-		public List<Attribute> solutionSet(int numPeople) {
+		public List<Attribute> getAttributes(int numPeople) {
 			return toSolutionSet(Clothes.values(), numPeople);
 		}
 

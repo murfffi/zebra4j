@@ -46,11 +46,6 @@ public abstract class AllDifferentType implements AttributeType {
 		model.allDifferent(varsForType.toArray(new IntVar[0])).post();
 	}
 
-	@Override
-	public boolean checkDifferent() {
-		return true;
-	}
-
 	public static List<Attribute> toSolutionSet(Attribute[] allValues, int numPeople) {
 		if (numPeople > allValues.length) {
 			throw new IllegalArgumentException(

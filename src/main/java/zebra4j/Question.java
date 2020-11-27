@@ -31,14 +31,34 @@ import java.util.stream.Stream;
 
 import lombok.Value;
 
+/**
+ * A question about an attribute of a person
+ * 
+ * <p>
+ * The question is towards the person, identified by the attribute in
+ * {@link #getTowards()} and is about the attribute of type {@link #getAbout()}.
+ */
 @Value
 public class Question {
 	public static Question NAME_OF_CRIMINAL = new Question(Criminal.YES, PersonName.TYPE);
 
+	/**
+	 * Generates a random question about the people in the given solution
+	 * 
+	 * @param solution
+	 * @return a question that "appliesTo" the given solution
+	 */
 	public static Question generate(PuzzleSolution solution) {
 		return generate(solution.getAttributeSets(), new Random());
 	}
 
+	/**
+	 * Generates a random question using the given sets of attributes
+	 * 
+	 * @param attributeSets
+	 * @param rnd
+	 * @return a question, not null
+	 */
 	public static Question generate(Map<AttributeType, Set<Attribute>> attributeSets, Random rnd) {
 		List<AttributeType> types = new ArrayList<>(attributeSets.keySet());
 		int aboutCount = (int) aboutTypeStream(types).count();
@@ -72,6 +92,10 @@ public class Question {
 
 	public String toSentence() {
 		return about.questionSentencePart() + " " + towards.description() + "?";
+	}
+
+	public Optional<Attribute> answer(PuzzleSolution solution) {
+		return solution.findPerson(towards).flatMap(person -> Optional.ofNullable(person.findAttribute(about)));
 	}
 
 	public boolean appliesTo(Puzzle puzzle) {

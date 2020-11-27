@@ -30,8 +30,25 @@ import zebra4j.fact.BothTrue;
 import zebra4j.fact.Different;
 import zebra4j.fact.Fact;
 
+/**
+ * A generator for {@link QuestionPuzzle}
+ * 
+ * <p>
+ * You can use the same generator to create multiple different puzzles by
+ * calling the {@link #generate()} method multiple times. All generated puzzles
+ * will have the same question, attributes and solution but will have different
+ * facts (clues). The generated puzzles will not contain facts the directly
+ * answer the question.
+ */
 public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuzzle> {
 
+	/**
+	 * Generates a random puzzle seeded with a random solution, with all built-in
+	 * facts and attributes.
+	 * 
+	 * @param numPeople the number of people in the puzzle
+	 * @return a puzzle, not null
+	 */
 	public static QuestionPuzzle randomPuzzle(int numPeople) {
 		PuzzleSolution sampleSolution = new SolutionGenerator(numPeople).generate();
 		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(Question.generate(sampleSolution),
@@ -41,10 +58,28 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 
 	private final Question question;
 
+	/**
+	 * Creates a new generator with a default random generator
+	 * 
+	 * @see #QuestionPuzzleGenerator(Question, PuzzleSolution, Random, Set)
+	 */
 	public QuestionPuzzleGenerator(Question question, PuzzleSolution solution, Set<Fact.Type> factTypes) {
 		this(question, solution, new Random(), factTypes);
 	}
 
+	/**
+	 * Creates a new generator for puzzles with the given solution assignment
+	 * 
+	 * @see #randomPuzzle(int) example usage
+	 * 
+	 * @param question
+	 * @param solution  a full assignment of attributes to people, used for
+	 *                  generating {@link Fact}s
+	 * @param rnd       a random generator, which may be initialized with a fixed
+	 *                  seed to get repeatable results
+	 * @param factTypes the types of facts to be generated e.g.
+	 *                  {@link AbstractPuzzleGenerator#DEFAULT_FACT_TYPES}
+	 */
 	public QuestionPuzzleGenerator(Question question, PuzzleSolution solution, Random rnd, Set<Fact.Type> factTypes) {
 		super(rnd, solution, factTypes);
 		Validate.isTrue(question.appliesTo(solution), "Question %s does not apply to solution %s", question, solution);
@@ -58,8 +93,8 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	}
 
 	@Override
-	protected CountingSolver createSolver(QuestionPuzzle puzzle) {
-		return new QuestionPuzzleSolver(puzzle);
+	protected int countSolutions(QuestionPuzzle puzzle) {
+		return new QuestionPuzzleSolver(puzzle).solve().size();
 	}
 
 	@Override

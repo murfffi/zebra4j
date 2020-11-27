@@ -25,7 +25,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import lombok.Value;
+import zebra4j.fact.Fact;
 
+/**
+ * A puzzle that looks for answer to the given question given rules defined by
+ * the attribute sets used in the puzzle (e.g. all people have different name
+ * and the name may be Liza, John or Mary) and a set of {@link Fact}s known
+ * about the people in the puzzle.
+ */
 @Value
 public class QuestionPuzzle {
 
@@ -36,10 +43,6 @@ public class QuestionPuzzle {
 		Validate.isTrue(question.appliesTo(puzzle), "Question %s does not apply to puzzle %s", question, puzzle);
 		this.question = question;
 		this.puzzle = puzzle;
-	}
-
-	public static QuestionPuzzle nameOfCriminal(Puzzle puzzle) {
-		return new QuestionPuzzle(Question.NAME_OF_CRIMINAL, puzzle);
 	}
 
 	@Override

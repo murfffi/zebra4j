@@ -92,7 +92,7 @@ public class BasicAttributeType extends AllDifferentType {
 	}
 
 	@Override
-	public List<Attribute> solutionSet(int numPeople) {
+	public List<Attribute> getAttributes(int numPeople) {
 		return AllDifferentType.toSolutionSet(attributes.toArray(new Attribute[0]), numPeople);
 	}
 

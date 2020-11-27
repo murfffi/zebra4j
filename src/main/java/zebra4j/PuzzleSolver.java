@@ -36,9 +36,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import zebra4j.fact.Fact;
 
+/**
+ * Solver for {@link Puzzle}
+ */
 @AllArgsConstructor
 @Slf4j
-public class PuzzleSolver implements CountingSolver {
+public class PuzzleSolver {
 
 	private final Puzzle puzzle;
 
@@ -70,11 +73,6 @@ public class PuzzleSolver implements CountingSolver {
 				.distinct().collect(Collectors.toList());
 		log.trace("Found {} distinct solutions", zebraSolutions.size());
 		return zebraSolutions;
-	}
-
-	@Override
-	public int countSolutions() {
-		return solve().size();
 	}
 
 	private PuzzleSolution fromChocoSolution(Solution choco, ZebraModel model) {
