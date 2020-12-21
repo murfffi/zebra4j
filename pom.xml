@@ -70,6 +70,16 @@
 		</dependency>
 	</dependencies>
 
+	<repositories>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>bintray-marin-nozhchev</id>
+			<url>https://dl.bintray.com/marin-nozhchev/marin-nozhchev</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<pluginManagement><!-- lock down plugins versions to avoid using Maven 
 				defaults (may be moved to parent pom) -->
@@ -173,7 +183,7 @@
 				</dependencies>
 				<configuration>
 					<!-- Documentation at https://revapi.org/revapi-maven-plugin/_attachments/check-mojo.html -->
-					<alwaysCheckForReleaseVersion>false</alwaysCheckForReleaseVersion>
+					<alwaysCheckForReleaseVersion>true</alwaysCheckForReleaseVersion>
 					<analysisConfiguration>
 						<!-- Documented at https://revapi.org/revapi-basic-features/semver-ignore.html -->
 						<revapi.semver.ignore>
