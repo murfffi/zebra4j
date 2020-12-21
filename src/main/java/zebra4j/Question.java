@@ -94,6 +94,12 @@ public class Question {
 		return about.questionSentencePart() + " " + towards.description() + "?";
 	}
 
+	/**
+	 * Answers this question about the given solution, if applicable
+	 * 
+	 * @param solution required
+	 * @return the answer, present if this {@link #appliesTo} solution
+	 */
 	public Optional<Attribute> answer(PuzzleSolution solution) {
 		return solution.findPerson(towards).flatMap(person -> Optional.ofNullable(person.findAttribute(about)));
 	}

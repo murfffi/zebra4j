@@ -21,8 +21,10 @@
 package zebra4j;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collections;
 import java.util.Random;
 
 import org.junit.Test;
@@ -41,6 +43,21 @@ public class QuestionTest {
 		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
 		Question question = Question.generate(solution.getAttributeSets(), new Random(1));
 		assertEquals(question, Question.generate(solution.getAttributeSets(), new Random(1)));
+	}
+
+	@Test
+	public void testAnswer() {
+		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
+		Question question = Question.NAME_OF_CRIMINAL;
+		assertEquals(PersonName.ГЕОРГИ, question.answer(solution).get());
+	}
+
+	@Test
+	public void testAnswer_DoesNotApply() {
+		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
+		Question question = new Question(Criminal.YES,
+				new BasicAttributeType(Collections.singleton("test"), "questionSentencePart"));
+		assertFalse(question.answer(solution).isPresent());
 	}
 
 }
