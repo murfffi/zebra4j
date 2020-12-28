@@ -23,9 +23,11 @@ package zebra4j;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.chocosolver.solver.ChocoSettings;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.variables.IntVar;
 
@@ -36,7 +38,7 @@ public class ZebraModel {
 	private static final Pattern VAR_REGEX = Pattern.compile("person_of_'(\\w+)'_'([0-9]+)'");
 
 	@Getter
-	private final Model chocoModel = new Model();
+	private final Model chocoModel = new Model(UUID.randomUUID().toString(), new ChocoSettings());
 
 	private final Map<String, AttributeType> typeMap = new HashMap<>();
 

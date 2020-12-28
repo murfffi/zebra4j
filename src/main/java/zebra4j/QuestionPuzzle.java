@@ -21,8 +21,6 @@
 package zebra4j;
 
 import org.apache.commons.lang3.Validate;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import lombok.Value;
 import zebra4j.fact.Fact;
@@ -43,12 +41,6 @@ public class QuestionPuzzle {
 		Validate.isTrue(question.appliesTo(puzzle), "Question %s does not apply to puzzle %s", question, puzzle);
 		this.question = question;
 		this.puzzle = puzzle;
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append(puzzle).append(question.toSentence())
-				.build();
 	}
 
 }

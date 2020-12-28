@@ -7,7 +7,7 @@
 
 	<groupId>zebra4j</groupId>
 	<artifactId>zebra4j</artifactId>
-	<version>0.4</version>
+	<version>0.4.1-SNAPSHOT</version>
 
 	<name>zebra4j</name>
 	<url>https://github.com/murfffi/zebra4j</url>
@@ -170,41 +170,14 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
-				<groupId>org.revapi</groupId>
-				<artifactId>revapi-maven-plugin</artifactId>
-				<version>0.12.2</version>
-				<dependencies>
-					<dependency>
-						<groupId>org.revapi</groupId>
-						<artifactId>revapi-java</artifactId>
-						<version>0.22.1</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<!-- Documentation at https://revapi.org/revapi-maven-plugin/_attachments/check-mojo.html -->
-					<alwaysCheckForReleaseVersion>true</alwaysCheckForReleaseVersion>
-					<analysisConfiguration>
-						<!-- Documented at https://revapi.org/revapi-basic-features/semver-ignore.html -->
-						<revapi.semver.ignore>
-							<enabled>true</enabled>
-							<versionIncreaseAllows>
-								<major>breaking</major>
-								<!-- Breaking changes at minor version, allowed while major is 0 -->
-								<minor>breaking</minor>
-								<patch>nonBreaking</patch>
-							</versionIncreaseAllows>
-							<passThroughDifferences>
-								<item>java.class.nonPublicPartOfAPI</item>
-							</passThroughDifferences>
-						</revapi.semver.ignore>
-					</analysisConfiguration>
-				</configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>check</id>
 						<goals>
-							<goal>check</goal>
+							<goal>test-jar</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -223,4 +196,54 @@
 			<url>https://api.bintray.com/maven/marin-nozhchev/marin-nozhchev/zebra4j/;publish=1</url>
 		</repository>
 	</distributionManagement>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.revapi</groupId>
+						<artifactId>revapi-maven-plugin</artifactId>
+						<version>0.12.2</version>
+						<dependencies>
+							<dependency>
+								<groupId>org.revapi</groupId>
+								<artifactId>revapi-java</artifactId>
+								<version>0.22.1</version>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<!-- Documentation at https://revapi.org/revapi-maven-plugin/_attachments/check-mojo.html -->
+							<alwaysCheckForReleaseVersion>true</alwaysCheckForReleaseVersion>
+							<analysisConfiguration>
+								<!-- Documented at https://revapi.org/revapi-basic-features/semver-ignore.html -->
+								<revapi.semver.ignore>
+									<enabled>true</enabled>
+									<versionIncreaseAllows>
+										<major>breaking</major>
+										<!-- Breaking changes at minor version, allowed while major is 
+											0 -->
+										<minor>breaking</minor>
+										<patch>nonBreaking</patch>
+									</versionIncreaseAllows>
+									<passThroughDifferences>
+										<item>java.class.nonPublicPartOfAPI</item>
+									</passThroughDifferences>
+								</revapi.semver.ignore>
+							</analysisConfiguration>
+						</configuration>
+						<executions>
+							<execution>
+								<id>check</id>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
