@@ -1,5 +1,6 @@
 # zebra4j - Zebra puzzle generator and solver
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/441937d7ed1d4d97a59f8e9a48cdbeec)](https://app.codacy.com/gh/murfffi/zebra4j?utm_source=github.com&utm_medium=referral&utm_content=murfffi/zebra4j&utm_campaign=Badge_Grade_Settings)
 [![Build Status](https://travis-ci.org/murfffi/zebra4j.svg?branch=main)](https://travis-ci.org/murfffi/zebra4j)
 [![License](https://img.shields.io/github/license/murfffi/zebra4j)](/LICENSE)
 [![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/murfffi/zebra4j?include_prereleases)](https://github.com/murfffi/zebra4j/releases)
