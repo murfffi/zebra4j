@@ -30,12 +30,14 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections4.SetUtils;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import zebra4j.fact.BothTrue;
 import zebra4j.fact.Different;
 import zebra4j.fact.Fact;
 import zebra4j.fact.NearbyHouse;
 
 @AllArgsConstructor
+@Slf4j
 public abstract class AbstractPuzzleGenerator<P> {
 
 	public static final Set<Fact.Type> DEFAULT_FACT_TYPES = SetUtils.unmodifiableSet(BothTrue.TYPE, Different.TYPE,
@@ -55,9 +57,11 @@ public abstract class AbstractPuzzleGenerator<P> {
 		P puzzle = toPuzzle(facts);
 		int solutionsCnt = countSolutions(puzzle);
 		if (solutionsCnt != 1) {
-			throw new IllegalArgumentException(
-					String.format("The provided set of fact types generated a puzzle %s with %s solutions. "
-							+ "Amend the facts so the solutions are exactly 1.", puzzle, solutionsCnt));
+			String msg = String.format("The provided set of fact types generated a puzzle %s with %s solutions. "
+					+ "Amend the facts so the solutions are exactly 1.", puzzle, solutionsCnt);
+			System.err.println(msg);
+			log.trace("{} using {} facts.", msg, facts.size());
+			throw new IllegalArgumentException(msg);
 		}
 		removeFacts(facts);
 		return toPuzzle(facts);
@@ -95,7 +99,7 @@ public abstract class AbstractPuzzleGenerator<P> {
 		for (int i = 0; i < facts.size(); ++i) {
 			List<Fact> factsCopy = new ArrayList<>(facts);
 			factsCopy.remove(i);
-			P puzzle = toPuzzle(facts);
+			P puzzle = toPuzzle(factsCopy);
 			if (countSolutions(puzzle) == 1) {
 				facts.remove(i);
 				--i;
