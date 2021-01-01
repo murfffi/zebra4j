@@ -89,7 +89,8 @@ public class NearbyHouse implements Fact {
 	};
 
 	private final int distance;
-	private final Attribute left, right;
+	private final Attribute left;
+	private final Attribute right;
 
 	@Override
 	public void postTo(ZebraModel model) {

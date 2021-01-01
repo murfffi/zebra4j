@@ -38,7 +38,8 @@ public interface Fact {
 	 * A type of facts
 	 * 
 	 * <p>
-	 * Used as members of sets so they must implement equals and hashCode correctly.
+	 * Implementations of this interface are used as members of sets so they must
+	 * implement equals and hashCode correctly.
 	 */
 	interface Type {
 
@@ -57,5 +58,9 @@ public interface Fact {
 	 */
 	void postTo(ZebraModel model);
 
+	/**
+	 * @param solution required
+	 * @return if the fact is true about the people in the given solution
+	 */
 	boolean appliesTo(PuzzleSolution solution);
 }

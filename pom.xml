@@ -70,16 +70,6 @@
 		</dependency>
 	</dependencies>
 
-	<repositories>
-		<repository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>bintray-marin-nozhchev</id>
-			<url>https://dl.bintray.com/marin-nozhchev/marin-nozhchev</url>
-		</repository>
-	</repositories>
-
 	<build>
 		<pluginManagement><!-- lock down plugins versions to avoid using Maven 
 				defaults (may be moved to parent pom) -->
@@ -200,6 +190,15 @@
 	<profiles>
 		<profile>
 			<id>release</id>
+			<repositories>
+				<repository>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+					<id>bintray-marin-nozhchev</id>
+					<url>https://dl.bintray.com/marin-nozhchev/marin-nozhchev</url>
+				</repository>
+			</repositories>
 			<build>
 				<plugins>
 					<plugin>

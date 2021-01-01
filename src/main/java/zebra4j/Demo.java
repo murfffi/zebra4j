@@ -37,6 +37,9 @@ public class Demo {
 		customQuestionPuzzle();
 	}
 
+	/**
+	 * Generates and solves a basic {@link Puzzle} with default configuration
+	 */
 	public static void basicPuzzle() {
 		System.out.println("Basic puzzle:");
 		Puzzle puzzle = PuzzleGenerator.randomPuzzle(NUM_PEOPLE);
@@ -44,13 +47,19 @@ public class Demo {
 		System.out.println(new PuzzleSolver(puzzle).solve());
 	}
 
+	/**
+	 * Generates and solves a {@link QuestionPuzzle} with default configuration
+	 */
 	public static void questionPuzzle() {
 		System.out.println("Question puzzle:");
 		QuestionPuzzle puzzle = QuestionPuzzleGenerator.randomPuzzle(NUM_PEOPLE);
 		System.out.println(puzzle);
-		System.out.println(new QuestionPuzzleSolver(puzzle).solve().get(0).description());
+		System.out.println("Answer:" + new QuestionPuzzleSolver(puzzle).solve().get(0).description());
 	}
 
+	/**
+	 * Generates and solves a {@link QuestionPuzzle} with custom configuration
+	 */
 	public static void customQuestionPuzzle() {
 		System.out.println("Custom question puzzle:");
 		// Check out the definition of Attributes.PET to learn the easiest way to define
@@ -62,7 +71,7 @@ public class Demo {
 				sampleSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES);
 		QuestionPuzzle puzzle = generator.generate();
 		System.out.println(puzzle);
-		System.out.println(new QuestionPuzzleSolver(puzzle).solve().get(0).description());
+		System.out.println("Answer:" + new QuestionPuzzleSolver(puzzle).solve().get(0).description());
 	}
 
 }

@@ -12,4 +12,7 @@ Before merging, run:
 ./mvnw install
 ```
 
-TODO
+To deploy, run:
+```bash
+./mvnw -P release deploy
+```

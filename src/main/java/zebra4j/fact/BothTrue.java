@@ -54,7 +54,8 @@ public class BothTrue implements Fact {
 		}
 	};
 
-	private final Attribute left, right;
+	private final Attribute left;
+	private final Attribute right;
 
 	@Override
 	public String toString() {

@@ -46,7 +46,18 @@ public abstract class AllDifferentType implements AttributeType {
 		model.allDifferent(varsForType.toArray(new IntVar[0])).post();
 	}
 
-	public static List<Attribute> toSolutionSet(Attribute[] allValues, int numPeople) {
+	/**
+	 * Returns a list of the first "numPeople" elements of the given array
+	 * 
+	 * <p>
+	 * Used to implement {@link #getAttributes} in {@link AllDifferentType}
+	 * implementations with an fixed set of attributes.
+	 * 
+	 * @param allValues
+	 * @param numPeople
+	 * @return a list of attributes as in {@link #getAttributes}
+	 */
+	protected static List<Attribute> toSolutionSet(Attribute[] allValues, int numPeople) {
 		if (numPeople > allValues.length) {
 			throw new IllegalArgumentException(
 					String.format("%s has less elements - %s - then number of people requested: %s",
