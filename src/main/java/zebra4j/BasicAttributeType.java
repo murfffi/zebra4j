@@ -82,11 +82,6 @@ public class BasicAttributeType extends AllDifferentType {
 	}
 
 	@Override
-	public Attribute fromUniqueInt(int input) {
-		return attributes.get(input);
-	}
-
-	@Override
 	public String questionSentencePart() {
 		return questionSentencePart;
 	}

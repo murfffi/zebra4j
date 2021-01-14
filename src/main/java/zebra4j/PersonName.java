@@ -31,11 +31,6 @@ public enum PersonName implements Attribute {
 	public static AttributeType TYPE = new AllDifferentType() {
 
 		@Override
-		public Attribute fromUniqueInt(int input) {
-			return PersonName.fromUniqueInt(input);
-		}
-
-		@Override
 		public String questionSentencePart() {
 			return "Кой е";
 		}
@@ -55,10 +50,6 @@ public enum PersonName implements Attribute {
 	@Override
 	public int asUniqueInt() {
 		return ordinal();
-	}
-
-	public static PersonName fromUniqueInt(int input) {
-		return PersonName.values()[input];
 	}
 
 	@Override

@@ -23,6 +23,7 @@ package zebra4j;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -84,7 +85,9 @@ public class PuzzleSolver {
 		}
 		for (IntVar var : retrieveVars(choco)) {
 			int person = choco.getIntVal(var);
-			model.toOptionalAttribute(var.getName()).ifPresent(attr -> allAttributes[person].add(attr));
+			Optional<Attribute> attribute = model.toOptionalAttribute(var);
+			log.trace("Var {} was mapped to attribute {}", var.getName(), attribute);
+			attribute.ifPresent(attr -> allAttributes[person].add(attr));
 		}
 		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder(false);
 		Stream.of(allAttributes).forEach(list -> builder.add(new SolutionPerson(list)));
@@ -99,7 +102,7 @@ public class PuzzleSolver {
 	private ZebraModel toModel() {
 		ZebraModel model = new ZebraModel();
 		for (Entry<AttributeType, Set<Attribute>> entry : puzzle.getAttributeSets().entrySet()) {
-			entry.getKey().addToModel(model, entry.getValue());
+			entry.getKey().addToModel(model, entry.getValue(), puzzle.numPeople());
 		}
 		return model;
 	}

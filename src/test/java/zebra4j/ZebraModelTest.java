@@ -2,7 +2,7 @@
  * #%L
  * zebra4j
  * %%
- * Copyright (C) 2020 Marin Nozhchev
+ * Copyright (C) 2020 - 2021 Marin Nozhchev
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,39 +20,17 @@
  */
 package zebra4j;
 
-import java.util.List;
+import org.chocosolver.solver.variables.IntVar;
+import org.junit.Assert;
+import org.junit.Test;
 
-public enum Clothes implements Attribute {
+public class ZebraModelTest {
 
-	ЧЕРВЕНИ, СИНИ, ЗЕЛЕНИ, ЖЪЛТИ;
-
-	public static AttributeType TYPE = new AllDifferentType() {
-
-		@Override
-		public String questionSentencePart() {
-			return "Какъв цвят дрехи носи";
-		}
-
-		@Override
-		public List<Attribute> getAttributes(int numPeople) {
-			return toSolutionSet(Clothes.values(), numPeople);
-		}
-
-	};
-
-	@Override
-	public String description() {
-		return String.format("с %s дрехи", name().toLowerCase());
-	}
-
-	@Override
-	public int asUniqueInt() {
-		return ordinal();
-	}
-
-	@Override
-	public AttributeType type() {
-		return TYPE;
+	@Test
+	public void testToOptionalAttribute() {
+		ZebraModel model = new ZebraModel();
+		IntVar x = model.createUniqueVariable(PersonName.ГЕОРГИ, 4);
+		Assert.assertEquals(PersonName.ГЕОРГИ, model.toOptionalAttribute(x).get());
 	}
 
 }

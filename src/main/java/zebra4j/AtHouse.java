@@ -32,11 +32,6 @@ public class AtHouse implements Attribute {
 	public static AttributeType TYPE = new AllDifferentType() {
 
 		@Override
-		public Attribute fromUniqueInt(int input) {
-			return AtHouse.fromUniqueInt(input);
-		}
-
-		@Override
 		public String questionSentencePart() {
 			return "В коя къща е";
 		}

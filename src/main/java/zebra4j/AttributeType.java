@@ -32,22 +32,14 @@ import java.util.Set;
 public interface AttributeType {
 
 	/**
-	 * The inverse operation of {@link Attribute#asUniqueInt()}
-	 * 
-	 * @param input
-	 * @return an attribute, not null
-	 * @throws IllegalArgumentException if the input does not match an attribute
-	 */
-	Attribute fromUniqueInt(int input);
-
-	/**
 	 * Adds rules related to the subset of attributes of this type used in a puzzle
 	 * to the model describing the puzzle
 	 * 
 	 * @param model
 	 * @param attributesOfType
+	 * @param numPeople
 	 */
-	void addToModel(ZebraModel model, Set<Attribute> attributesOfType);
+	void addToModel(ZebraModel model, Set<Attribute> attributesOfType, int numPeople);
 
 	/**
 	 * @return part of a question sentence in natural language which asks about this

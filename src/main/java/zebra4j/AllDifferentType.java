@@ -34,13 +34,12 @@ import org.chocosolver.solver.variables.IntVar;
 public abstract class AllDifferentType implements AttributeType {
 
 	@Override
-	public void addToModel(ZebraModel zebraModel, Set<Attribute> attributesOfType) {
+	public void addToModel(ZebraModel zebraModel, Set<Attribute> attributesOfType, int numPeople) {
 		Model model = zebraModel.getChocoModel();
 		List<IntVar> varsForType = new ArrayList<>();
 		for (Attribute attr : attributesOfType) {
-			IntVar var = model.intVar(zebraModel.varName(attr), 0, attributesOfType.size() - 1);
+			IntVar var = zebraModel.createUniqueVariable(attr, numPeople);
 			varsForType.add(var);
-			zebraModel.addUniqueVariable(attr, var);
 		}
 		// The person for each attribute of a type is different.
 		model.allDifferent(varsForType.toArray(new IntVar[0])).post();

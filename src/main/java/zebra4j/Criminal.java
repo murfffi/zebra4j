@@ -25,8 +25,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
-import org.chocosolver.solver.Model;
-import org.chocosolver.solver.variables.IntVar;
 
 public enum Criminal implements Attribute {
 
@@ -35,17 +33,10 @@ public enum Criminal implements Attribute {
 	public static AttributeType TYPE = new AttributeType() {
 
 		@Override
-		public Attribute fromUniqueInt(int input) {
-			return input == 1 ? YES : NO;
-		}
-
-		@Override
-		public void addToModel(ZebraModel zebraModel, Set<Attribute> attributesOfType) {
-			Model model = zebraModel.getChocoModel();
+		public void addToModel(ZebraModel zebraModel, Set<Attribute> attributesOfType, int numPeople) {
 			Attribute attr = YES;
 			Validate.isTrue(attributesOfType.contains(attr));
-			IntVar var = model.intVar(zebraModel.varName(attr), 0, attributesOfType.size() - 1);
-			zebraModel.addUniqueVariable(attr, var);
+			zebraModel.createUniqueVariable(attr, numPeople);
 		}
 
 		@Override

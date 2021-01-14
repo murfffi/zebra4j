@@ -20,13 +20,11 @@
  */
 package zebra4j;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.chocosolver.solver.ChocoSettings;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.variables.IntVar;
@@ -35,17 +33,15 @@ import lombok.Getter;
 
 public class ZebraModel {
 
-	private static final Pattern VAR_REGEX = Pattern.compile("person_of_'(\\w+)'_'([0-9]+)'");
-
 	@Getter
 	private final Model chocoModel = new Model(UUID.randomUUID().toString(), new ChocoSettings());
 
-	private final Map<String, AttributeType> typeMap = new HashMap<>();
+	private final BidiMap<Attribute, IntVar> uniqueAttributeVariables = new DualHashBidiMap<Attribute, IntVar>();
 
-	private Map<Attribute, IntVar> uniqueAttributeVariables = new HashMap<>();
-
-	public void addUniqueVariable(Attribute attr, IntVar var) {
+	public IntVar createUniqueVariable(Attribute attr, int numPeople) {
+		IntVar var = chocoModel.intVar(varName(attr), 0, numPeople - 1);
 		uniqueAttributeVariables.put(attr, var);
+		return var;
 	}
 
 	public IntVar getVariableFor(Attribute uniqueAttribute) {
@@ -53,7 +49,6 @@ public class ZebraModel {
 	}
 
 	public String varName(Attribute attr) {
-		typeMap.putIfAbsent(getTypeId(attr), attr.type());
 		return String.format("person_of_'%s'_'%s'", getTypeId(attr), attr.asUniqueInt());
 	}
 
@@ -62,17 +57,7 @@ public class ZebraModel {
 		return type.getClass().getSimpleName() + type.hashCode();
 	}
 
-	public Attribute toAttribute(String name) {
-		return toOptionalAttribute(name).get();
-	}
-
-	public Optional<Attribute> toOptionalAttribute(String name) {
-		Matcher m = VAR_REGEX.matcher(name);
-		if (!m.matches()) {
-			return Optional.empty();
-		}
-		int attributeId = Integer.parseInt(m.group(2));
-		AttributeType attrType = typeMap.get(m.group(1));
-		return Optional.of(attrType.fromUniqueInt(attributeId));
+	public Optional<Attribute> toOptionalAttribute(IntVar var) {
+		return Optional.ofNullable(uniqueAttributeVariables.getKey(var));
 	}
 }
