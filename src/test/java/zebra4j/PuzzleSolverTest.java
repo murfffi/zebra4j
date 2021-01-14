@@ -21,27 +21,44 @@
 package zebra4j;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import zebra4j.fact.BothTrue;
+import zebra4j.fact.Different;
 
 public class PuzzleSolverTest {
+
+	private static final Logger log = LoggerFactory.getLogger(PuzzleSolverTest.class);
 
 	@Test
 	public void testUnique() {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.sampleSolution();
-		Puzzle puzzle = new PuzzleGenerator(startSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
+		Puzzle puzzle = new Puzzle(startSolution.getAttributeSets(),
+				new LinkedHashSet<>(BothTrue.TYPE.generate(startSolution)));
 		List<PuzzleSolution> result = new PuzzleSolver(puzzle).solve();
-		Assert.assertEquals(result.size(), new HashSet<>(result).size());
+		Set<PuzzleSolution> resultSet = new HashSet<>(result);
+		Assert.assertEquals(result.size(), resultSet.size());
+		boolean contains = resultSet.contains(startSolution);
+		log.debug("Hashcode: {}, Result hashcode: {}, Result: {}", startSolution.hashCode(), result.get(0).hashCode(),
+				result);
+		Assert.assertTrue(contains);
 	}
 
 	@Test
 	public void testCriminal() {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
-		Puzzle puzzle = new PuzzleGenerator(startSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
+		Puzzle puzzle = new Puzzle(startSolution.getAttributeSets(),
+				new LinkedHashSet<>(Different.TYPE.generate(startSolution).subList(0, 2)));
 		List<PuzzleSolution> result = new PuzzleSolver(puzzle).solve();
-		Assert.assertEquals(result.size(), new HashSet<>(result).size());
+		Set<PuzzleSolution> resultSet = new HashSet<>(result);
+		Assert.assertEquals(result.size(), resultSet.size());
 	}
 
 }
