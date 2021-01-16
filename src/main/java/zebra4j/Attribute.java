@@ -34,11 +34,6 @@ public interface Attribute {
 	String description();
 
 	/**
-	 * @return an integer that uniquely identifies the attribute within its type
-	 */
-	int asUniqueInt();
-
-	/**
 	 * @return the type of attribute, not null
 	 */
 	AttributeType type();

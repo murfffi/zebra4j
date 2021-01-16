@@ -50,13 +50,8 @@ public class AtHouse implements Attribute {
 		return "в къща " + house;
 	}
 
-	@Override
-	public int asUniqueInt() {
+	public int getPosition() {
 		return house;
-	}
-
-	public static AtHouse fromUniqueInt(int input) {
-		return new AtHouse(input);
 	}
 
 	@Override

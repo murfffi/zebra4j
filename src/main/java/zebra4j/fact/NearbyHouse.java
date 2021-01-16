@@ -57,18 +57,18 @@ public class NearbyHouse implements Fact {
 			List<SolutionPerson> people = new ArrayList<>(solution.getPeople());
 			for (int i = 0; i < people.size(); ++i) {
 				SolutionPerson leftPerson = people.get(i);
-				Attribute leftHouse = leftPerson.findAttribute(AtHouse.TYPE);
+				AtHouse leftHouse = (AtHouse) leftPerson.findAttribute(AtHouse.TYPE);
 				if (leftHouse == null) {
 					continue;
 				}
-				int leftPos = leftHouse.asUniqueInt();
+				int leftPos = leftHouse.getPosition();
 				for (int j = i + 1; j < people.size(); ++j) {
 					SolutionPerson rightPerson = people.get(j);
-					Attribute rightHouse = rightPerson.findAttribute(AtHouse.TYPE);
+					AtHouse rightHouse = (AtHouse) rightPerson.findAttribute(AtHouse.TYPE);
 					if (rightHouse == null) {
 						continue;
 					}
-					int rightPos = rightHouse.asUniqueInt();
+					int rightPos = rightHouse.getPosition();
 
 					int distance = Math.abs(leftPos - rightPos);
 
@@ -143,7 +143,7 @@ public class NearbyHouse implements Fact {
 
 	private static Optional<Integer> getHousePosition(PuzzleSolution solution, Attribute attribute) {
 		return solution.findPerson(attribute).flatMap(person -> Optional.ofNullable(person.findAttribute(AtHouse.TYPE)))
-				.map(house -> house.asUniqueInt());
+				.map(house -> ((AtHouse) house).getPosition());
 	}
 
 }

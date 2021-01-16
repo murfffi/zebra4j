@@ -66,11 +66,6 @@ public class BasicAttributeType extends AllDifferentType {
 		}
 
 		@Override
-		public int asUniqueInt() {
-			return id;
-		}
-
-		@Override
 		public AttributeType type() {
 			return type;
 		}

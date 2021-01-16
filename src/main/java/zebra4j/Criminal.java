@@ -60,11 +60,6 @@ public enum Criminal implements Attribute {
 	}
 
 	@Override
-	public int asUniqueInt() {
-		return ordinal();
-	}
-
-	@Override
 	public AttributeType type() {
 		return TYPE;
 	}
