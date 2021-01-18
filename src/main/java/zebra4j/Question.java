@@ -23,6 +23,7 @@ package zebra4j;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
@@ -90,7 +91,7 @@ public class Question {
 	private final Attribute towards;
 	private final AttributeType about;
 
-	public String toSentence() {
+	public String toSentence(Locale locale) {
 		return about.questionSentencePart() + " " + towards.description() + "?";
 	}
 

@@ -50,6 +50,11 @@ public class AtHouse implements Attribute {
 		return "в къща " + house;
 	}
 
+	/**
+	 * The number of the position of the house from left to right
+	 * 
+	 * @return number, starting at 1
+	 */
 	public int getPosition() {
 		return house;
 	}

@@ -20,8 +20,12 @@
  */
 package zebra4j;
 
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -45,7 +49,18 @@ public class Puzzle {
 	private final Map<AttributeType, Set<Attribute>> attributeSets;
 	private final Set<Fact> facts;
 
+	/**
+	 * @return the number of people in the puzzle
+	 */
 	public int numPeople() {
 		return attributeSets.values().iterator().next().size();
+	}
+
+	public List<String> describeConstraints(Locale locale) {
+		Stream<String> setDesc = attributeSets.entrySet().stream()
+				.map(e -> e.getKey().describeSet(e.getValue(), locale));
+		// TODO Use localized Fact.description(locale) instead of toString
+		Stream<String> factDesc = facts.stream().map(Fact::toString);
+		return Stream.concat(setDesc, factDesc).collect(Collectors.toList());
 	}
 }

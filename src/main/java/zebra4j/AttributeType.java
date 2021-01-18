@@ -21,6 +21,7 @@
 package zebra4j;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -61,4 +62,17 @@ public interface AttributeType {
 	 *                                  possible attributes of this type
 	 */
 	List<Attribute> getAttributes(int count);
+
+	/**
+	 * Describe the given set of attributes in the form of sentence, in the given
+	 * locale, describing a rule for solving a puzzle.
+	 * 
+	 * <p>
+	 * The sentence is in the form: People's names are Mary, Jane and Steve.
+	 * 
+	 * @param subset the set of attributes of this type, used in a puzzle
+	 * @param locale
+	 * @return a sentence string, not null.
+	 */
+	String describeSet(Set<Attribute> subset, Locale locale);
 }

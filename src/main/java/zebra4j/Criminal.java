@@ -22,6 +22,7 @@ package zebra4j;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
@@ -50,6 +51,13 @@ public enum Criminal implements Attribute {
 			Arrays.fill(set, Criminal.NO);
 			set[0] = Criminal.YES;
 			return Arrays.asList(set);
+		}
+
+		@Override
+		public String describeSet(Set<Attribute> set, Locale locale) {
+			// return ResourceBundle.getBundle("zebra4j.bundle.Criminal",
+			// locale).getString("describeSet");
+			return Localization.translate(Criminal.class, "describeSet", locale);
 		}
 
 	};

@@ -76,7 +76,7 @@ public class PuzzleSolutionBuilder {
 	}
 
 	public PuzzleSolutionBuilder addWithHouse(SolutionPerson person) {
-		if (person.attributeTypes().contains(AtHouse.TYPE)) {
+		if (person.findAttribute(AtHouse.TYPE) != null) {
 			throw new IllegalArgumentException("AtHouse is not allowed to be pre-set in this case.");
 		}
 		SolutionPerson personWithHouse = person.withAttribute(new AtHouse(people.size() + 1));
