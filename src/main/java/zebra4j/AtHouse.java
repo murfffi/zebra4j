@@ -21,6 +21,7 @@
 package zebra4j;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -32,8 +33,8 @@ public class AtHouse implements Attribute {
 	public static AttributeType TYPE = new AllDifferentType() {
 
 		@Override
-		public String questionSentencePart() {
-			return "В коя къща е";
+		public String questionSentencePart(Locale locale) {
+			return Localization.translate(AtHouse.class, "questionSentencePart", locale);
 		}
 
 		@Override

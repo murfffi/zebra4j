@@ -21,6 +21,7 @@
 package zebra4j;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.text.CaseUtils;
 
@@ -31,8 +32,8 @@ public enum PersonName implements Attribute {
 	public static AttributeType TYPE = new AllDifferentType() {
 
 		@Override
-		public String questionSentencePart() {
-			return "Кой е";
+		public String questionSentencePart(Locale locale) {
+			return Localization.translate(PersonName.class, "questionSentencePart", locale);
 		}
 
 		@Override

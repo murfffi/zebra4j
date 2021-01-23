@@ -22,6 +22,7 @@ package zebra4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import lombok.EqualsAndHashCode;
@@ -77,7 +78,8 @@ public class BasicAttributeType extends AllDifferentType {
 	}
 
 	@Override
-	public String questionSentencePart() {
+	public String questionSentencePart(Locale locale) {
+		// TODO Support localization
 		return questionSentencePart;
 	}
 

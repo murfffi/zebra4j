@@ -2,7 +2,7 @@
  * #%L
  * zebra4j
  * %%
- * Copyright (C) 2020 Marin Nozhchev
+ * Copyright (C) 2020 - 2021 Marin Nozhchev
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,35 +20,22 @@
  */
 package zebra4j;
 
-import java.util.List;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Locale;
 
-public enum Clothes implements Attribute {
+import org.junit.Test;
 
-	ЧЕРВЕНИ, СИНИ, ЗЕЛЕНИ, ЖЪЛТИ;
+public class AtHouseTest {
 
-	public static AttributeType TYPE = new AllDifferentType() {
-
-		@Override
-		public String questionSentencePart(Locale locale) {
-			return Localization.translate(Clothes.class, "questionSentencePart", locale);
-		}
-
-		@Override
-		public List<Attribute> getAttributes(int numPeople) {
-			return toSolutionSet(Clothes.values(), numPeople);
-		}
-
-	};
-
-	@Override
-	public String description() {
-		return String.format("с %s дрехи", name().toLowerCase());
-	}
-
-	@Override
-	public AttributeType type() {
-		return TYPE;
+	@Test
+	public void testQuestionSentencePart() {
+		String enResult = AtHouse.TYPE.questionSentencePart(Locale.ENGLISH);
+		String bgResult = AtHouse.TYPE.questionSentencePart(new Locale("bg", "BG"));
+		assertNotNull(enResult);
+		assertNotNull(bgResult);
+		assertNotEquals(enResult, bgResult);
 	}
 
 }

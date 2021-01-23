@@ -92,7 +92,7 @@ public class Question {
 	private final AttributeType about;
 
 	public String toSentence(Locale locale) {
-		return about.questionSentencePart() + " " + towards.description() + "?";
+		return about.questionSentencePart(locale) + " " + towards.description() + "?";
 	}
 
 	/**

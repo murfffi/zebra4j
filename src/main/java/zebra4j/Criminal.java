@@ -41,8 +41,8 @@ public enum Criminal implements Attribute {
 		}
 
 		@Override
-		public String questionSentencePart() {
-			return "Престъпник ли е";
+		public String questionSentencePart(Locale locale) {
+			return Localization.translate(Criminal.class, "questionSentencePart", locale);
 		}
 
 		@Override

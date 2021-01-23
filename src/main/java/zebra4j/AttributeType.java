@@ -43,12 +43,13 @@ public interface AttributeType {
 	void addToModel(ZebraModel model, Set<Attribute> attributesOfType, int numPeople);
 
 	/**
+	 * @param locale
 	 * @return part of a question sentence in natural language which asks about this
 	 *         attribute type
 	 * 
 	 * @see Question
 	 */
-	String questionSentencePart();
+	String questionSentencePart(Locale locale);
 
 	/**
 	 * Return some attributes of this type.
