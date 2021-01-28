@@ -22,6 +22,7 @@ package zebra4j.fact;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.chocosolver.solver.constraints.Constraint;
 import org.chocosolver.solver.variables.IntVar;
@@ -29,7 +30,6 @@ import org.chocosolver.solver.variables.IntVar;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import zebra4j.Attribute;
-import zebra4j.PersonName;
 import zebra4j.PuzzleSolution;
 import zebra4j.SolutionPerson;
 import zebra4j.ZebraModel;
@@ -58,16 +58,12 @@ public class BothTrue implements Fact {
 	private final Attribute right;
 
 	@Override
-	public String toString() {
-		if (left instanceof PersonName) {
-			return String.format("%s e %s", left.description(), right.description());
-		}
-		return String.format("Този който е %s, e и %s.", left.description(), right.description());
+	public String describe(Locale locale) {
+		return FactUtil.describe(getClass(), locale, left, right);
 	}
 
 	@Override
 	public void postTo(ZebraModel model) {
-		// The person of literal1 is the same as the person of literal2
 		IntVar leftVar = model.getVariableFor(left);
 		IntVar rightVar = model.getVariableFor(right);
 

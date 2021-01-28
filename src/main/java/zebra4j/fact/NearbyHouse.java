@@ -22,6 +22,7 @@ package zebra4j.fact;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.chocosolver.solver.constraints.Constraint;
@@ -132,7 +133,7 @@ public class NearbyHouse implements Fact {
 	}
 
 	@Override
-	public String toString() {
+	public String describe(Locale locale) {
 		String dist = distance == 1 ? "в съседна къща на" : String.format("през %s къща от", distance - 1);
 		if (left instanceof PersonName) {
 			return String.format("%s живее %s %s", left.description(), dist, right.description());

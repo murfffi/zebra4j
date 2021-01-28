@@ -21,12 +21,13 @@
 package zebra4j.fact;
 
 import java.util.List;
+import java.util.Locale;
 
 import zebra4j.PuzzleSolution;
 import zebra4j.ZebraModel;
 
 /**
- * A fact given as clus to the players
+ * A fact given as clues to the players
  *
  * <p>
  * Facts are used as members of sets so they must implement equals and hashCode
@@ -63,4 +64,7 @@ public interface Fact {
 	 * @return if the fact is true about the people in the given solution
 	 */
 	boolean appliesTo(PuzzleSolution solution);
+
+	String describe(Locale locale);
+
 }

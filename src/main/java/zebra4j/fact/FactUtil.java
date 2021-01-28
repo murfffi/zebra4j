@@ -2,7 +2,7 @@
  * #%L
  * zebra4j
  * %%
- * Copyright (C) 2020 Marin Nozhchev
+ * Copyright (C) 2020 - 2021 Marin Nozhchev
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,27 +18,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-package zebra4j;
+package zebra4j.fact;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.Locale;
 
-import lombok.Value;
+import zebra4j.Attribute;
+import zebra4j.Localization;
+import zebra4j.PersonName;
 
-@Value
-public class PuzzleSolution {
+class FactUtil {
 
-	private final Set<SolutionPerson> people;
-	private final Map<AttributeType, Set<Attribute>> attributeSets;
-
-	/**
-	 * Find a person based on an attribute
-	 * 
-	 * @param attr
-	 * @return the person, if any, that has this uniquely identifying attribute
-	 */
-	public Optional<SolutionPerson> findPerson(Attribute attr) {
-		return people.stream().filter(person -> person.asList().contains(attr)).findAny();
+	static String describe(Class<?> cls, Locale locale, Attribute left, Attribute right) {
+		String patternId = "genericPattern";
+		if (left instanceof PersonName) {
+			patternId = "namePattern";
+		}
+		String pattern = Localization.translate(cls, patternId, locale);
+		return String.format(pattern, left.description(), right.description());
 	}
+
 }

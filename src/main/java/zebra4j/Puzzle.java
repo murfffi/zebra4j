@@ -59,8 +59,7 @@ public class Puzzle {
 	public List<String> describeConstraints(Locale locale) {
 		Stream<String> setDesc = attributeSets.entrySet().stream()
 				.map(e -> e.getKey().describeSet(e.getValue(), locale));
-		// TODO Use localized Fact.description(locale) instead of toString
-		Stream<String> factDesc = facts.stream().map(Fact::toString);
+		Stream<String> factDesc = facts.stream().map(fact -> fact.describe(locale));
 		return Stream.concat(setDesc, factDesc).collect(Collectors.toList());
 	}
 }

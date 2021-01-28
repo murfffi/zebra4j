@@ -59,7 +59,6 @@ public abstract class AbstractPuzzleGenerator<P> {
 		if (solutionsCnt != 1) {
 			String msg = String.format("The provided set of fact types generated a puzzle %s with %s solutions. "
 					+ "Amend the facts so the solutions are exactly 1.", puzzle, solutionsCnt);
-			System.err.println(msg);
 			log.trace("{} using {} facts.", msg, facts.size());
 			throw new IllegalArgumentException(msg);
 		}

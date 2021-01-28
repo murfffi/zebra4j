@@ -22,6 +22,7 @@ package zebra4j.fact;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.chocosolver.solver.constraints.Constraint;
 import org.chocosolver.solver.variables.IntVar;
@@ -30,7 +31,6 @@ import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import zebra4j.Attribute;
 import zebra4j.Criminal;
-import zebra4j.PersonName;
 import zebra4j.PuzzleSolution;
 import zebra4j.SolutionPerson;
 import zebra4j.ZebraModel;
@@ -65,11 +65,8 @@ public class Different implements Fact {
 	private final Attribute right;
 
 	@Override
-	public String toString() {
-		if (left instanceof PersonName) {
-			return String.format("%s не e %s", left.description(), right.description());
-		}
-		return String.format("Този който е %s, не е %s.", left.description(), right.description());
+	public String describe(Locale locale) {
+		return FactUtil.describe(getClass(), locale, left, right);
 	}
 
 	@Override

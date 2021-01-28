@@ -53,9 +53,10 @@ public class QuestionPuzzleSolver {
 	 * This method is available in Java 9+
 	 */
 	static <T> Stream<T> toStream(Optional<T> opt) {
-		if (opt.isPresent())
+		if (opt.isPresent()) {
 			return Stream.of(opt.get());
-		else
+		} else {
 			return Stream.empty();
+		}
 	}
 }

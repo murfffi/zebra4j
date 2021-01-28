@@ -57,7 +57,7 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 		return toBasicPuzzle(solution, facts);
 	}
 
-	public static Puzzle toBasicPuzzle(PuzzleSolution solution, List<Fact> facts) {
+	static Puzzle toBasicPuzzle(PuzzleSolution solution, List<Fact> facts) {
 		return new Puzzle(solution.getAttributeSets(), new LinkedHashSet<>(facts));
 	}
 

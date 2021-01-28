@@ -91,7 +91,13 @@ public class Question {
 	private final Attribute towards;
 	private final AttributeType about;
 
-	public String toSentence(Locale locale) {
+	/**
+	 * Converts the question to a natural language sentence
+	 * 
+	 * @param locale
+	 * @return
+	 */
+	public String describe(Locale locale) {
 		return about.questionSentencePart(locale) + " " + towards.description() + "?";
 	}
 
