@@ -7,13 +7,24 @@
 
 ## Overview
 
-zebra4j is a pure Java generator and solver for
-[Zebra puzzles](https://en.wikipedia.org/wiki/Zebra_Puzzle), also knows as
-"logic grid puzzles". Such libraries are used as backend of interactive games
-aimed at children of all ages.
+zebra4j is a generator and solver for [Zebra
+puzzles](https://en.wikipedia.org/wiki/Zebra_Puzzle), also knows as "logic grid
+puzzles". Such libraries are used as backend of interactive games aimed at
+children of all ages.
 
-The library requires Java 8+. `/zebra4j/src/main/java/zebra4j/Demo.java` and
-unit tests demonstrate how to use it.
+While there are many available solutions there, this library has some unique
+features:
+- It can describe generated puzzles in multiple languages, not just produce data
+  structures. See "Localizing" section for details.
+- It supports both puzzles that end with question like "Who owns the zebra?" and
+  puzzles that require identifying all attributes of all people.
+- zebra4j is available as either a JAR for Java 8 applications, a pure
+  JavaScript library, or a native library, compiled ahead-of-time with GraalVM
+  (coming soon). The native library can be embedded in an app written in another
+  language like Python, Go or Rust.
+
+`/zebra4j/src/main/java/zebra4j/Demo.java` and unit tests demonstrate how to use
+the library in Java.
 
 ## Download a release
 
@@ -71,6 +82,17 @@ with the same names.
 demonstrates how to select specific types of Attributes and Facts when
 generating puzzles.
 
+## Localizing
+
+zebra4j can describe generated puzzles in natural language. Multiple languages
+are supported. The built-in attributes and facts can be localized using standard
+[Java ResourceBundle](https://docs.oracle.com/javase/tutorial/i18n/resbundle/index.html)
+localization. The library comes with English and Bulgarian languages support.
+Translations are welcome!
+
+You can also extend and replace the built-in Attributes and Facts, as described
+above, to add support for languages that require different sentence structure.
+
 ## Install library from source
 
 Requirements:
@@ -84,7 +106,7 @@ To install, check out the code and then run:
 
 ## Submit bugs and feature requests
 
-Please use [Github issues](https://github.com/murfffi/zebra4j/issues).
+Please use [GitHub issues](https://github.com/murfffi/zebra4j/issues).
 
 ## Logging
 

@@ -177,7 +177,6 @@
 	<scm>
 		<url>https://github.com/murfffi/zebra4j</url>
 		<connection>scm:git:ssh://git@github.com/murfffi/zebra4j.git</connection>
-		<tag>v0.4</tag>
 	</scm>
 	<distributionManagement>
 		<repository>
