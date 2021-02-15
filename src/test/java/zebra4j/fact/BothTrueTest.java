@@ -27,6 +27,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import zebra4j.LocalizationTestUtils;
+import zebra4j.PersonName;
 import zebra4j.Puzzle;
 import zebra4j.PuzzleGeneratorTest;
 import zebra4j.PuzzleSolution;
@@ -42,6 +44,13 @@ public class BothTrueTest {
 	@Test
 	public void testPostTo() {
 		testPostTo(BothTrue.TYPE);
+	}
+
+	@Test
+	public void testDescribe() {
+		Fact f = new BothTrue(PersonName.ГЕОРГИ, PersonName.ЕЛЕНА);
+		// TODO does not work for English yet
+		LocalizationTestUtils.testDescribe(f::describe, LocalizationTestUtils.BULGARIAN);
 	}
 
 	public static void testGenerate(Fact.Type type) {
