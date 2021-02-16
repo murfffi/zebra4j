@@ -41,6 +41,8 @@ public class LocalizationTestUtils {
 
 	public static void testDescribe(Function<Locale, String> describe) {
 		SUPPORTED_LOCALES.stream().forEach(l -> testDescribe(describe, l));
+		long uniqueTranslations = SUPPORTED_LOCALES.stream().map(describe).distinct().count();
+		assertEquals(SUPPORTED_LOCALES.size(), uniqueTranslations);
 	}
 
 	public static void testDescribe(Function<Locale, String> describe, Locale locale) {

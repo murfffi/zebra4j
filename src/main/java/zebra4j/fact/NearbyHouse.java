@@ -32,6 +32,7 @@ import lombok.Value;
 import zebra4j.AllDifferentType;
 import zebra4j.AtHouse;
 import zebra4j.Attribute;
+import zebra4j.Localization;
 import zebra4j.PersonName;
 import zebra4j.PuzzleSolution;
 import zebra4j.SolutionPerson;
@@ -134,12 +135,18 @@ public class NearbyHouse implements Fact {
 
 	@Override
 	public String describe(Locale locale) {
-		String dist = distance == 1 ? "в съседна къща на" : String.format("през %s къща от", distance - 1);
+		Class<?> cls = getClass();
+		String distPattern = Localization.translate(cls, "distPattern", locale);
+		String dist = distance == 1 ? Localization.translate(cls, "nextDoor", locale)
+				: String.format(distPattern, distance - 1);
+
+		String patternId = "genericPattern";
 		if (left instanceof PersonName) {
-			return String.format("%s живее %s %s", left.description(locale), dist, right.description(locale));
+			patternId = "namePattern";
 		}
-		return String.format("Този който е %s живее %s този който е %s.", left.description(locale), dist,
-				right.description(locale));
+
+		String pattern = Localization.translate(cls, patternId, locale);
+		return String.format(pattern, left.description(locale), dist, right.description(locale));
 	}
 
 	private static Optional<Integer> getHousePosition(PuzzleSolution solution, Attribute attribute) {

@@ -22,6 +22,9 @@ package zebra4j.fact;
 
 import org.junit.Test;
 
+import zebra4j.LocalizationTestUtils;
+import zebra4j.PersonName;
+
 public class NearbyHouseTest {
 
 	@Test
@@ -32,6 +35,13 @@ public class NearbyHouseTest {
 	@Test
 	public void testPostTo() {
 		BothTrueTest.testPostTo(NearbyHouse.TYPE);
+	}
+
+	@Test
+	public void testDescribe() {
+		Fact f = new NearbyHouse(1, PersonName.ГЕОРГИ, PersonName.ЕЛЕНА);
+		// TODO does not work for English yet
+		LocalizationTestUtils.testDescribe(f::describe, LocalizationTestUtils.BULGARIAN);
 	}
 
 }
