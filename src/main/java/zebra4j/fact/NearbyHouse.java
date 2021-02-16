@@ -136,10 +136,10 @@ public class NearbyHouse implements Fact {
 	public String describe(Locale locale) {
 		String dist = distance == 1 ? "в съседна къща на" : String.format("през %s къща от", distance - 1);
 		if (left instanceof PersonName) {
-			return String.format("%s живее %s %s", left.description(), dist, right.description());
+			return String.format("%s живее %s %s", left.description(locale), dist, right.description(locale));
 		}
-		return String.format("Този който е %s живее %s този който е %s.", left.description(), dist,
-				right.description());
+		return String.format("Този който е %s живее %s този който е %s.", left.description(locale), dist,
+				right.description(locale));
 	}
 
 	private static Optional<Integer> getHousePosition(PuzzleSolution solution, Attribute attribute) {

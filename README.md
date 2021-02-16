@@ -18,7 +18,7 @@ features:
   structures. See "Localizing" section for details.
 - It supports both puzzles that end with question like "Who owns the zebra?" and
   puzzles that require identifying all attributes of all people.
-- zebra4j is available as either a JAR for Java 8 applications, a pure
+- zebra4j is available as either a JAR for Java 8+ applications, a pure
   JavaScript library, or a native library, compiled ahead-of-time with GraalVM
   (coming soon). The native library can be embedded in an app written in another
   language like Python, Go or Rust.

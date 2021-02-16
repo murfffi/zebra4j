@@ -47,7 +47,7 @@ public class AtHouse implements Attribute {
 	private final int house;
 
 	@Override
-	public String description() {
+	public String description(Locale locale) {
 		return "в къща " + house;
 	}
 

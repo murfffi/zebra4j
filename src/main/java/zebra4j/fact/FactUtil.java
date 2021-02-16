@@ -34,7 +34,7 @@ class FactUtil {
 			patternId = "namePattern";
 		}
 		String pattern = Localization.translate(cls, patternId, locale);
-		return String.format(pattern, left.description(), right.description());
+		return String.format(pattern, left.description(locale), right.description(locale));
 	}
 
 }

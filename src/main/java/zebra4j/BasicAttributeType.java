@@ -62,7 +62,7 @@ public class BasicAttributeType extends AllDifferentType {
 		private final String description;
 
 		@Override
-		public String description() {
+		public String description(Locale locale) {
 			return description;
 		}
 

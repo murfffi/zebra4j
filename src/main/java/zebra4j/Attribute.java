@@ -20,6 +20,8 @@
  */
 package zebra4j;
 
+import java.util.Locale;
+
 /**
  * A known attribute for a person like a specific "name", "pet" or if the person
  * is criminal
@@ -31,7 +33,7 @@ public interface Attribute {
 	/**
 	 * As in the sentence "Ivan is {description}"
 	 */
-	String description();
+	String description(Locale locale);
 
 	/**
 	 * @return the type of attribute, not null

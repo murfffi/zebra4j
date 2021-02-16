@@ -63,7 +63,7 @@ public enum Criminal implements Attribute {
 	};
 
 	@Override
-	public String description() {
+	public String description(Locale locale) {
 		return this == NO ? "невинен" : "престъпник";
 	}
 

@@ -42,7 +42,7 @@ public enum Clothes implements Attribute {
 	};
 
 	@Override
-	public String description() {
+	public String description(Locale locale) {
 		return String.format("с %s дрехи", name().toLowerCase());
 	}
 

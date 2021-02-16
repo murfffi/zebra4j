@@ -44,7 +44,7 @@ public enum PersonName implements Attribute {
 	};
 
 	@Override
-	public String description() {
+	public String description(Locale locale) {
 		return CaseUtils.toCamelCase(name(), true);
 	}
 
