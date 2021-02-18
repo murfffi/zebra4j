@@ -21,13 +21,24 @@
 package zebra4j;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+
+import org.apache.commons.text.CaseUtils;
 
 public class Localization {
 
 	public static String translate(Class<?> cls, String key, Locale locale) {
 		String bundleName = cls.getName().replace("zebra4j.", "zebra4j.bundle.");
 		return ResourceBundle.getBundle(bundleName, locale).getString(key);
+	}
+
+	public static String translateEnum(Enum<?> value, Locale locale) {
+		try {
+			return translate(value.getClass(), value.name(), locale);
+		} catch (MissingResourceException e) {
+			return CaseUtils.toCamelCase(value.name(), true);
+		}
 	}
 
 }

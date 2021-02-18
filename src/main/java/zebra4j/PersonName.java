@@ -23,11 +23,9 @@ package zebra4j;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.text.CaseUtils;
-
 public enum PersonName implements Attribute {
 
-	ИВАН, ЕЛЕНА, ПЕТЪР, ТЕОДОРА, ГЕОРГИ;
+	IVAN, ELENA, PETER, THEODORA, GEORGE;
 
 	public static AttributeType TYPE = new AllDifferentType() {
 
@@ -45,7 +43,7 @@ public enum PersonName implements Attribute {
 
 	@Override
 	public String description(Locale locale) {
-		return CaseUtils.toCamelCase(name(), true);
+		return Localization.translateEnum(this, locale);
 	}
 
 	@Override

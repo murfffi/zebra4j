@@ -39,9 +39,8 @@ public class NearbyHouseTest {
 
 	@Test
 	public void testDescribe() {
-		Fact f = new NearbyHouse(1, PersonName.ГЕОРГИ, PersonName.ЕЛЕНА);
-		// TODO does not work for English yet
-		LocalizationTestUtils.testDescribe(f::describe, LocalizationTestUtils.BULGARIAN);
+		Fact f = new NearbyHouse(1, PersonName.GEORGE, PersonName.ELENA);
+		LocalizationTestUtils.testDescribe(f::describe);
 	}
 
 }

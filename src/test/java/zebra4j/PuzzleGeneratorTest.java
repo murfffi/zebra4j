@@ -54,17 +54,17 @@ public class PuzzleGeneratorTest {
 
 	public static PuzzleSolution sampleSolution() {
 		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder();
-		builder.addWithHouse(PersonName.ПЕТЪР, Clothes.СИНИ);
-		builder.addWithHouse(PersonName.ГЕОРГИ, Clothes.ЖЪЛТИ);
-		builder.addWithHouse(PersonName.ИВАН, Clothes.ЗЕЛЕНИ);
+		builder.addWithHouse(PersonName.PETER, Clothes.СИНИ);
+		builder.addWithHouse(PersonName.GEORGE, Clothes.ЖЪЛТИ);
+		builder.addWithHouse(PersonName.IVAN, Clothes.ЗЕЛЕНИ);
 		PuzzleSolution solution = builder.build();
 		return solution;
 	}
 
 	public static PuzzleSolution simpleSolutionWithCriminal() {
 		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder();
-		builder.addWithHouse(PersonName.ПЕТЪР, Criminal.NO);
-		builder.addWithHouse(PersonName.ГЕОРГИ, Criminal.YES);
+		builder.addWithHouse(PersonName.PETER, Criminal.NO);
+		builder.addWithHouse(PersonName.GEORGE, Criminal.YES);
 		PuzzleSolution startSolution = builder.build();
 		return startSolution;
 	}

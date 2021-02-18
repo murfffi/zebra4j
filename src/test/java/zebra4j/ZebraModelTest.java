@@ -29,8 +29,8 @@ public class ZebraModelTest {
 	@Test
 	public void testToOptionalAttribute() {
 		ZebraModel model = new ZebraModel();
-		IntVar x = model.createUniqueVariable(PersonName.ГЕОРГИ, 4);
-		Assert.assertEquals(PersonName.ГЕОРГИ, model.toOptionalAttribute(x).get());
+		IntVar x = model.createUniqueVariable(PersonName.GEORGE, 4);
+		Assert.assertEquals(PersonName.GEORGE, model.toOptionalAttribute(x).get());
 	}
 
 }

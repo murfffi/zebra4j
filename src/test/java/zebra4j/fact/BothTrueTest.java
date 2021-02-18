@@ -48,9 +48,8 @@ public class BothTrueTest {
 
 	@Test
 	public void testDescribe() {
-		Fact f = new BothTrue(PersonName.ГЕОРГИ, PersonName.ЕЛЕНА);
-		// TODO does not work for English yet
-		LocalizationTestUtils.testDescribe(f::describe, LocalizationTestUtils.BULGARIAN);
+		Fact f = new BothTrue(PersonName.GEORGE, PersonName.ELENA);
+		LocalizationTestUtils.testDescribe(f::describe);
 	}
 
 	public static void testGenerate(Fact.Type type) {

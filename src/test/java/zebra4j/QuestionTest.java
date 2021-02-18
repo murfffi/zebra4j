@@ -49,7 +49,7 @@ public class QuestionTest {
 	public void testAnswer() {
 		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
 		Question question = Question.NAME_OF_CRIMINAL;
-		assertEquals(PersonName.ГЕОРГИ, question.answer(solution).get());
+		assertEquals(PersonName.GEORGE, question.answer(solution).get());
 	}
 
 	@Test
