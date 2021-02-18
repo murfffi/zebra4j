@@ -25,7 +25,7 @@ import java.util.Locale;
 
 public enum Clothes implements Attribute {
 
-	ЧЕРВЕНИ, СИНИ, ЗЕЛЕНИ, ЖЪЛТИ;
+	RED, BLUE, GREEN, YELLOW;
 
 	public static AttributeType TYPE = new AllDifferentType() {
 
@@ -43,7 +43,9 @@ public enum Clothes implements Attribute {
 
 	@Override
 	public String description(Locale locale) {
-		return String.format("с %s дрехи", name().toLowerCase());
+		String name = Localization.translateEnum(this, locale).toLowerCase(locale);
+		String pattern = Localization.translate(getClass(), "pattern", locale);
+		return String.format(pattern, name);
 	}
 
 	@Override

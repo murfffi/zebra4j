@@ -55,8 +55,6 @@ public enum Criminal implements Attribute {
 
 		@Override
 		public String describeSet(Set<Attribute> set, Locale locale) {
-			// return ResourceBundle.getBundle("zebra4j.bundle.Criminal",
-			// locale).getString("describeSet");
 			return Localization.translate(Criminal.class, "describeSet", locale);
 		}
 

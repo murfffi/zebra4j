@@ -54,9 +54,9 @@ public class PuzzleGeneratorTest {
 
 	public static PuzzleSolution sampleSolution() {
 		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder();
-		builder.addWithHouse(PersonName.PETER, Clothes.СИНИ);
-		builder.addWithHouse(PersonName.GEORGE, Clothes.ЖЪЛТИ);
-		builder.addWithHouse(PersonName.IVAN, Clothes.ЗЕЛЕНИ);
+		builder.addWithHouse(PersonName.PETER, Clothes.BLUE);
+		builder.addWithHouse(PersonName.GEORGE, Clothes.YELLOW);
+		builder.addWithHouse(PersonName.IVAN, Clothes.GREEN);
 		PuzzleSolution solution = builder.build();
 		return solution;
 	}
