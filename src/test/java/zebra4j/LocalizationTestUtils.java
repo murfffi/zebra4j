@@ -31,11 +31,9 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.function.Function;
 
-import org.apache.commons.lang3.LocaleUtils;
-
 public class LocalizationTestUtils {
 
-	public static final Locale BULGARIAN = LocaleUtils.toLocale("bg");
+	public static final Locale BULGARIAN = new Locale("bg");
 
 	public static final Collection<Locale> SUPPORTED_LOCALES = Arrays.asList(Locale.ENGLISH, BULGARIAN);
 
