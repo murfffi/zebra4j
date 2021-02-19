@@ -34,11 +34,11 @@ public interface Attributes {
 	 * {@link BasicAttributeType}
 	 */
 	public static final AttributeType PET = new BasicAttributeType(SetUtils.unmodifiableSet(//
-			"с любимец зебра", //
-			"с любимец котка", //
-			"с любимец куче", //
-			"с любимец хамстер"), //
-			"Какъв домашен любимец има");
+			"with a zebra", //
+			"with a cat", //
+			"with a dog", //
+			"with a hamster"), //
+			"What pet are %s with?");
 
 	/**
 	 * Clothes attribute. Serves as an example how to define attributes as an enum.
@@ -57,6 +57,5 @@ public interface Attributes {
 	/**
 	 * The set of attributes used by the demos
 	 */
-	public static final Set<AttributeType> DEFAULT_TYPES = SetUtils.unmodifiableSet(NAME, AT_HOUSE, CLOTHES, CRIMINAL,
-			PET);
+	public static final Set<AttributeType> DEFAULT_TYPES = SetUtils.unmodifiableSet(NAME, AT_HOUSE, CLOTHES, CRIMINAL);
 }

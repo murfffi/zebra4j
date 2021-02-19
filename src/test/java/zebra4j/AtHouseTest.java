@@ -20,22 +20,13 @@
  */
 package zebra4j;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Locale;
-
 import org.junit.Test;
 
 public class AtHouseTest {
 
 	@Test
 	public void testQuestionSentencePart() {
-		String enResult = AtHouse.TYPE.questionSentencePart(Locale.ENGLISH);
-		String bgResult = AtHouse.TYPE.questionSentencePart(new Locale("bg", "BG"));
-		assertNotNull(enResult);
-		assertNotNull(bgResult);
-		assertNotEquals(enResult, bgResult);
+		LocalizationTestUtils.testDescribe(AtHouse.TYPE::questionSentencePart);
 	}
 
 }

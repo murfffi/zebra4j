@@ -43,9 +43,11 @@ public interface AttributeType {
 	void addToModel(ZebraModel model, Set<Attribute> attributesOfType, int numPeople);
 
 	/**
+	 * Returns the pattern for questions "about" this attribute type
+	 * 
 	 * @param locale
-	 * @return part of a question sentence in natural language which asks about this
-	 *         attribute type
+	 * @return a pattern for {@link String#format} with a single placeholder for the
+	 *         attribute of the person the question is towards.
 	 * 
 	 * @see Question
 	 */

@@ -22,6 +22,7 @@ package zebra4j;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,13 +43,19 @@ public class AtHouse implements Attribute {
 			return Stream.iterate(1, f -> f + 1).map(AtHouse::new).limit(numPeople).collect(Collectors.toList());
 		}
 
+		@Override
+		public String describeSet(Set<Attribute> set, Locale locale) {
+			String pattern = Localization.translate(AtHouse.class, "pattern", locale);
+			return String.format(pattern, set.size());
+		};
+
 	};
 
 	private final int house;
 
 	@Override
 	public String description(Locale locale) {
-		return "в къща " + house;
+		return Localization.translate(getClass(), "description", locale) + house;
 	}
 
 	/**
