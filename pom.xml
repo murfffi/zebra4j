@@ -7,7 +7,7 @@
 
 	<groupId>zebra4j</groupId>
 	<artifactId>zebra4j</artifactId>
-	<version>0.5-SNAPSHOT</version>
+	<version>0.5</version>
 
 	<name>zebra4j</name>
 	<url>https://github.com/murfffi/zebra4j</url>
@@ -177,6 +177,7 @@
 	<scm>
 		<url>https://github.com/murfffi/zebra4j</url>
 		<connection>scm:git:ssh://git@github.com/murfffi/zebra4j.git</connection>
+		<tag>v0.5</tag>
 	</scm>
 	<distributionManagement>
 		<repository>
