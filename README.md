@@ -96,7 +96,7 @@ above, to add support for languages that require different sentence structure.
 ## Install library from source
 
 Requirements:
-- Java 8 JDK with its java executable on the PATH
+- Java 8+ JDK with its java executable on the PATH
 
 To install, check out the code and then run:
 

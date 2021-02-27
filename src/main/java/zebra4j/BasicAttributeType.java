@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.apache.commons.lang3.Validate;
+
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -35,6 +37,10 @@ import lombok.ToString;
  * <p>
  * This is the easiest way to define a custom attribute. See
  * {@link Attributes#PET} as an example.
+ * 
+ * <p>
+ * This implementation does not support internationalization to remain simple.
+ * Just write the labels and patterns in the desired locale.
  * 
  * @see AllDifferentType
  */
@@ -51,6 +57,9 @@ public class BasicAttributeType extends AllDifferentType {
 		for (String label : labels) {
 			attributes.add(new BasicAttribute(attributes.size(), label));
 		}
+		// The message below is passed to String.format hence % is escaped.
+		Validate.isTrue(questionSentencePart.contains("%s"),
+				"questionSentencePart should contain a %%s placeholder for the person the question is about.");
 		this.questionSentencePart = questionSentencePart;
 	}
 
@@ -79,7 +88,6 @@ public class BasicAttributeType extends AllDifferentType {
 
 	@Override
 	public String questionSentencePart(Locale locale) {
-		// TODO Support localization
 		return questionSentencePart;
 	}
 

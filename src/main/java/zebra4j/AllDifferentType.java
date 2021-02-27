@@ -51,7 +51,7 @@ public abstract class AllDifferentType implements AttributeType {
 		String[] descriptions = set.stream().map(a -> a.description(locale)).toArray(String[]::new);
 		String delimiter = String.format(" %s ", Localization.translate(AllDifferentType.class, "or", locale));
 		return Localization.translate(AllDifferentType.class, "anyPersonIs", locale) + " "
-				+ String.join(" or ", descriptions);
+				+ String.join(delimiter, descriptions);
 	}
 
 	/**

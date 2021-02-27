@@ -31,6 +31,7 @@ import org.chocosolver.solver.search.strategy.Search;
 import org.chocosolver.solver.search.strategy.strategy.AbstractStrategy;
 import org.chocosolver.util.ESat;
 
+@SuppressWarnings("rawtypes")
 public class ChocoSettings implements Settings {
 
 	/**
