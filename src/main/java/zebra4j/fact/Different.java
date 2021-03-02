@@ -59,6 +59,11 @@ public class Different implements Fact {
 			}
 			return result;
 		}
+
+		@Override
+		public String toString() {
+			return Different.class.getName();
+		}
 	};
 
 	private final Attribute left;

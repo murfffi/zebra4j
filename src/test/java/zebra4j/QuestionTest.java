@@ -56,7 +56,7 @@ public class QuestionTest {
 	public void testAnswer_DoesNotApply() {
 		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
 		Question question = new Question(Criminal.YES,
-				new BasicAttributeType(Collections.singleton("test"), "questionSentencePart %s"));
+				new BasicAttributeType(Collections.singleton("test"), "questionSentencePart %s", ""));
 		assertFalse(question.answer(solution).isPresent());
 	}
 

@@ -52,6 +52,11 @@ public class BothTrue implements Fact {
 			}
 			return result;
 		}
+
+		@Override
+		public String toString() {
+			return BothTrue.class.getName();
+		}
 	};
 
 	private final Attribute left;

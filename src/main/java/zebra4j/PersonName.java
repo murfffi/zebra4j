@@ -39,6 +39,11 @@ public enum PersonName implements Attribute {
 			return toSolutionSet(PersonName.values(), numPeople);
 		}
 
+		@Override
+		public String toString() {
+			return PersonName.class.getName();
+		}
+
 	};
 
 	@Override

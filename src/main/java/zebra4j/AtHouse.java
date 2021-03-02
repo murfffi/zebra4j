@@ -49,6 +49,11 @@ public class AtHouse implements Attribute {
 			return String.format(pattern, set.size());
 		};
 
+		@Override
+		public String toString() {
+			return AtHouse.class.getName();
+		}
+
 	};
 
 	private final int house;

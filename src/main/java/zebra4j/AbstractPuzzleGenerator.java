@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections4.SetUtils;
 
@@ -34,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 import zebra4j.fact.BothTrue;
 import zebra4j.fact.Different;
 import zebra4j.fact.Fact;
+import zebra4j.fact.Fact.Type;
 import zebra4j.fact.NearbyHouse;
 
 @AllArgsConstructor
@@ -52,7 +54,8 @@ public abstract class AbstractPuzzleGenerator<P> {
 	 *         each generated puzzle is different and has a minimal set of facts
 	 */
 	public P generate() {
-		List<Fact> facts = factTypes.stream().flatMap(type -> type.generate(solution).stream())
+		Stream<Type> sortedFacts = factTypes.stream().sorted((a, b) -> a.toString().compareTo(b.toString()));
+		List<Fact> facts = sortedFacts.flatMap(type -> type.generate(solution).stream())
 				.filter(fact -> !rejectFact(fact)).collect(Collectors.toList());
 		P puzzle = toPuzzle(facts);
 		int solutionsCnt = countSolutions(puzzle);
