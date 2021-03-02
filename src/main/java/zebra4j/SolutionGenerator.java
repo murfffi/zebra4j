@@ -52,6 +52,10 @@ public class SolutionGenerator implements Supplier<PuzzleSolution> {
 	public PuzzleSolution get() {
 		List<List<Attribute>> attributesByPersonAndType = new ArrayList<>();
 		List<AttributeType> attributeTypesSorted = new ArrayList<>(attributeTypes);
+
+		// TODO reconsider
+		attributeTypesSorted.sort((a, b) -> a.toString().compareTo(b.toString()));
+
 		Collections.swap(attributeTypesSorted, 0, attributeTypesSorted.indexOf(PersonName.TYPE));
 		for (AttributeType type : attributeTypesSorted) {
 			List<Attribute> attributes = type.getAttributes(numPeople);

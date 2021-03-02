@@ -38,7 +38,7 @@ public interface Attributes {
 			"with a cat", //
 			"with a dog", //
 			"with a hamster"), //
-			"What pet are %s with?");
+			"What pet are %s with?", "Pet");
 
 	/**
 	 * Clothes attribute. Serves as an example how to define attributes as an enum.

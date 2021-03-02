@@ -88,6 +88,11 @@ public class NearbyHouse implements Fact {
 			}
 			return result;
 		}
+
+		@Override
+		public String toString() {
+			return NearbyHouse.class.getName();
+		}
 	};
 
 	private final int distance;

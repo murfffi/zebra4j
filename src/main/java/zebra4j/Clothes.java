@@ -39,6 +39,11 @@ public enum Clothes implements Attribute {
 			return toSolutionSet(Clothes.values(), numPeople);
 		}
 
+		@Override
+		public String toString() {
+			return Clothes.class.getName();
+		}
+
 	};
 
 	@Override

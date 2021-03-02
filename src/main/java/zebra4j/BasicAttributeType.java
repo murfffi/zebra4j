@@ -29,7 +29,6 @@ import org.apache.commons.lang3.Validate;
 
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 /**
  * Defines an attribute type using a set of labels.
@@ -44,15 +43,15 @@ import lombok.ToString;
  * 
  * @see AllDifferentType
  */
-@ToString(exclude = "type")
 @EqualsAndHashCode(exclude = "type", callSuper = false)
 public class BasicAttributeType extends AllDifferentType {
 
 	private final AttributeType type = this;
 	private final List<Attribute> attributes;
 	private final String questionSentencePart;
+	private final String typeName;
 
-	public BasicAttributeType(Set<String> labels, String questionSentencePart) {
+	public BasicAttributeType(Set<String> labels, String questionSentencePart, String typeName) {
 		attributes = new ArrayList<>(labels.size());
 		for (String label : labels) {
 			attributes.add(new BasicAttribute(attributes.size(), label));
@@ -61,6 +60,7 @@ public class BasicAttributeType extends AllDifferentType {
 		Validate.isTrue(questionSentencePart.contains("%s"),
 				"questionSentencePart should contain a %%s placeholder for the person the question is about.");
 		this.questionSentencePart = questionSentencePart;
+		this.typeName = typeName;
 	}
 
 	@RequiredArgsConstructor
@@ -94,6 +94,11 @@ public class BasicAttributeType extends AllDifferentType {
 	@Override
 	public List<Attribute> getAttributes(int numPeople) {
 		return AllDifferentType.toSolutionSet(attributes.toArray(new Attribute[0]), numPeople);
+	}
+
+	@Override
+	public String toString() {
+		return typeName;
 	}
 
 }
