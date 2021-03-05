@@ -22,9 +22,19 @@ package zebra4j;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.collections4.SetUtils;
 import org.junit.Test;
+
+import zebra4j.fact.BothTrue;
+import zebra4j.fact.Different;
 
 public class QuestionPuzzleSolverTest {
 
@@ -34,9 +44,23 @@ public class QuestionPuzzleSolverTest {
 				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		QuestionPuzzle questionPuzzle = new QuestionPuzzle(Question.NAME_OF_CRIMINAL, basicPuzzle);
 		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(questionPuzzle);
-		List<Attribute> solutionNames = solver.solve();
+		Collection<Attribute> solutionNames = solver.solve();
 		assertEquals(1, solutionNames.size());
-		assertEquals(PersonName.TYPE, solutionNames.get(0).type());
+		assertEquals(PersonName.TYPE, solutionNames.iterator().next().type());
+	}
+
+	@Test
+	public void testMinimal() {
+		Question question = new Question(Clothes.GREEN, PersonName.TYPE);
+		Map<AttributeType, Set<Attribute>> sets = new HashMap<>();
+		sets.put(Clothes.TYPE, SetUtils.unmodifiableSet(Clothes.BLUE, Clothes.RED, Clothes.GREEN));
+		sets.put(Criminal.TYPE, SetUtils.unmodifiableSet(Criminal.YES, Criminal.NO));
+		sets.put(PersonName.TYPE, SetUtils.unmodifiableSet(PersonName.ELENA, PersonName.IVAN, PersonName.PETER));
+		sets.put(AtHouse.TYPE, new HashSet<>(AtHouse.TYPE.getAttributes(3)));
+		Puzzle puzzle = new Puzzle(sets, SetUtils.unmodifiableSet(new BothTrue(PersonName.PETER, Clothes.BLUE),
+				new Different(PersonName.IVAN, Clothes.GREEN)));
+		Collection<Attribute> solutions = new QuestionPuzzleSolver(new QuestionPuzzle(question, puzzle)).solve();
+		assertEquals(Arrays.asList(PersonName.ELENA), new ArrayList<>(solutions));
 	}
 
 }

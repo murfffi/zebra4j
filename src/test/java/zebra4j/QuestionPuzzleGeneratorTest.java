@@ -23,7 +23,7 @@ package zebra4j;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Random;
 import java.util.Set;
 
@@ -39,7 +39,7 @@ public class QuestionPuzzleGeneratorTest {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
 		QuestionPuzzle puzzle = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution,
 				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
-		List<Attribute> result = new QuestionPuzzleSolver(puzzle).solve();
+		Collection<Attribute> result = new QuestionPuzzleSolver(puzzle).solve();
 		assertEquals(1, result.size());
 	}
 

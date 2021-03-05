@@ -77,7 +77,7 @@ public class Demo {
 		Locale locale = Locale.getDefault();
 		System.out.println(puzzle.getPuzzle().describeConstraints(locale));
 		System.out.println(puzzle.getQuestion().describe(locale));
-		System.out.println("Answer:" + new QuestionPuzzleSolver(puzzle).solve().get(0).description(locale));
+		System.out.println("Answer:" + new QuestionPuzzleSolver(puzzle).solve().iterator().next().description(locale));
 	}
 
 }

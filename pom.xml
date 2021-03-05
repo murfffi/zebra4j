@@ -194,8 +194,13 @@
 		<repository>
 			<id>bintray-marin-nozhchev-marin-nozhchev</id>
 			<name>marin-nozhchev-marin-nozhchev</name>
-			<url>https://api.bintray.com/maven/marin-nozhchev/marin-nozhchev/zebra4j/;publish=1</url>
+			<url>https://api.bintray.com/maven/marin-nozhchev/marin-nozhchev/zebra4j/;publish=1</url>			
 		</repository>
+		<snapshotRepository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/murfffi/zebra4j</url>	
+		</snapshotRepository>
 	</distributionManagement>
 
 	<profiles>
