@@ -20,9 +20,11 @@
  */
 package zebra4j.fact;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
+import zebra4j.AttributeType;
 import zebra4j.PuzzleSolution;
 import zebra4j.ZebraModel;
 
@@ -66,5 +68,7 @@ public interface Fact {
 	boolean appliesTo(PuzzleSolution solution);
 
 	String describe(Locale locale);
+
+	Collection<AttributeType> attributeTypes();
 
 }

@@ -20,6 +20,11 @@
  */
 package zebra4j;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.Validate;
 
 import lombok.Value;
@@ -41,6 +46,14 @@ public class QuestionPuzzle {
 		Validate.isTrue(question.appliesTo(puzzle), "Question %s does not apply to puzzle %s", question, puzzle);
 		this.question = question;
 		this.puzzle = puzzle;
+	}
+
+	public List<String> describeConstraints(Locale locale) {
+		return puzzle.describeConstraintsForTypes(locale, gatherFactTypes());
+	}
+
+	private Set<AttributeType> gatherFactTypes() {
+		return puzzle.getFacts().stream().flatMap(f -> f.attributeTypes().stream()).collect(Collectors.toSet());
 	}
 
 }

@@ -20,6 +20,9 @@
  */
 package zebra4j;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
 
 public class AtHouseTest {
@@ -27,6 +30,12 @@ public class AtHouseTest {
 	@Test
 	public void testQuestionSentencePart() {
 		LocalizationTestUtils.testDescribe(AtHouse.TYPE::questionSentencePart);
+	}
+
+	@Test
+	public void testType_DescribeSet() throws Exception {
+		Set<Attribute> attrSet = new HashSet<>(AtHouse.TYPE.getAttributes(3));
+		LocalizationTestUtils.testDescribe(l -> AtHouse.TYPE.describeSet(attrSet, l));
 	}
 
 }

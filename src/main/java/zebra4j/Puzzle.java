@@ -57,8 +57,11 @@ public class Puzzle {
 	}
 
 	public List<String> describeConstraints(Locale locale) {
-		Stream<String> setDesc = attributeSets.entrySet().stream()
-				.map(e -> e.getKey().describeSet(e.getValue(), locale));
+		return describeConstraintsForTypes(locale, attributeSets.keySet());
+	}
+
+	List<String> describeConstraintsForTypes(Locale locale, Set<AttributeType> types) {
+		Stream<String> setDesc = types.stream().map(t -> t.describeSet(attributeSets.get(t), locale));
 		Stream<String> factDesc = facts.stream().map(fact -> fact.describe(locale));
 		return Stream.concat(setDesc, factDesc).collect(Collectors.toList());
 	}

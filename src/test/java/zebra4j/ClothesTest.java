@@ -20,6 +20,13 @@
  */
 package zebra4j;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
+
 import org.junit.Test;
 
 public class ClothesTest {
@@ -29,4 +36,18 @@ public class ClothesTest {
 		LocalizationTestUtils.testDescribe(Clothes.RED::description);
 	}
 
+	@Test
+	public void testType_DescribeSet() throws Exception {
+		Set<Attribute> attrSet = new HashSet<>(Arrays.asList(Clothes.values()));
+		LocalizationTestUtils.testDescribe(l -> Clothes.TYPE.describeSet(attrSet, l));
+	}
+
+	@Test
+	public void testType_DescribeSetAllRepresented() throws Exception {
+		Set<Attribute> attrSet = new HashSet<>(Arrays.asList(Clothes.values()));
+		for (Locale l : LocalizationTestUtils.SUPPORTED_LOCALES) {
+			String description = Clothes.TYPE.describeSet(attrSet, l);
+			attrSet.forEach(attr -> assertTrue(description.contains(attr.description(l))));
+		}
+	}
 }

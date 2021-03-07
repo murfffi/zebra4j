@@ -23,16 +23,29 @@ package zebra4j;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
+import java.util.Locale;
+import java.util.Set;
 
 import org.junit.Test;
+
+import zebra4j.fact.BothTrue;
+import zebra4j.fact.Fact;
 
 public class PuzzleTest {
 
 	@Test
 	public void testNumPeople() {
 		PuzzleSolution solution = PuzzleGeneratorTest.sampleSolution();
-		Puzzle puzzle = PuzzleGenerator.toBasicPuzzle(solution, Collections.emptyList());
+		Puzzle puzzle = new Puzzle(solution.getAttributeSets(), Collections.emptySet());
 		assertEquals(3, puzzle.numPeople());
 	}
 
+	@Test
+	public void testDescribeContstraints() throws Exception {
+		PuzzleSolution solution = PuzzleGeneratorTest.sampleSolution();
+		Set<Fact> facts = Collections.singleton(new BothTrue(PersonName.PETER, new AtHouse(1)));
+		Puzzle puzzle = new Puzzle(solution.getAttributeSets(), facts);
+		assertEquals(puzzle.getAttributeSets().size() + facts.size(),
+				puzzle.describeConstraints(Locale.getDefault()).size());
+	}
 }

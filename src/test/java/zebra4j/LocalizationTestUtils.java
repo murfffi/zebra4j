@@ -61,7 +61,7 @@ public class LocalizationTestUtils {
 					expected.contains(block));
 			found.add(block);
 		}
-		assertEquals(expected, found);
+		assertEquals(String.format("For locale: %s and output: %s", locale, output), expected, found);
 
 	}
 

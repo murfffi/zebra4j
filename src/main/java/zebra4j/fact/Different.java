@@ -21,6 +21,8 @@
 package zebra4j.fact;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,6 +32,7 @@ import org.chocosolver.solver.variables.IntVar;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import zebra4j.Attribute;
+import zebra4j.AttributeType;
 import zebra4j.Criminal;
 import zebra4j.PuzzleSolution;
 import zebra4j.SolutionPerson;
@@ -91,5 +94,10 @@ public class Different implements Fact {
 	public boolean appliesTo(PuzzleSolution solution) {
 		return solution.findPerson(left).filter(person -> !right.equals(person.findAttribute(right.type())))
 				.isPresent();
+	}
+
+	@Override
+	public Collection<AttributeType> attributeTypes() {
+		return Arrays.asList(left.type(), right.type());
 	}
 }

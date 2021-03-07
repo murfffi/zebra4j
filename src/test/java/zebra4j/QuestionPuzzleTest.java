@@ -20,13 +20,27 @@
  */
 package zebra4j;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Set;
+
 import org.junit.Test;
 
-public class CriminalTest {
+import zebra4j.fact.BothTrue;
+import zebra4j.fact.Fact;
+
+public class QuestionPuzzleTest {
 
 	@Test
-	public void testType_DescribeSet() {
-		LocalizationTestUtils.testDescribe(l -> Criminal.TYPE.describeSet(null, l));
+	public void testDescribeConstraints() {
+		PuzzleSolution solution = PuzzleGeneratorTest.sampleSolution();
+		assertEquals(3, solution.getAttributeSets().size());
+		Set<Fact> facts = Collections.singleton(new BothTrue(PersonName.PETER, new AtHouse(1)));
+		QuestionPuzzle puzzle = new QuestionPuzzle(new Question(PersonName.PETER, AtHouse.TYPE),
+				new Puzzle(solution.getAttributeSets(), facts));
+		assertEquals(2 + facts.size(), puzzle.describeConstraints(Locale.getDefault()).size());
 	}
 
 }

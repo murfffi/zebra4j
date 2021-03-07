@@ -21,6 +21,8 @@
 package zebra4j.fact;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -32,6 +34,7 @@ import lombok.Value;
 import zebra4j.AllDifferentType;
 import zebra4j.AtHouse;
 import zebra4j.Attribute;
+import zebra4j.AttributeType;
 import zebra4j.Localization;
 import zebra4j.PersonName;
 import zebra4j.PuzzleSolution;
@@ -157,6 +160,11 @@ public class NearbyHouse implements Fact {
 	private static Optional<Integer> getHousePosition(PuzzleSolution solution, Attribute attribute) {
 		return solution.findPerson(attribute).flatMap(person -> Optional.ofNullable(person.findAttribute(AtHouse.TYPE)))
 				.map(house -> ((AtHouse) house).getPosition());
+	}
+
+	@Override
+	public Collection<AttributeType> attributeTypes() {
+		return Arrays.asList(left.type(), right.type(), AtHouse.TYPE);
 	}
 
 }
