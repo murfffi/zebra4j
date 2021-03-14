@@ -33,6 +33,10 @@ public class Demo {
 	private static final int NUM_PEOPLE = 3;
 
 	public static void main(String[] args) {
+		demo();
+	}
+
+	static void demo() {
 		basicPuzzle();
 		questionPuzzle();
 		customQuestionPuzzle();

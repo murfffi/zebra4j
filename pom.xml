@@ -62,6 +62,13 @@
 			<version>1.7.30</version>
 		</dependency>
 		<dependency>
+			<groupId>info.picocli</groupId>
+			<artifactId>picocli</artifactId>
+			<version>4.6.1</version>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>1.2.3</version>
@@ -106,40 +113,29 @@
 		</pluginManagement>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>license-maven-plugin</artifactId>
-				<version>2.0.0</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.4</version>
 				<configuration>
-					<addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
-					<licenseName>agpl_v3</licenseName>
+					<minimizeJar>true</minimizeJar>
+					<shadedArtifactAttached>true</shadedArtifactAttached>
+					<transformers>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+							<resource>.txt</resource>
+						</transformer>
+					</transformers>
 				</configuration>
 				<executions>
 					<execution>
-						<id>first</id>
+						<phase>package</phase>
 						<goals>
-							<goal>check-file-header</goal>
-						</goals>
-						<phase>process-sources</phase>
-						<configuration>
-							<failOnNotUptodateHeader>true</failOnNotUptodateHeader>
-							<failOnMissingHeader>true</failOnMissingHeader>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.2.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
+							<goal>shade</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
@@ -169,9 +165,10 @@
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+							<mainClass>zebra4j.Cli</mainClass>
 						</manifest>
 						<manifestEntries>
-						    <!-- https://docs.oracle.com/javase/9/docs/api/java/lang/module/ModuleFinder.html#automatic-modules -->
+							<!-- https://docs.oracle.com/javase/9/docs/api/java/lang/module/ModuleFinder.html#automatic-modules -->
 							<Automatic-Module-Name>zebra4j</Automatic-Module-Name>
 						</manifestEntries>
 					</archive>
@@ -194,12 +191,12 @@
 		<repository>
 			<id>bintray-marin-nozhchev-marin-nozhchev</id>
 			<name>marin-nozhchev-marin-nozhchev</name>
-			<url>https://api.bintray.com/maven/marin-nozhchev/marin-nozhchev/zebra4j/;publish=1</url>			
+			<url>https://api.bintray.com/maven/marin-nozhchev/marin-nozhchev/zebra4j/;publish=1</url>
 		</repository>
 		<snapshotRepository>
 			<id>github</id>
 			<name>GitHub Packages</name>
-			<url>https://maven.pkg.github.com/murfffi/zebra4j</url>	
+			<url>https://maven.pkg.github.com/murfffi/zebra4j</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -217,6 +214,42 @@
 			</repositories>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>license-maven-plugin</artifactId>
+						<version>2.0.0</version>
+						<configuration>
+							<addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+							<licenseName>agpl_v3</licenseName>
+						</configuration>
+						<executions>
+							<execution>
+								<id>first</id>
+								<goals>
+									<goal>check-file-header</goal>
+								</goals>
+								<phase>process-sources</phase>
+								<configuration>
+									<failOnNotUptodateHeader>true</failOnNotUptodateHeader>
+									<failOnMissingHeader>true</failOnMissingHeader>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>3.2.1</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 					<plugin>
 						<groupId>org.revapi</groupId>
 						<artifactId>revapi-maven-plugin</artifactId>
@@ -278,7 +311,7 @@
 								</configuration>
 							</execution>
 						</executions>
-					</plugin>				
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
