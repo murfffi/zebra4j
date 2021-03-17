@@ -5,7 +5,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>zebra4j</groupId>
+	<!-- https://central.sonatype.org/pages/choosing-your-coordinates.html -->
+	<groupId>io.github.murfffi</groupId>
 	<artifactId>zebra4j</artifactId>
 	<version>0.6-SNAPSHOT</version>
 
@@ -114,30 +115,6 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.2.4</version>
-				<configuration>
-					<minimizeJar>true</minimizeJar>
-					<shadedArtifactAttached>true</shadedArtifactAttached>
-					<transformers>
-						<transformer
-							implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
-							<resource>.txt</resource>
-						</transformer>
-					</transformers>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
 				<version>3.0.0-M3</version>
 				<executions>
@@ -214,6 +191,29 @@
 			</repositories>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-shade-plugin</artifactId>
+						<version>3.2.4</version>
+						<configuration>
+							<minimizeJar>true</minimizeJar>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+									<resource>.txt</resource>
+								</transformer>
+							</transformers>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>shade</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>license-maven-plugin</artifactId>
@@ -314,6 +314,71 @@
 					</plugin>
 				</plugins>
 			</build>
+		</profile>
+		<profile>
+			<id>native</id>
+			<properties>
+				<graalvm.version>21.0.0.2</graalvm.version>
+			</properties>
+			<!-- https://www.graalvm.org/reference-manual/native-image/NativeImageMavenPlugin/ -->
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.graalvm.nativeimage</groupId>
+						<artifactId>native-image-maven-plugin</artifactId>
+						<version>${graalvm.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>native-image</goal>
+								</goals>
+								<phase>package</phase>
+							</execution>
+						</executions>
+						<configuration>
+							<skip>false</skip>
+							<imageName>zebra4j</imageName>
+							<buildArgs>
+								--no-fallback
+							</buildArgs>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<annotationProcessorPaths>
+								<path>
+									<groupId>info.picocli</groupId>
+									<artifactId>picocli-codegen</artifactId>
+									<version>4.6.1</version>
+								</path>
+								<path>
+									<groupId>org.projectlombok</groupId>
+									<artifactId>lombok</artifactId>
+									<version>1.18.18</version>
+								</path>
+							</annotationProcessorPaths>
+							<compilerArgs>
+								<arg>-Aproject=${project.groupId}/${project.artifactId}</arg>
+							</compilerArgs>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			<dependencies>
+				<dependency>
+					<groupId>org.graalvm.sdk</groupId>
+					<artifactId>graal-sdk</artifactId>
+					<version>${graalvm.version}</version>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-nop</artifactId>
+					<version>1.7.30</version>
+				</dependency>
+			</dependencies>
 		</profile>
 	</profiles>
 </project>
