@@ -31,10 +31,9 @@ import picocli.CommandLine.IVersionProvider;
 import picocli.CommandLine.Option;
 import zebra4j.Cli.DemoCli;
 import zebra4j.Cli.GenerateCli;
-import zebra4j.Cli.VersionProvider;
 
 @Command(name = "zebra4j", mixinStandardHelpOptions = true, description = "Generates logic grid (zebra) puzzles.", subcommands = {
-		DemoCli.class, GenerateCli.class }, versionProvider = VersionProvider.class, showDefaultValues = true)
+		DemoCli.class, GenerateCli.class }, versionProvider = Cli.VersionProvider.class, showDefaultValues = true)
 public class Cli {
 
 	enum PuzzleType {
@@ -99,15 +98,17 @@ public class Cli {
 		private void printQuestionPuzzle() {
 			Random rnd = new Random(seed);
 			PuzzleSolution sampleSolution = new SolutionGenerator(Attributes.DEFAULT_TYPES, people, rnd).generate();
-			QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(
-					Question.generate(sampleSolution.getAttributeSets(), rnd), sampleSolution, rnd,
+			Question question = Question.generate(sampleSolution.getAttributeSets(), rnd);
+			QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(question, sampleSolution, rnd,
 					QuestionPuzzleGenerator.DEFAULT_FACT_TYPES);
 			QuestionPuzzle puzzle = generator.generate();
 			Attribute answer = puzzle.getQuestion().answer(sampleSolution).get();
 			out.println("Facts:");
 			puzzle.describeConstraints(locale).stream().forEach(out::println);
 			AttributeType about = puzzle.getQuestion().getAbout();
-			out.println("\nAnswer options: " + puzzle.getPuzzle().getAttributeSets().get(about).stream()
+			out.println();
+			out.println("Question: " + question.describe(locale));
+			out.println("Answer options: " + puzzle.getPuzzle().getAttributeSets().get(about).stream()
 					.map(a -> a.description(locale)).collect(Collectors.joining(", ")));
 			out.println("Answer: " + answer.description(locale));
 			out.println("Seed: " + seed);

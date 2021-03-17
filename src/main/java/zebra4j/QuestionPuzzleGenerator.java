@@ -111,12 +111,18 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	}
 
 	private boolean rejectDifferent(Different fact) {
+		if (fact.getLeft().equals(question.getTowards()) && fact.getRight().type().equals(question.getAbout())) {
+			return true;
+		}
+		if (fact.getLeft().type().equals(question.getAbout()) && fact.getRight().equals(question.getTowards())) {
+			return true;
+		}
 		return false;
 	}
 
 	private boolean rejectBothTrue(BothTrue fact) {
 		if (fact.getLeft().equals(question.getTowards()) || fact.getRight().equals(question.getTowards())) {
-			return true;
+			return fact.attributeTypes().contains(question.getAbout());
 		}
 
 		return false;

@@ -143,10 +143,12 @@ public class NearbyHouse implements Fact {
 
 	@Override
 	public String describe(Locale locale) {
+		// https://ell.stackexchange.com/questions/249250/he-lives-two-houses-away-from-me
+		// https://hinative.com/en-US/questions/15514466
 		Class<?> cls = getClass();
 		String distPattern = Localization.translate(cls, "distPattern", locale);
 		String dist = distance == 1 ? Localization.translate(cls, "nextDoor", locale)
-				: String.format(distPattern, distance - 1);
+				: String.format(distPattern, distance);
 
 		String patternId = "genericPattern";
 		if (left instanceof PersonName) {
