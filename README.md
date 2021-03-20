@@ -28,6 +28,8 @@ features:
 `/zebra4j/src/main/java/zebra4j/Demo.java` and unit tests demonstrate how to use
 the library in Java.
 
+SAMPLES.md contain some sample generated puzzles.
+
 ## Download a release
 
 The library is available in the Maven repository <https://dl.bintray.com/marin-nozhchev/marin-nozhchev> .
