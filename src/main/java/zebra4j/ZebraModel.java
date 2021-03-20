@@ -60,7 +60,7 @@ public class ZebraModel {
 		if (uniqueAttributeVariables.get(attr) != null) {
 			throw new IllegalArgumentException(String.format("Variable for attribute %s already exists.", attr));
 		}
-		IntVar var = chocoModel.intVar(varName(attr), 0, numPeople - 1);
+		IntVar var = chocoModel.intVar(varName(), 0, numPeople - 1);
 		uniqueAttributeVariables.put(attr, var);
 		return var;
 	}
@@ -89,7 +89,7 @@ public class ZebraModel {
 		return Optional.ofNullable(uniqueAttributeVariables.getKey(var));
 	}
 
-	private String varName(Attribute attr) {
+	private String varName() {
 		return "Person" + ++varCount;
 	}
 }

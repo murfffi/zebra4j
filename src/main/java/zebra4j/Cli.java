@@ -25,6 +25,7 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import lombok.Value;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.IVersionProvider;
@@ -96,23 +97,40 @@ public class Cli {
 		}
 
 		private void printQuestionPuzzle() {
-			Random rnd = new Random(seed);
-			PuzzleSolution sampleSolution = new SolutionGenerator(Attributes.DEFAULT_TYPES, people, rnd).generate();
-			Question question = Question.generate(sampleSolution.getAttributeSets(), rnd);
-			QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(question, sampleSolution, rnd,
-					QuestionPuzzleGenerator.DEFAULT_FACT_TYPES);
-			QuestionPuzzle puzzle = generator.generate();
-			Attribute answer = puzzle.getQuestion().answer(sampleSolution).get();
-			out.println("Facts:");
-			puzzle.describeConstraints(locale).stream().forEach(out::println);
-			AttributeType about = puzzle.getQuestion().getAbout();
-			out.println();
-			out.println("Question: " + question.describe(locale));
-			out.println("Answer options: " + puzzle.getPuzzle().getAttributeSets().get(about).stream()
-					.map(a -> a.description(locale)).collect(Collectors.joining(", ")));
-			out.println("Answer: " + answer.description(locale));
-			out.println("Seed: " + seed);
+			QSample sample = sampleQuestionPuzzle(seed, people);
+			Cli.printQuestionPuzzle(sample, locale, out);
 		}
+
+	}
+
+	@Value
+	static class QSample {
+		long seed;
+		QuestionPuzzle puzzle;
+		Attribute answer;
+	}
+
+	static QSample sampleQuestionPuzzle(long seed, int people) {
+		Random rnd = new Random(seed);
+		PuzzleSolution sampleSolution = new SolutionGenerator(Attributes.DEFAULT_TYPES, people, rnd).generate();
+		Question question = Question.generate(sampleSolution.getAttributeSets(), rnd);
+		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(question, sampleSolution, rnd,
+				QuestionPuzzleGenerator.DEFAULT_FACT_TYPES);
+		QuestionPuzzle puzzle = generator.generate();
+		Attribute answer = puzzle.getQuestion().answer(sampleSolution).get();
+		return new QSample(seed, puzzle, answer);
+	}
+
+	static void printQuestionPuzzle(QSample sample, Locale locale, PrintStream out) {
+		out.println("Facts:");
+		sample.puzzle.describeConstraints(locale).stream().forEach(out::println);
+		AttributeType about = sample.puzzle.getQuestion().getAbout();
+		out.println();
+		out.println("Question: " + sample.puzzle.getQuestion().describe(locale));
+		out.println("Answer options: " + sample.puzzle.getPuzzle().getAttributeSets().get(about).stream()
+				.map(a -> a.description(locale)).collect(Collectors.joining(", ")));
+		out.println("Answer: " + sample.answer.description(locale));
+		out.println("Seed: " + sample.seed);
 	}
 
 	static class VersionProvider implements IVersionProvider {
