@@ -28,7 +28,7 @@ features:
 `/zebra4j/src/main/java/zebra4j/Demo.java` and unit tests demonstrate how to use
 the library in Java.
 
-SAMPLES.md contain some sample generated puzzles.
+[SAMPLES.md](SAMPLES.md) contain some sample generated puzzles.
 
 ## Download a release
 
@@ -118,5 +118,5 @@ The library uses [slf4j-api](http://www.slf4j.org/) as logging API and does not
 include or enforce any particular backend.
 
 ## Contributing
-
-See /CONTRIBUTING.md .
+<!-- https://github.blog/2013-01-31-relative-links-in-markup-files/ -->
+See [CONTRIBUTING.md](CONTRIBUTING.md) .

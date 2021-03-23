@@ -33,6 +33,9 @@ import picocli.CommandLine.Option;
 import zebra4j.Cli.DemoCli;
 import zebra4j.Cli.GenerateCli;
 
+/**
+ * CLI for zebra4j
+ */
 @Command(name = "zebra4j", mixinStandardHelpOptions = true, description = "Generates logic grid (zebra) puzzles.", subcommands = {
 		DemoCli.class, GenerateCli.class }, versionProvider = Cli.VersionProvider.class, showDefaultValues = true)
 public class Cli {
