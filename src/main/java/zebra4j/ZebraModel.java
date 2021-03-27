@@ -25,8 +25,8 @@ import java.util.UUID;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.chocosolver.solver.ChocoSettings;
 import org.chocosolver.solver.Model;
+import org.chocosolver.solver.Settings;
 import org.chocosolver.solver.variables.IntVar;
 
 import lombok.Getter;
@@ -37,7 +37,11 @@ import lombok.Getter;
 public class ZebraModel {
 
 	@Getter
-	private final Model chocoModel = new Model(UUID.randomUUID().toString(), new ChocoSettings());
+	private final Model chocoModel;
+
+	public ZebraModel(Settings chocoSettings) {
+		chocoModel = new Model(UUID.randomUUID().toString(), chocoSettings);
+	}
 
 	private final BidiMap<Attribute, IntVar> uniqueAttributeVariables = new DualHashBidiMap<Attribute, IntVar>();
 

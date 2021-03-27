@@ -12,17 +12,41 @@
 
 	<name>zebra4j</name>
 	<url>https://github.com/murfffi/zebra4j</url>
+	<description>zebra4j is a generator and solver library for Zebra puzzles, also knows as "logic grid puzzles".</description>
 	<organization>
 		<name>Marin Nozhchev</name>
 		<url>https://github.com/murfffi</url>
 	</organization>
 	<inceptionYear>2020</inceptionYear>
 
+	<developers>
+		<developer>
+			<id>murfffi</id>
+			<email>murfffi@gmail.com</email>
+			<name>Marin Nozhchev</name>
+			<timezone>2</timezone>
+			<organizationUrl>https://github.com/murfffi</organizationUrl>
+		</developer>
+	</developers>
+
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/murfffi/zebra4j/issues</url>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>GNU Affero General Public License, Version 3</name>
+			<distribution>repo</distribution>
+			<url>https://www.gnu.org/licenses/agpl-3.0.en.html</url>
+		</license>
+	</licenses>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
 		<exec.mainClass>zebra4j.Cli</exec.mainClass>
+		<lombok.version>1.18.18</lombok.version>
+		<delombok.output>${project.build.directory}/generated-sources/delombok</delombok.output>
 	</properties>
 
 	<dependencies>
@@ -50,7 +74,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.18</version>
+			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -92,10 +116,6 @@
 					<version>3.2.0</version>
 				</plugin>
 				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.8.1</version>
-				</plugin>
-				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.22.2</version>
 				</plugin>
@@ -114,6 +134,13 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<release>8</release>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
@@ -275,7 +302,60 @@
 							<execution>
 								<id>attach-sources</id>
 								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<!-- https://stackoverflow.com/a/51947792/1551798 -->
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok-maven-plugin</artifactId>
+						<version>${lombok.version}.0</version>
+						<configuration>
+							<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+							<outputDirectory>${delombok.output}</outputDirectory>
+							<addOutputDirectory>false</addOutputDirectory>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>delombok</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.2.0</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
 									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<sourcepath>${delombok.output}</sourcepath>
+							<source>8</source>
+							<detectJavaApiLink>false</detectJavaApiLink>
+							<doclint>all,-missing</doclint>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<!-- scoop/brew install gpg -->
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
 								</goals>
 							</execution>
 						</executions>
@@ -342,6 +422,17 @@
 							</execution>
 						</executions>
 					</plugin>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.8</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
@@ -386,7 +477,7 @@
 								<path>
 									<groupId>org.projectlombok</groupId>
 									<artifactId>lombok</artifactId>
-									<version>1.18.18</version>
+									<version>${lombok.version}</version>
 								</path>
 							</annotationProcessorPaths>
 							<compilerArgs>

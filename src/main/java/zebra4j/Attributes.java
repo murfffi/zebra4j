@@ -45,8 +45,8 @@ public interface Attributes {
 	 * 
 	 * <p>
 	 * Defining attributes as an enum allows for value-dependent implementation of
-	 * methods like {@link AttributeType#questionSentencePart()} or
-	 * {@link Attribute#description()} .
+	 * methods like {@link AttributeType#questionSentencePart} or
+	 * {@link Attribute#description} .
 	 */
 	public static final AttributeType CLOTHES = Clothes.TYPE;
 	public static final AttributeType AT_HOUSE = AtHouse.TYPE;

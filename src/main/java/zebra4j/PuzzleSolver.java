@@ -28,23 +28,31 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.chocosolver.solver.DefaultSettings;
 import org.chocosolver.solver.Model;
+import org.chocosolver.solver.Settings;
 import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
 
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import zebra4j.fact.Fact;
 
 /**
  * Solver for {@link Puzzle}
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class PuzzleSolver {
 
 	private final Puzzle puzzle;
+
+	@Getter
+	@Setter
+	private Settings chocoSettings = new DefaultSettings();
 
 	/**
 	 * @param zebraModel
@@ -100,7 +108,7 @@ public class PuzzleSolver {
 	}
 
 	private ZebraModel toModel() {
-		ZebraModel model = new ZebraModel();
+		ZebraModel model = new ZebraModel(chocoSettings);
 		for (Entry<AttributeType, Set<Attribute>> entry : puzzle.getAttributeSets().entrySet()) {
 			entry.getKey().addToModel(model, entry.getValue(), puzzle.numPeople());
 		}

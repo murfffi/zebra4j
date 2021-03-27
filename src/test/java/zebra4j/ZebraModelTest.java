@@ -20,6 +20,7 @@
  */
 package zebra4j;
 
+import org.chocosolver.solver.DefaultSettings;
 import org.chocosolver.solver.variables.IntVar;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class ZebraModelTest {
 
 	@Test
 	public void testToOptionalAttribute() {
-		ZebraModel model = new ZebraModel();
+		ZebraModel model = new ZebraModel(new DefaultSettings());
 		IntVar x = model.createUniqueVariable(PersonName.GEORGE, 4);
 		Assert.assertEquals(PersonName.GEORGE, model.toOptionalAttribute(x).get());
 	}
