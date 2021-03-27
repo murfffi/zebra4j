@@ -56,20 +56,14 @@ public class AtHouse implements Attribute {
 
 	};
 
-	private final int house;
+	/**
+	 * The number of the position of the house from left to right, starting at 1.
+	 */
+	private final int position;
 
 	@Override
 	public String description(Locale locale) {
-		return Localization.translate(getClass(), "description", locale) + house;
-	}
-
-	/**
-	 * The number of the position of the house from left to right
-	 * 
-	 * @return number, starting at 1
-	 */
-	public int getPosition() {
-		return house;
+		return Localization.translate(getClass(), "description", locale) + position;
 	}
 
 	@Override

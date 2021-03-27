@@ -23,6 +23,13 @@ package zebra4j;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * The name attribute of a person
+ * 
+ * <p>
+ * Most facts have special desription sentence patterns when one of the member
+ * attributes is {@link PersonName}.
+ */
 public enum PersonName implements Attribute {
 
 	IVAN, ELENA, PETER, THEODORA, GEORGE;

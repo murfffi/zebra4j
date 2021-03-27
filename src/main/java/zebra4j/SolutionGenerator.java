@@ -44,7 +44,7 @@ public class SolutionGenerator implements Supplier<PuzzleSolution> {
 	}
 
 	public SolutionGenerator(int numPeople) {
-		// TODO Generate random subset given number of people
+		// TODO Generate random subset of attribute typed given number of people
 		this(DEFAULT_TYPES, numPeople, new Random());
 	}
 
@@ -53,15 +53,19 @@ public class SolutionGenerator implements Supplier<PuzzleSolution> {
 		List<List<Attribute>> attributesByPersonAndType = new ArrayList<>();
 		List<AttributeType> attributeTypesSorted = new ArrayList<>(attributeTypes);
 
-		// TODO reconsider
+		// Sort attribute types by name to achieve reproducible (stable) generation.
 		attributeTypesSorted.sort((a, b) -> a.toString().compareTo(b.toString()));
 
+		// Make sure name is first, so if facts are generated from the solution, the
+		// name is always "to the left".
 		Collections.swap(attributeTypesSorted, 0, attributeTypesSorted.indexOf(PersonName.TYPE));
+
 		for (AttributeType type : attributeTypesSorted) {
 			List<Attribute> attributes = type.getAttributes(numPeople);
 			Collections.shuffle(attributes, rnd);
 			attributesByPersonAndType.add(attributes);
 		}
+
 		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder(true);
 		for (int i = 0; i < numPeople; ++i) {
 			final int person = i;

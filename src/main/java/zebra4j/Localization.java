@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.text.CaseUtils;
 
-public class Localization {
+public interface Localization {
 
 	public static String translate(Class<?> cls, String key, Locale locale) {
 		String bundleName = cls.getName().replace("zebra4j.", "zebra4j.bundle.");

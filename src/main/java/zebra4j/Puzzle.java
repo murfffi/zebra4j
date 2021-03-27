@@ -27,10 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Value;
 import zebra4j.fact.Fact;
 
 /**
@@ -40,13 +37,17 @@ import zebra4j.fact.Fact;
  * John or Mary). The assignment must also satisfy the given set of
  * {@link Fact}s.
  */
-@Getter
-@AllArgsConstructor
-@EqualsAndHashCode
-@ToString
+@Value
 public class Puzzle {
 
+	/**
+	 * The attribute types and the sub-sets of their values used in the puzzle.
+	 */
 	private final Map<AttributeType, Set<Attribute>> attributeSets;
+
+	/**
+	 * The facts that must be satisfied by any solution of the puzzle.
+	 */
 	private final Set<Fact> facts;
 
 	/**
@@ -56,6 +57,12 @@ public class Puzzle {
 		return attributeSets.values().iterator().next().size();
 	}
 
+	/**
+	 * Describe in natural language the constraints that the solution must satisfy.
+	 * 
+	 * @param locale required
+	 * @return a list of sentences in the given locale, not null.
+	 */
 	public List<String> describeConstraints(Locale locale) {
 		return describeConstraintsForTypes(locale, attributeSets.keySet());
 	}
