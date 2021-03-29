@@ -29,8 +29,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.SetUtils;
+import org.chocosolver.solver.Settings;
 
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import zebra4j.fact.BothTrue;
 import zebra4j.fact.Different;
@@ -38,7 +41,7 @@ import zebra4j.fact.Fact;
 import zebra4j.fact.Fact.Type;
 import zebra4j.fact.NearbyHouse;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public abstract class AbstractPuzzleGenerator<P> {
 
@@ -48,6 +51,10 @@ public abstract class AbstractPuzzleGenerator<P> {
 	private final Random rnd;
 	protected final PuzzleSolution solution;
 	private final Set<Fact.Type> factTypes;
+
+	@Getter
+	@Setter
+	private Settings chocoSettings;
 
 	/**
 	 * @return a new puzzle generated from the seed solution and randomness source;
