@@ -42,7 +42,7 @@ public class PuzzleSolverTest {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.sampleSolution();
 		Puzzle puzzle = new Puzzle(startSolution.getAttributeSets(),
 				new LinkedHashSet<>(BothTrue.TYPE.generate(startSolution)));
-		List<PuzzleSolution> result = new PuzzleSolver(puzzle).solve();
+		List<PuzzleSolution> result = createTestSolver(puzzle).solve();
 		Set<PuzzleSolution> resultSet = new HashSet<>(result);
 		Assert.assertEquals(result.size(), resultSet.size());
 		boolean contains = resultSet.contains(startSolution);
@@ -56,9 +56,13 @@ public class PuzzleSolverTest {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
 		Puzzle puzzle = new Puzzle(startSolution.getAttributeSets(),
 				new LinkedHashSet<>(Different.TYPE.generate(startSolution).subList(0, 2)));
-		List<PuzzleSolution> result = new PuzzleSolver(puzzle).solve();
+		List<PuzzleSolution> result = createTestSolver(puzzle).solve();
 		Set<PuzzleSolution> resultSet = new HashSet<>(result);
 		Assert.assertEquals(result.size(), resultSet.size());
+	}
+
+	protected PuzzleSolver createTestSolver(Puzzle puzzle) {
+		return new PuzzleSolver(puzzle);
 	}
 
 }

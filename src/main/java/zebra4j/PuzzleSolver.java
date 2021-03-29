@@ -28,13 +28,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.chocosolver.solver.DefaultSettings;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Settings;
 import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -45,6 +45,7 @@ import zebra4j.fact.Fact;
  * Solver for {@link Puzzle}
  */
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Slf4j
 public class PuzzleSolver {
 
@@ -52,7 +53,7 @@ public class PuzzleSolver {
 
 	@Getter
 	@Setter
-	private Settings chocoSettings = new DefaultSettings();
+	private Settings chocoSettings;
 
 	/**
 	 * @param zebraModel

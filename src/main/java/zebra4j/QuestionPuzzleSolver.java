@@ -25,6 +25,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.chocosolver.solver.Settings;
+
 /**
  * Solver for {@link QuestionPuzzle}
  */
@@ -36,6 +38,10 @@ public class QuestionPuzzleSolver {
 	public QuestionPuzzleSolver(QuestionPuzzle qPuzzle) {
 		this.qPuzzle = qPuzzle;
 		this.solver = new PuzzleSolver(qPuzzle.getPuzzle());
+	}
+
+	public void setChocoSettings(Settings chocoSettings) {
+		solver.setChocoSettings(chocoSettings);
 	}
 
 	/**
