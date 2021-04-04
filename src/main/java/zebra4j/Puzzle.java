@@ -54,7 +54,8 @@ public class Puzzle {
 	 * @return the number of people in the puzzle
 	 */
 	public int numPeople() {
-		return attributeSets.values().iterator().next().size();
+		return attributeSets.entrySet().stream().filter(e -> e.getKey() instanceof AllDifferentType)
+				.map(e -> e.getValue().size()).min(Integer::compare).orElse(0);
 	}
 
 	/**

@@ -25,8 +25,8 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -52,7 +52,7 @@ public class QuestionPuzzleSolverTest {
 	@Test
 	public void testMinimal() {
 		Question question = new Question(Clothes.GREEN, PersonName.TYPE);
-		Map<AttributeType, Set<Attribute>> sets = new HashMap<>();
+		Map<AttributeType, Set<Attribute>> sets = new LinkedHashMap<>();
 		sets.put(Clothes.TYPE, SetUtils.unmodifiableSet(Clothes.BLUE, Clothes.RED, Clothes.GREEN));
 		sets.put(Criminal.TYPE, SetUtils.unmodifiableSet(Criminal.YES, Criminal.NO));
 		sets.put(PersonName.TYPE, SetUtils.unmodifiableSet(PersonName.ELENA, PersonName.IVAN, PersonName.PETER));

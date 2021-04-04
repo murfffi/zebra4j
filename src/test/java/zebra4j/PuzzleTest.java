@@ -23,9 +23,13 @@ package zebra4j;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections4.SetUtils;
 import org.junit.Test;
 
 import zebra4j.fact.BothTrue;
@@ -38,6 +42,24 @@ public class PuzzleTest {
 		PuzzleSolution solution = PuzzleGeneratorTest.sampleSolution();
 		Puzzle puzzle = new Puzzle(solution.getAttributeSets(), Collections.emptySet());
 		assertEquals(3, puzzle.numPeople());
+	}
+
+	@Test
+	public void testNumPeopleWithCriminal() {
+		Map<AttributeType, Set<Attribute>> sets = new LinkedHashMap<>();
+		sets.put(Criminal.TYPE, SetUtils.unmodifiableSet(Criminal.YES, Criminal.NO));
+		sets.put(Clothes.TYPE, SetUtils.unmodifiableSet(Clothes.BLUE, Clothes.RED, Clothes.GREEN));
+		Puzzle puzzle = new Puzzle(sets, Collections.emptySet());
+		assertEquals(3, puzzle.numPeople());
+	}
+
+	@Test
+	public void testNumPeopleWithDifferentSizeSets() {
+		Map<AttributeType, Set<Attribute>> sets = new LinkedHashMap<>();
+		sets.put(Clothes.TYPE, SetUtils.unmodifiableSet(Clothes.BLUE, Clothes.RED, Clothes.GREEN));
+		sets.put(AtHouse.TYPE, new HashSet<>(AtHouse.TYPE.getAttributes(2)));
+		Puzzle puzzle = new Puzzle(sets, Collections.emptySet());
+		assertEquals(2, puzzle.numPeople());
 	}
 
 	@Test

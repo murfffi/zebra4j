@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/murfffi/zebra4j.svg?branch=main)](https://travis-ci.org/murfffi/zebra4j)
 [![License](https://img.shields.io/github/license/murfffi/zebra4j)](/LICENSE)
-[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/murfffi/zebra4j?include_prereleases)](https://github.com/murfffi/zebra4j/releases)
+[![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)](https://search.maven.org/artifact/io.github.murfffi/zebra4j)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e85598dea228465188b9e70774983532)](https://www.codacy.com/gh/murfffi/zebra4j/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=murfffi/zebra4j&amp;utm_campaign=Badge_Grade)
 
 ## Overview
@@ -32,30 +32,17 @@ the library in Java.
 
 ## Download a release
 
-The library is available in the Maven repository <https://dl.bintray.com/marin-nozhchev/marin-nozhchev> .
+The library is available in the Maven Central .
 
 The artifact details are:
 
 - groupId: zebra4j
 - artifactId: zebra4j
-- version: (see release badge above and drop the v)
+- version: ![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)
 
 With Maven, you can add it as a dependency like this:
 
 ```xml
-<project>
-  ...
-  <repositories>
-    ...
-    <repository>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <id>bintray-marin-nozhchev</id>
-      <url>https://dl.bintray.com/marin-nozhchev/marin-nozhchev</url>
-    </repository>
-    ...
-  </repositories>
   ...
   <dependencies>
    ...

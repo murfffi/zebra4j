@@ -54,6 +54,28 @@
 			<groupId>org.choco-solver</groupId>
 			<artifactId>choco-solver</artifactId>
 			<version>4.10.6</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.knowm.xchart</groupId>
+					<artifactId>xchart</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.jgrapht</groupId>
+					<artifactId>jgrapht-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.github.cp-profiler</groupId>
+					<artifactId>cpprof-java</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>dk.brics.automaton</groupId>
+					<artifactId>automaton</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.choco-solver</groupId>
+					<artifactId>choco-sat</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
