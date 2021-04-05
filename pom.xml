@@ -45,7 +45,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<exec.mainClass>zebra4j.Cli</exec.mainClass>
-		<lombok.version>1.18.18</lombok.version>
+		<lombok.version>1.18.20.0</lombok.version>
 		<delombok.output>${project.build.directory}/generated-sources/delombok</delombok.output>
 	</properties>
 
@@ -334,7 +334,7 @@
 						<!-- https://stackoverflow.com/a/51947792/1551798 -->
 						<groupId>org.projectlombok</groupId>
 						<artifactId>lombok-maven-plugin</artifactId>
-						<version>${lombok.version}.0</version>
+						<version>${lombok.version}</version>
 						<configuration>
 							<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
 							<outputDirectory>${delombok.output}</outputDirectory>
