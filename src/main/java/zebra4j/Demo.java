@@ -28,7 +28,7 @@ import org.apache.commons.collections4.SetUtils;
 /**
  * Sample app
  */
-public class Demo {
+class Demo {
 
 	private static final int NUM_PEOPLE = 3;
 

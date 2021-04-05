@@ -1,0 +1,14 @@
+{
+  "resources":{
+  "includes":[]},
+  "bundles":[
+    {"name":"zebra4j.bundle.AllDifferentType"}, 
+    {"name":"zebra4j.bundle.AtHouse"}, 
+    {"name":"zebra4j.bundle.Clothes"}, 
+    {"name":"zebra4j.bundle.Criminal"}, 
+    {"name":"zebra4j.bundle.PersonName"}, 
+    {"name":"zebra4j.bundle.fact.BothTrue"}, 
+    {"name":"zebra4j.bundle.fact.Different"}, 
+    {"name":"zebra4j.bundle.fact.NearbyHouse"}
+  ]
+}

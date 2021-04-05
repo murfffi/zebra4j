@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import lombok.Value;
 
@@ -40,7 +40,7 @@ public class AtHouse implements Attribute {
 
 		@Override
 		public List<Attribute> getAttributes(int numPeople) {
-			return Stream.iterate(1, f -> f + 1).map(AtHouse::new).limit(numPeople).collect(Collectors.toList());
+			return IntStream.rangeClosed(1, numPeople).mapToObj(AtHouse::new).collect(Collectors.toList());
 		}
 
 		@Override
