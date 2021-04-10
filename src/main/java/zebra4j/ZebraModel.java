@@ -21,6 +21,7 @@
  */
 package zebra4j;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -93,6 +94,10 @@ public class ZebraModel {
 	 */
 	public IntVar getVariableFor(Attribute uniqueAttribute) {
 		return uniqueAttributeVariables.get(uniqueAttribute);
+	}
+
+	public Map<Attribute, IntVar> getVariableMap() {
+		return uniqueAttributeVariables;
 	}
 
 	/**

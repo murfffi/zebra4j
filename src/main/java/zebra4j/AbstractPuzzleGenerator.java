@@ -66,7 +66,7 @@ public abstract class AbstractPuzzleGenerator<P> {
 		List<Fact> facts = sortedFacts.flatMap(type -> type.generate(solution).stream())
 				.filter(fact -> !rejectFact(fact)).collect(Collectors.toList());
 		P puzzle = toPuzzle(facts);
-		int solutionsCnt = countSolutions(puzzle, 2);
+		int solutionsCnt = countSolutions(puzzle);
 		if (solutionsCnt != 1) {
 			String msg = String.format("The provided set of fact types generated a puzzle %s with %s solutions. "
 					+ "Amend the facts so the solutions are exactly 1.", puzzle, solutionsCnt);
@@ -89,7 +89,11 @@ public abstract class AbstractPuzzleGenerator<P> {
 	 * @param puzzle
 	 * @return number of unique solutions of the given puzzle
 	 */
-	protected abstract int countSolutions(P puzzle, int limit);
+	protected boolean uniqueSolution(P puzzle) {
+		return countSolutions(puzzle) == 1;
+	}
+
+	protected abstract int countSolutions(P puzzle);
 
 	/**
 	 * Checks if the fact is not compatible with the specific puzzle being generated
@@ -110,7 +114,7 @@ public abstract class AbstractPuzzleGenerator<P> {
 			List<Fact> factsCopy = new ArrayList<>(facts);
 			factsCopy.remove(i);
 			P puzzle = toPuzzle(factsCopy);
-			if (countSolutions(puzzle, 2) == 1) {
+			if (uniqueSolution(puzzle)) {
 				facts.remove(i);
 				--i;
 			}

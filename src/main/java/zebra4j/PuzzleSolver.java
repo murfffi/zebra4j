@@ -23,11 +23,15 @@ package zebra4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Spliterators.AbstractSpliterator;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Settings;
@@ -56,33 +60,54 @@ public class PuzzleSolver {
 	@Setter
 	private Settings chocoSettings;
 
+	private class SolutionIterator extends AbstractSpliterator<Map<Attribute, Integer>> {
+
+		protected SolutionIterator() {
+			super(Long.MAX_VALUE, 0);
+		}
+
+		@Override
+		public boolean tryAdvance(Consumer<? super Map<Attribute, Integer>> action) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+	}
+
 	/**
 	 * @param zebraModel
 	 * @return a list of choco-solver solutions; useful to count solutions
 	 */
-	Stream<Solution> solveChoco(ZebraModel zebraModel) {
+	Stream<Map<Attribute, Integer>> solveChoco(ZebraModel zebraModel) {
 		for (Fact fact : puzzle.getFacts()) {
 			fact.postTo(zebraModel);
 		}
 		Model model = zebraModel.getChocoModel();
-		List<Solution> solutions = new ArrayList<>();
 		Solver solver = model.getSolver();
-		while (solver.solve()) {
-			Solution solution = new Solution(model).record();
-			if (!retrieveVars(solution).isEmpty()) {
-				solutions.add(solution);
+		Solution solution = new Solution(model);
+		AbstractSpliterator<Map<Attribute, Integer>> spliterator = new AbstractSpliterator<Map<Attribute, Integer>>(
+				Long.MAX_VALUE, 0) {
+
+			@Override
+			public boolean tryAdvance(Consumer<? super Map<Attribute, Integer>> action) {
+				if (!solver.solve()) {
+					return false;
+				}
+				solution.record();
+				action.accept(zebraModel.getVariableMap().entrySet().stream()
+						.collect(Collectors.toMap(e -> e.getKey(), e -> solution.getIntVal(e.getValue()))));
+				return true;
 			}
-		}
-		// TODO lazy stream
-		return solutions.stream();
+		};
+		return StreamSupport.stream(spliterator, false);
 	}
 
 	public List<PuzzleSolution> solve() {
 		log.debug("Solving puzzle {}", puzzle);
 		final ZebraModel zebraModel = toModel();
-		Stream<Solution> solutions = solveChoco(zebraModel);
+		Stream<Map<Attribute, Integer>> solutions = solveChoco(zebraModel);
 		// 16% of runtime is here
-		List<PuzzleSolution> zebraSolutions = solutions.map(choco -> fromChocoSolution(choco, zebraModel)).distinct()
+		List<PuzzleSolution> zebraSolutions = solutions.map(choco -> fromChocoSolution(choco)).distinct()
 				.collect(Collectors.toList());
 		log.trace("Found {} distinct solutions", zebraSolutions.size());
 		return zebraSolutions;
@@ -101,6 +126,19 @@ public class PuzzleSolver {
 			log.trace("Var {} was mapped to attribute {}", var.getName(), attribute);
 			attribute.ifPresent(attr -> allAttributes[person].add(attr));
 		}
+		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder(false);
+		Stream.of(allAttributes).forEach(list -> builder.add(new SolutionPerson(list)));
+		return builder.build();
+	}
+
+	private PuzzleSolution fromChocoSolution(Map<Attribute, Integer> choco) {
+		int numPeople = puzzle.numPeople();
+		@SuppressWarnings("unchecked")
+		List<Attribute>[] allAttributes = new List[numPeople];
+		for (int i = 0; i < allAttributes.length; ++i) {
+			allAttributes[i] = new ArrayList<>();
+		}
+		choco.entrySet().stream().forEach(e -> allAttributes[e.getValue()].add(e.getKey()));
 		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder(false);
 		Stream.of(allAttributes).forEach(list -> builder.add(new SolutionPerson(list)));
 		return builder.build();

@@ -21,6 +21,7 @@
  */
 package zebra4j;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -94,10 +95,27 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	}
 
 	@Override
-	protected int countSolutions(QuestionPuzzle puzzle, int limit) {
+	protected int countSolutions(QuestionPuzzle puzzle) {
 		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(puzzle);
 		solver.setChocoSettings(getChocoSettings());
 		return solver.solve().size();
+	}
+
+	@Override
+	protected boolean uniqueSolution(QuestionPuzzle puzzle) {
+		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(puzzle);
+		solver.setChocoSettings(getChocoSettings());
+		Iterator<Attribute> iter = solver.solveToStream().iterator();
+		if (!iter.hasNext()) {
+			return false;
+		}
+		Attribute first = iter.next();
+		while (iter.hasNext()) {
+			if (!first.equals(iter.next())) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override

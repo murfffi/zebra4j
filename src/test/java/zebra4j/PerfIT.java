@@ -21,6 +21,8 @@
  */
 package zebra4j;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import zebra4j.Cli.QSample;
@@ -29,8 +31,8 @@ public class PerfIT {
 
 	@Test
 	public void testQuestion() throws Exception {
-		QSample sample = Cli.sampleQuestionPuzzle(1, 5);
-		System.out.println(sample.getPuzzle().getPuzzle().getFacts().size());
+		QSample sample = Cli.sampleQuestionPuzzle(1, 4);
+		assertEquals(7, sample.getPuzzle().getPuzzle().getFacts().size());
 	}
 
 }

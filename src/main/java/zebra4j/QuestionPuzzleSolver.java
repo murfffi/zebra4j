@@ -52,11 +52,13 @@ public class QuestionPuzzleSolver {
 	 *         single solution and the collection will have a single element.
 	 */
 	public Set<Attribute> solve() {
-		// .distinct() here doesn't seem to work in TeaVM
+		return solveToStream().collect(Collectors.toSet());
+	}
+
+	public Stream<Attribute> solveToStream() {
 		ZebraModel model = solver.toModel();
 		return solver.solveChoco(model)
-				.flatMap(solution -> toStream(qPuzzle.getQuestion().answer(solution, model, qPuzzle.getPuzzle())))
-				.collect(Collectors.toSet());
+				.flatMap(solution -> toStream(qPuzzle.getQuestion().answer(solution, qPuzzle.getPuzzle())));
 	}
 
 	/**

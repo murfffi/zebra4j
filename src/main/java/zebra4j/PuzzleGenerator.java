@@ -63,7 +63,7 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 	}
 
 	@Override
-	protected int countSolutions(Puzzle puzzle, int limit) {
+	protected int countSolutions(Puzzle puzzle) {
 		return new PuzzleSolver(puzzle, getChocoSettings()).solve().size();
 	}
 
