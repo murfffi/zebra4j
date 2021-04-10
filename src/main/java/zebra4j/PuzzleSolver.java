@@ -60,7 +60,7 @@ public class PuzzleSolver {
 	 * @param zebraModel
 	 * @return a list of choco-solver solutions; useful to count solutions
 	 */
-	List<Solution> solveChoco(ZebraModel zebraModel) {
+	Stream<Solution> solveChoco(ZebraModel zebraModel) {
 		for (Fact fact : puzzle.getFacts()) {
 			fact.postTo(zebraModel);
 		}
@@ -73,15 +73,17 @@ public class PuzzleSolver {
 				solutions.add(solution);
 			}
 		}
-		return solutions;
+		// TODO lazy stream
+		return solutions.stream();
 	}
 
 	public List<PuzzleSolution> solve() {
 		log.debug("Solving puzzle {}", puzzle);
 		final ZebraModel zebraModel = toModel();
-		List<Solution> solutions = solveChoco(zebraModel);
-		List<PuzzleSolution> zebraSolutions = solutions.stream().map(choco -> fromChocoSolution(choco, zebraModel))
-				.distinct().collect(Collectors.toList());
+		Stream<Solution> solutions = solveChoco(zebraModel);
+		// 16% of runtime is here
+		List<PuzzleSolution> zebraSolutions = solutions.map(choco -> fromChocoSolution(choco, zebraModel)).distinct()
+				.collect(Collectors.toList());
 		log.trace("Found {} distinct solutions", zebraSolutions.size());
 		return zebraSolutions;
 	}
@@ -109,7 +111,7 @@ public class PuzzleSolver {
 		return choco.retrieveIntVars(true);
 	}
 
-	private ZebraModel toModel() {
+	ZebraModel toModel() {
 		ZebraModel model = new ZebraModel(chocoSettings);
 		for (Entry<AttributeType, Set<Attribute>> entry : puzzle.getAttributeSets().entrySet()) {
 			entry.getKey().addToModel(model, entry.getValue(), puzzle.numPeople());

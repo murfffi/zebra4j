@@ -31,6 +31,9 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.chocosolver.solver.Solution;
+import org.chocosolver.solver.variables.IntVar;
+
 import lombok.Value;
 
 /**
@@ -112,6 +115,13 @@ public class Question {
 		return solution.findPerson(towards).flatMap(person -> Optional.ofNullable(person.findAttribute(about)));
 	}
 
+	public Optional<Attribute> answer(Solution chocoSolution, ZebraModel model, Puzzle puzzle) {
+		IntVar towardsVar = model.getVariableFor(towards);
+		int personId = chocoSolution.getIntVal(towardsVar);
+		Set<Attribute> attributes = puzzle.getAttributeSets().get(about);
+		return attributes.stream().filter(attr -> matchPersonId(attr, chocoSolution, model, personId)).findAny();
+	}
+
 	public boolean appliesTo(Puzzle puzzle) {
 		return appliesTo(puzzle.getAttributeSets());
 	}
@@ -123,6 +133,15 @@ public class Question {
 	private boolean appliesTo(Map<AttributeType, Set<Attribute>> attributeSets) {
 		boolean towardsApplies = attributeSets.getOrDefault(towards.type(), Collections.emptySet()).contains(towards);
 		return towardsApplies && attributeSets.containsKey(about);
+	}
+
+	private boolean matchPersonId(Attribute attr, Solution chocoSolution, ZebraModel model, int towardsPersonId) {
+		IntVar var = model.getVariableFor(attr);
+		if (var == null) {
+			return false;
+		}
+		int personId = chocoSolution.getIntVal(var);
+		return personId == towardsPersonId;
 	}
 
 }

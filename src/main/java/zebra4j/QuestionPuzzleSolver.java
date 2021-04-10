@@ -53,7 +53,9 @@ public class QuestionPuzzleSolver {
 	 */
 	public Set<Attribute> solve() {
 		// .distinct() here doesn't seem to work in TeaVM
-		return this.solver.solve().stream().flatMap(solution -> toStream(qPuzzle.getQuestion().answer(solution)))
+		ZebraModel model = solver.toModel();
+		return solver.solveChoco(model)
+				.flatMap(solution -> toStream(qPuzzle.getQuestion().answer(solution, model, qPuzzle.getPuzzle())))
 				.collect(Collectors.toSet());
 	}
 

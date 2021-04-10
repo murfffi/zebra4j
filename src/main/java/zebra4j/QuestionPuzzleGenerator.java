@@ -94,7 +94,7 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	}
 
 	@Override
-	protected int countSolutions(QuestionPuzzle puzzle) {
+	protected int countSolutions(QuestionPuzzle puzzle, int limit) {
 		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(puzzle);
 		solver.setChocoSettings(getChocoSettings());
 		return solver.solve().size();

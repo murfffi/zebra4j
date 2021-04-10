@@ -23,6 +23,10 @@ package zebra4j;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static zebra4j.Attributes.AT_HOUSE;
+import static zebra4j.Attributes.CLOTHES;
+import static zebra4j.Attributes.CRIMINAL;
+import static zebra4j.Attributes.NAME;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -30,6 +34,7 @@ import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.commons.collections4.SetUtils;
 import org.junit.Test;
 
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +71,8 @@ public class PuzzleGeneratorTest {
 	@Test
 	public void testGenerate_StableBySeed() throws Exception {
 		Random rnd = new Random(1614459213067L);
-		SolutionGenerator solg = new SolutionGenerator(Attributes.DEFAULT_TYPES, 3, rnd);
+		Set<AttributeType> types = SetUtils.unmodifiableSet(NAME, AT_HOUSE, CLOTHES, CRIMINAL);
+		SolutionGenerator solg = new SolutionGenerator(types, 3, rnd);
 		PuzzleSolution sol = solg.generate();
 
 		PuzzleGenerator gen = new PuzzleGenerator(rnd, sol, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES);
