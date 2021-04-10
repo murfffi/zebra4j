@@ -26,7 +26,7 @@ import java.util.Locale;
 
 public enum Clothes implements Attribute {
 
-	RED, BLUE, GREEN, YELLOW;
+	RED, BLUE, GREEN, YELLOW, PINK;
 
 	public static AttributeType TYPE = new AllDifferentType() {
 

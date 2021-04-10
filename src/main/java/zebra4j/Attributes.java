@@ -38,7 +38,8 @@ public interface Attributes {
 			"with a zebra", //
 			"with a cat", //
 			"with a dog", //
-			"with a hamster"), //
+			"with a hamster", //
+			"with a snake"), //
 			"What pet are %s with?", "Pet");
 
 	/**
@@ -58,5 +59,6 @@ public interface Attributes {
 	/**
 	 * The set of attributes used by the demos
 	 */
-	public static final Set<AttributeType> DEFAULT_TYPES = SetUtils.unmodifiableSet(NAME, AT_HOUSE, CLOTHES, CRIMINAL);
+	public static final Set<AttributeType> DEFAULT_TYPES = SetUtils.unmodifiableSet(NAME, AT_HOUSE, CLOTHES, CRIMINAL,
+			PET);
 }
