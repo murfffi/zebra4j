@@ -36,6 +36,7 @@ import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Settings;
 import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.Solver;
+import org.chocosolver.solver.variables.IntVar;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -59,10 +60,15 @@ public class PuzzleSolver {
 	private Settings chocoSettings;
 
 	/**
-	 * @param zebraModel
-	 * @return a list of choco-solver solutions; useful to count solutions
+	 * Solve the puzzle returning a lazy stream to all solutions in a raw form,
+	 * close to the underlying Choco solver model
+	 * 
+	 * @return a list of raw solutions - map from {@link Attribute} to person ID;
+	 *         useful when just counting solutions
 	 */
-	Stream<Map<Attribute, Integer>> solveChoco(ZebraModel zebraModel) {
+	Stream<Map<Attribute, Integer>> solveChoco() {
+		ZebraModel zebraModel = toModel();
+		log.debug("Solving puzzle {}", puzzle);
 		for (Fact fact : puzzle.getFacts()) {
 			fact.postTo(zebraModel);
 		}
@@ -78,7 +84,14 @@ public class PuzzleSolver {
 					return false;
 				}
 				solution.record();
-				action.accept(zebraModel.getVariableMap().entrySet().stream()
+				// We extract the values of only the relevant variables. Returning a copy of the
+				// complete solution is not efficient because the solution contains much more
+				// internal variables and data.
+				// For question puzzles, this can be further improved by extracting only the
+				// attributes for towards and about, but the optimization is currently not worth
+				// the added complexity.
+				Set<Entry<Attribute, IntVar>> variables = zebraModel.getVariableMap().entrySet();
+				action.accept(variables.stream()
 						.collect(Collectors.toMap(e -> e.getKey(), e -> solution.getIntVal(e.getValue()))));
 				return true;
 			}
@@ -86,19 +99,23 @@ public class PuzzleSolver {
 		return StreamSupport.stream(spliterator, false);
 	}
 
+	/**
+	 * Solves the puzzles eagerly.
+	 * 
+	 * @return a list of all distinct solution.
+	 */
 	public List<PuzzleSolution> solve() {
-		log.debug("Solving puzzle {}", puzzle);
 		List<PuzzleSolution> zebraSolutions = solveToStream().distinct().collect(Collectors.toList());
 		log.trace("Found {} distinct solutions", zebraSolutions.size());
 		return zebraSolutions;
 	}
 
+	/**
+	 * @return a lazy stream of all solutions with possible duplicates
+	 */
 	public Stream<PuzzleSolution> solveToStream() {
-		ZebraModel zebraModel = toModel();
-		Stream<Map<Attribute, Integer>> solutions = solveChoco(zebraModel);
-		// 16% of runtime is here
-		Stream<PuzzleSolution> stream = solutions.map(choco -> fromChocoSolution(choco));
-		return stream;
+		// 16% of the typical CPU cost of this method is in the map.
+		return solveChoco().map(this::fromChocoSolution);
 	}
 
 	private PuzzleSolution fromChocoSolution(Map<Attribute, Integer> choco) {
@@ -114,7 +131,7 @@ public class PuzzleSolver {
 		return builder.build();
 	}
 
-	ZebraModel toModel() {
+	private ZebraModel toModel() {
 		ZebraModel model = new ZebraModel(chocoSettings);
 		for (Entry<AttributeType, Set<Attribute>> entry : puzzle.getAttributeSets().entrySet()) {
 			entry.getKey().addToModel(model, entry.getValue(), puzzle.numPeople());

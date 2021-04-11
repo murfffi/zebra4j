@@ -87,13 +87,19 @@ public abstract class AbstractPuzzleGenerator<P> {
 	protected abstract P toPuzzle(List<Fact> facts);
 
 	/**
-	 * @param puzzle
-	 * @return number of unique solutions of the given puzzle
+	 * If the puzzle has a unique solution
+	 * 
+	 * @param puzzle required
+	 * @return false, if the puzzle has no or multiple solutions
 	 */
 	protected boolean uniqueSolution(P puzzle) {
 		return countSolutions(puzzle) == 1;
 	}
 
+	/**
+	 * @param puzzle required
+	 * @return number of unique solutions of the given puzzle
+	 */
 	protected abstract int countSolutions(P puzzle);
 
 	/**
@@ -109,6 +115,17 @@ public abstract class AbstractPuzzleGenerator<P> {
 		return false;
 	}
 
+	/**
+	 * Reduce the initial list of all compatible facts to the facts to use in the
+	 * generated puzzle
+	 * 
+	 * <p>
+	 * Implementation typically override either this method or
+	 * {@link #uniqueSolution} with a more efficient solution.
+	 * 
+	 * @param facts initial list of facts with which the puzzle has a unique
+	 *              solution
+	 */
 	protected void removeFacts(List<Fact> facts) {
 		for (int i = 0; i < facts.size(); ++i) {
 			List<Fact> factsCopy = new ArrayList<>(facts);

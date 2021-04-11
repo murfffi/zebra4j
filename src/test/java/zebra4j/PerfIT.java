@@ -23,8 +23,6 @@ package zebra4j;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Locale;
-
 import org.junit.Test;
 
 import zebra4j.Cli.QSample;
@@ -34,7 +32,6 @@ public class PerfIT {
 	@Test
 	public void testQuestion() throws Exception {
 		QSample sample = Cli.sampleQuestionPuzzle(1, 5);
-		Cli.printQuestionPuzzle(sample, Locale.getDefault(), System.out);
 		assertEquals(3, sample.getPuzzle().getPuzzle().getFacts().size());
 	}
 

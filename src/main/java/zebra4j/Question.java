@@ -40,6 +40,10 @@ import lombok.Value;
  * The question is towards the person, identified by the attribute in
  * {@link #getTowards()} and is about the attribute of type {@link #getAbout()}.
  */
+/**
+ * @author mnozhchev
+ *
+ */
 @Value
 public class Question {
 	public static Question NAME_OF_CRIMINAL = new Question(Criminal.YES, PersonName.TYPE);
@@ -112,10 +116,17 @@ public class Question {
 		return solution.findPerson(towards).flatMap(person -> Optional.ofNullable(person.findAttribute(about)));
 	}
 
-	public Optional<Attribute> answer(Map<Attribute, Integer> chocoSolution, Puzzle puzzle) {
-		int personId = chocoSolution.get(towards);
+	/**
+	 * Answers this question about the given solution, if applicable
+	 * 
+	 * @param rawSolution solution, as in {@link PuzzleSolver#solveChoco()}
+	 * @param puzzle      the puzzle that the solution solves, used for metadata
+	 * @return same as {@link #answer(PuzzleSolution)}
+	 */
+	public Optional<Attribute> answer(Map<Attribute, Integer> rawSolution, Puzzle puzzle) {
+		int personId = rawSolution.get(towards);
 		Set<Attribute> attributes = puzzle.getAttributeSets().get(about);
-		return attributes.stream().filter(attr -> chocoSolution.get(attr) == personId).findAny();
+		return attributes.stream().filter(attr -> rawSolution.get(attr) == personId).findAny();
 	}
 
 	public boolean appliesTo(Puzzle puzzle) {

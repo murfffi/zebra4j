@@ -56,8 +56,7 @@ public class QuestionPuzzleSolver {
 	}
 
 	public Stream<Attribute> solveToStream() {
-		ZebraModel model = solver.toModel();
-		return solver.solveChoco(model)
+		return solver.solveChoco()
 				.flatMap(solution -> toStream(qPuzzle.getQuestion().answer(solution, qPuzzle.getPuzzle())));
 	}
 
