@@ -21,10 +21,12 @@
  */
 package zebra4j;
 
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import zebra4j.fact.Fact;
 
@@ -65,6 +67,25 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 	@Override
 	protected int countSolutions(Puzzle puzzle) {
 		return new PuzzleSolver(puzzle, getChocoSettings()).solve().size();
+	}
+
+	@Override
+	protected boolean uniqueSolution(Puzzle puzzle) {
+		Iterator<PuzzleSolution> iter = solveToStream(puzzle).iterator();
+		if (!iter.hasNext()) {
+			return false;
+		}
+		PuzzleSolution first = iter.next();
+		while (iter.hasNext()) {
+			if (!first.equals(iter.next())) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private Stream<PuzzleSolution> solveToStream(Puzzle puzzle) {
+		return new PuzzleSolver(puzzle, getChocoSettings()).solveToStream();
 	}
 
 }

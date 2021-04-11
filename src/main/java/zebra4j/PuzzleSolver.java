@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.Set;
 import java.util.Spliterators.AbstractSpliterator;
 import java.util.function.Consumer;
@@ -37,7 +36,6 @@ import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Settings;
 import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.Solver;
-import org.chocosolver.solver.variables.IntVar;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -59,20 +57,6 @@ public class PuzzleSolver {
 	@Getter
 	@Setter
 	private Settings chocoSettings;
-
-	private class SolutionIterator extends AbstractSpliterator<Map<Attribute, Integer>> {
-
-		protected SolutionIterator() {
-			super(Long.MAX_VALUE, 0);
-		}
-
-		@Override
-		public boolean tryAdvance(Consumer<? super Map<Attribute, Integer>> action) {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-	}
 
 	/**
 	 * @param zebraModel
@@ -104,31 +88,17 @@ public class PuzzleSolver {
 
 	public List<PuzzleSolution> solve() {
 		log.debug("Solving puzzle {}", puzzle);
-		final ZebraModel zebraModel = toModel();
-		Stream<Map<Attribute, Integer>> solutions = solveChoco(zebraModel);
-		// 16% of runtime is here
-		List<PuzzleSolution> zebraSolutions = solutions.map(choco -> fromChocoSolution(choco)).distinct()
-				.collect(Collectors.toList());
+		List<PuzzleSolution> zebraSolutions = solveToStream().distinct().collect(Collectors.toList());
 		log.trace("Found {} distinct solutions", zebraSolutions.size());
 		return zebraSolutions;
 	}
 
-	private PuzzleSolution fromChocoSolution(Solution choco, ZebraModel model) {
-		int numPeople = puzzle.numPeople();
-		@SuppressWarnings("unchecked")
-		List<Attribute>[] allAttributes = new List[numPeople];
-		for (int i = 0; i < allAttributes.length; ++i) {
-			allAttributes[i] = new ArrayList<>();
-		}
-		for (IntVar var : retrieveVars(choco)) {
-			int person = choco.getIntVal(var);
-			Optional<Attribute> attribute = model.toOptionalAttribute(var);
-			log.trace("Var {} was mapped to attribute {}", var.getName(), attribute);
-			attribute.ifPresent(attr -> allAttributes[person].add(attr));
-		}
-		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder(false);
-		Stream.of(allAttributes).forEach(list -> builder.add(new SolutionPerson(list)));
-		return builder.build();
+	public Stream<PuzzleSolution> solveToStream() {
+		ZebraModel zebraModel = toModel();
+		Stream<Map<Attribute, Integer>> solutions = solveChoco(zebraModel);
+		// 16% of runtime is here
+		Stream<PuzzleSolution> stream = solutions.map(choco -> fromChocoSolution(choco));
+		return stream;
 	}
 
 	private PuzzleSolution fromChocoSolution(Map<Attribute, Integer> choco) {
@@ -142,11 +112,6 @@ public class PuzzleSolver {
 		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder(false);
 		Stream.of(allAttributes).forEach(list -> builder.add(new SolutionPerson(list)));
 		return builder.build();
-	}
-
-	private List<IntVar> retrieveVars(Solution choco) {
-		// If people are two, all vars become boolean.
-		return choco.retrieveIntVars(true);
 	}
 
 	ZebraModel toModel() {

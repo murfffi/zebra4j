@@ -21,10 +21,11 @@
  */
 package zebra4j;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.Validate;
 
@@ -101,21 +102,11 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 		return solver.solve().size();
 	}
 
-	@Override
-	protected boolean uniqueSolution(QuestionPuzzle puzzle) {
+	public Stream<Attribute> solveToStream(QuestionPuzzle puzzle) {
 		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(puzzle);
 		solver.setChocoSettings(getChocoSettings());
-		Iterator<Attribute> iter = solver.solveToStream().iterator();
-		if (!iter.hasNext()) {
-			return false;
-		}
-		Attribute first = iter.next();
-		while (iter.hasNext()) {
-			if (!first.equals(iter.next())) {
-				return false;
-			}
-		}
-		return true;
+		Stream<Attribute> stream = solver.solveToStream();
+		return stream;
 	}
 
 	@Override
@@ -147,6 +138,22 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 		}
 
 		return false;
+	}
+
+	@Override
+	protected void removeFacts(List<Fact> facts) {
+		Attribute answer = question.answer(solution).get();
+		Different contraFact = new Different(question.getTowards(), answer);
+		for (int i = 0; i < facts.size(); ++i) {
+			List<Fact> factsCopy = new ArrayList<>(facts);
+			factsCopy.remove(i);
+			factsCopy.add(contraFact);
+			QuestionPuzzle puzzle = toPuzzle(factsCopy);
+			if (!solveToStream(puzzle).findAny().isPresent()) {
+				facts.remove(i);
+				--i;
+			}
+		}
 	}
 
 }

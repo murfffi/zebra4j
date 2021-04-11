@@ -73,6 +73,7 @@ public abstract class AbstractPuzzleGenerator<P> {
 			log.trace("{} using {} facts.", msg, facts.size());
 			throw new IllegalArgumentException(msg);
 		}
+		Collections.shuffle(facts, rnd);
 		removeFacts(facts);
 		return toPuzzle(facts);
 	}
@@ -108,8 +109,7 @@ public abstract class AbstractPuzzleGenerator<P> {
 		return false;
 	}
 
-	private void removeFacts(List<Fact> facts) {
-		Collections.shuffle(facts, rnd);
+	protected void removeFacts(List<Fact> facts) {
 		for (int i = 0; i < facts.size(); ++i) {
 			List<Fact> factsCopy = new ArrayList<>(facts);
 			factsCopy.remove(i);
