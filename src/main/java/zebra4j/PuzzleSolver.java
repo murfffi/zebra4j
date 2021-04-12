@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.Spliterators.AbstractSpliterator;
+import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -75,8 +75,9 @@ public class PuzzleSolver {
 		Model model = zebraModel.getChocoModel();
 		Solver solver = model.getSolver();
 		Solution solution = new Solution(model);
-		AbstractSpliterator<Map<Attribute, Integer>> spliterator = new AbstractSpliterator<Map<Attribute, Integer>>(
-				Long.MAX_VALUE, 0) {
+		// We don't extend AbstractSpliterator below because it is not available in
+		// TeaVM stdlib. We don't use its features anyway.
+		Spliterator<Map<Attribute, Integer>> spliterator = new Spliterator<Map<Attribute, Integer>>() {
 
 			@Override
 			public boolean tryAdvance(Consumer<? super Map<Attribute, Integer>> action) {
@@ -94,6 +95,24 @@ public class PuzzleSolver {
 				action.accept(variables.stream()
 						.collect(Collectors.toMap(e -> e.getKey(), e -> solution.getIntVal(e.getValue()))));
 				return true;
+			}
+
+			@Override
+			public Spliterator<Map<Attribute, Integer>> trySplit() {
+				// Splitting not possible
+				return null;
+			}
+
+			@Override
+			public long estimateSize() {
+				// Per javadoc, means unknown size
+				return Long.MAX_VALUE;
+			}
+
+			@Override
+			public int characteristics() {
+				// Value is a bit field. 0 means no characteristics.
+				return 0;
 			}
 		};
 		return StreamSupport.stream(spliterator, false);
