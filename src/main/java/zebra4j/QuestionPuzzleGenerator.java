@@ -21,7 +21,9 @@
  */
 package zebra4j;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -32,6 +34,8 @@ import org.apache.commons.lang3.Validate;
 import zebra4j.fact.BothTrue;
 import zebra4j.fact.Different;
 import zebra4j.fact.Fact;
+import zebra4j.util.CollectionChain;
+import zebra4j.util.Subsequence;
 
 /**
  * A generator for {@link QuestionPuzzle}
@@ -90,9 +94,9 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	}
 
 	@Override
-	protected QuestionPuzzle toPuzzle(List<Fact> facts) {
+	protected QuestionPuzzle toPuzzle(Collection<Fact> facts) {
 		Validate.isTrue(question.appliesTo(solution), "Question %s does not apply to solution %s", question, solution);
-		return new QuestionPuzzle(question, PuzzleGenerator.toBasicPuzzle(solution, facts));
+		return new QuestionPuzzle(question, new Puzzle(solution.getAttributeSets(), facts));
 	}
 
 	@Override
@@ -143,17 +147,17 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	@Override
 	protected void removeFacts(List<Fact> facts) {
 		Attribute answer = question.answer(solution).get();
+		Subsequence<Fact> activeFacts = new Subsequence<>(facts);
 		Different contraFact = new Different(question.getTowards(), answer);
+		Collection<Fact> testedFacts = new CollectionChain<>(activeFacts, Collections.singleton(contraFact));
+		QuestionPuzzle puzzle = toPuzzle(testedFacts);
 		for (int i = 0; i < facts.size(); ++i) {
-			List<Fact> factsCopy = new ArrayList<>(facts);
-			factsCopy.remove(i);
-			factsCopy.add(contraFact);
-			QuestionPuzzle puzzle = toPuzzle(factsCopy);
-			if (!solveToStream(puzzle).findAny().isPresent()) {
-				facts.remove(i);
-				--i;
+			activeFacts.block(i);
+			if (solveToStream(puzzle).findAny().isPresent()) {
+				activeFacts.unblock(i);
 			}
 		}
+		facts.retainAll(new HashSet<>(activeFacts));
 	}
 
 }

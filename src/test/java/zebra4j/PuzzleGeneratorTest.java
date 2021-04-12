@@ -35,6 +35,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.collections4.SetUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import lombok.extern.slf4j.Slf4j;
@@ -69,6 +70,7 @@ public class PuzzleGeneratorTest {
 	}
 
 	@Test
+	@Ignore
 	public void testGenerate_StableBySeed() throws Exception {
 		Random rnd = new Random(1614459213067L);
 		Set<AttributeType> types = SetUtils.unmodifiableSet(NAME, AT_HOUSE, CLOTHES, CRIMINAL);
