@@ -8,7 +8,7 @@
 	<!-- https://central.sonatype.org/pages/choosing-your-coordinates.html -->
 	<groupId>io.github.murfffi</groupId>
 	<artifactId>zebra4j</artifactId>
-	<version>0.7-SNAPSHOT</version>
+	<version>0.7</version>
 
 	<name>zebra4j</name>
 	<url>https://github.com/murfffi/zebra4j</url>
@@ -45,7 +45,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<exec.mainClass>zebra4j.Cli</exec.mainClass>
-		<lombok.version>1.18.18</lombok.version>
+		<lombok.version>1.18.20</lombok.version>
 		<delombok.output>${project.build.directory}/generated-sources/delombok</delombok.output>
 	</properties>
 
@@ -232,7 +232,7 @@
 	<scm>
 		<url>https://github.com/murfffi/zebra4j</url>
 		<connection>scm:git:ssh://git@github.com/murfffi/zebra4j.git</connection>
-		<tag>v0.6</tag>
+		<tag>v0.7</tag>
 	</scm>
 	<distributionManagement>
 		<!-- https://issues.sonatype.org/browse/OSSRH-65855 -->
@@ -260,15 +260,6 @@
 		</profile>
 		<profile>
 			<id>release</id>
-			<repositories>
-				<repository>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-					<id>bintray-marin-nozhchev</id>
-					<url>https://dl.bintray.com/marin-nozhchev/marin-nozhchev</url>
-				</repository>
-			</repositories>
 			<build>
 				<plugins>
 					<plugin>
