@@ -24,13 +24,21 @@ package zebra4j;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.lang.Character.UnicodeBlock;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.function.Function;
+
+import org.languagetool.JLanguageTool;
+import org.languagetool.language.AmericanEnglish;
+import org.languagetool.rules.RuleMatch;
+
+import lombok.SneakyThrows;
 
 public class LocalizationTestUtils {
 
@@ -64,6 +72,18 @@ public class LocalizationTestUtils {
 		}
 		assertEquals(String.format("For locale: %s and output: %s", locale, output), expected, found);
 
+	}
+
+	public static void testGrammar(Function<Locale, String> describe) {
+		String sentence = describe.apply(Locale.ENGLISH);
+		testEnglishGrammar(sentence);
+	}
+
+	@SneakyThrows(IOException.class)
+	public static void testEnglishGrammar(String sentence) {
+		JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
+		List<RuleMatch> matches = langTool.check(sentence);
+		assertTrue(matches.toString(), matches.isEmpty());
 	}
 
 }

@@ -21,8 +21,6 @@
  */
 package zebra4j;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
@@ -30,30 +28,12 @@ import java.util.Set;
 
 import org.junit.Test;
 
-public class ClothesTest {
+public class ClothesIT {
 
 	@Test
-	public void testDescription() {
-		LocalizationTestUtils.testDescribe(Clothes.RED::description);
-	}
-
-	@Test
-	public void testQuestionSentencePart() {
-		LocalizationTestUtils.testDescribe(Clothes.TYPE::questionSentencePart);
-	}
-
-	@Test
-	public void testType_DescribeSet() throws Exception {
+	public void testType_DescribeSet_Grammar() throws Exception {
 		Set<Attribute> attrSet = new HashSet<>(Arrays.asList(Clothes.values()));
-		LocalizationTestUtils.testDescribe(l -> Clothes.TYPE.describeSet(attrSet, l));
-	}
-
-	@Test
-	public void testType_DescribeSetAllRepresented() throws Exception {
-		Set<Attribute> attrSet = new HashSet<>(Arrays.asList(Clothes.values()));
-		for (Locale l : LocalizationTestUtils.SUPPORTED_LOCALES) {
-			String description = Clothes.TYPE.describeSet(attrSet, l);
-			attrSet.forEach(attr -> assertTrue(description.contains(attr.description(l))));
-		}
+		String sentence = Clothes.TYPE.describeSet(attrSet, Locale.ENGLISH);
+		LocalizationTestUtils.testEnglishGrammar(sentence);
 	}
 }
