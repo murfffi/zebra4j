@@ -22,7 +22,6 @@
 package zebra4j;
 
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -57,11 +56,7 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 
 	@Override
 	protected Puzzle toPuzzle(List<Fact> facts) {
-		return toBasicPuzzle(solution, facts);
-	}
-
-	static Puzzle toBasicPuzzle(PuzzleSolution solution, List<Fact> facts) {
-		return new Puzzle(solution.getAttributeSets(), new LinkedHashSet<>(facts));
+		return new Puzzle(solution.getAttributeSets(), facts);
 	}
 
 	@Override
