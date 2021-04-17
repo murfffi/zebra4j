@@ -26,7 +26,6 @@ import static org.junit.Assert.assertFalse;
 
 import java.util.Collection;
 import java.util.Random;
-import java.util.Set;
 
 import org.junit.Test;
 
@@ -50,7 +49,7 @@ public class QuestionPuzzleGeneratorTest {
 		QuestionPuzzle puzzle = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution, new Random(1),
 				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		Attribute nameOfCriminal = startSolution.findPerson(Criminal.YES).get().findAttribute(PersonName.TYPE);
-		Set<Fact> facts = puzzle.getPuzzle().getFacts();
+		Collection<Fact> facts = puzzle.getPuzzle().getFacts();
 		assertFalse(facts.contains(new BothTrue(nameOfCriminal, Criminal.YES)));
 		assertFalse(facts.contains(new BothTrue(Criminal.YES, nameOfCriminal)));
 	}

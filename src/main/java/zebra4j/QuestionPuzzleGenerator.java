@@ -92,7 +92,7 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	@Override
 	protected QuestionPuzzle toPuzzle(List<Fact> facts) {
 		Validate.isTrue(question.appliesTo(solution), "Question %s does not apply to solution %s", question, solution);
-		return new QuestionPuzzle(question, PuzzleGenerator.toBasicPuzzle(solution, facts));
+		return new QuestionPuzzle(question, new Puzzle(solution.getAttributeSets(), facts));
 	}
 
 	@Override

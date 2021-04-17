@@ -21,6 +21,7 @@
  */
 package zebra4j;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -49,7 +50,7 @@ public class Puzzle {
 	/**
 	 * The facts that must be satisfied by any solution of the puzzle.
 	 */
-	private final Set<Fact> facts;
+	private final Collection<Fact> facts;
 
 	/**
 	 * @return the number of people in the puzzle
