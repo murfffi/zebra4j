@@ -8,7 +8,7 @@
 	<!-- https://central.sonatype.org/pages/choosing-your-coordinates.html -->
 	<groupId>io.github.murfffi</groupId>
 	<artifactId>zebra4j</artifactId>
-	<version>0.7.1-SNAPSHOT</version>
+	<version>0.8-SNAPSHOT</version>
 
 	<name>zebra4j</name>
 	<url>https://github.com/murfffi/zebra4j</url>
@@ -372,7 +372,7 @@
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
-								<phase>verify</phase>
+								<phase>install</phase>
 								<goals>
 									<goal>sign</goal>
 								</goals>
@@ -428,6 +428,8 @@
 								<goals>
 									<goal>enforce</goal>
 								</goals>
+								<!-- So we can run mvn verify -P release in CI with Java 11 -->
+								<phase>install</phase>
 							</execution>
 						</executions>
 						<configuration>

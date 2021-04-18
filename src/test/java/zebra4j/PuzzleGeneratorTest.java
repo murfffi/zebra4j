@@ -30,10 +30,10 @@ import static zebra4j.Attributes.NAME;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.SetUtils;
 import org.junit.Test;
 
@@ -78,14 +78,14 @@ public class PuzzleGeneratorTest {
 		PuzzleGenerator gen = new PuzzleGenerator(rnd, sol, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES);
 		Puzzle puzzle = gen.generate();
 
-		Set<Fact> expectedFacts = new LinkedHashSet<>(Arrays.asList( //
+		Collection<Fact> expectedFacts = Arrays.asList( //
 				new BothTrue(PersonName.PETER, Clothes.BLUE), //
 				new Different(PersonName.ELENA, Criminal.YES), //
 				new Different(PersonName.IVAN, new AtHouse(3)), //
 				new Different(Clothes.BLUE, Criminal.YES), //
 				new Different(PersonName.ELENA, Clothes.GREEN), //
-				new NearbyHouse(2, PersonName.IVAN, PersonName.PETER)));
-		assertEquals(expectedFacts, puzzle.getFacts());
+				new NearbyHouse(2, PersonName.IVAN, PersonName.PETER));
+		assertTrue(CollectionUtils.isEqualCollection(expectedFacts, puzzle.getFacts()));
 	}
 
 	public static PuzzleSolution sampleSolution() {
