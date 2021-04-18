@@ -21,17 +21,18 @@
  */
 package zebra4j;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang3.Validate;
 
 import zebra4j.fact.BothTrue;
 import zebra4j.fact.Different;
 import zebra4j.fact.Fact;
+import zebra4j.util.CollectionChain;
 
 /**
  * A generator for {@link QuestionPuzzle}
@@ -90,7 +91,7 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	}
 
 	@Override
-	protected QuestionPuzzle toPuzzle(List<Fact> facts) {
+	protected QuestionPuzzle toPuzzle(Collection<Fact> facts) {
 		Validate.isTrue(question.appliesTo(solution), "Question %s does not apply to solution %s", question, solution);
 		return new QuestionPuzzle(question, new Puzzle(solution.getAttributeSets(), facts));
 	}
@@ -100,13 +101,6 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(puzzle);
 		solver.setChocoSettings(getChocoSettings());
 		return solver.solve().size();
-	}
-
-	public Stream<Attribute> solveToStream(QuestionPuzzle puzzle) {
-		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(puzzle);
-		solver.setChocoSettings(getChocoSettings());
-		Stream<Attribute> stream = solver.solveToStream();
-		return stream;
 	}
 
 	@Override
@@ -140,18 +134,41 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 		return false;
 	}
 
+	/**
+	 * Optimized facts pruning for {@link QuestionPuzzle}
+	 * 
+	 * <p>
+	 * The implementation in the super class is correct for question puzzles but not
+	 * optimal. The major optimization below is looking for a single solution in a
+	 * puzzle with an additional fact that excludes the starting one. This is
+	 * equivalent to iterating over solutions looking for one different than the
+	 * starting solution but pushes the search down to the solver which is faster.
+	 * 
+	 * <p>
+	 * A minor implementation is reducing the amount of allocations. This
+	 * implementation uses a single solver, puzzle and does one less copy of the
+	 * facts per iteration. That does not reduce - sometimes even increases - wall
+	 * clock time likely because copies are very fast, while GC runs in parallel.
+	 * However, overall CPU usage is reduced because GC has less to do. In
+	 * environments with less efficient GC, like TeaVM or native, wall clock time is
+	 * decreased.
+	 */
 	@Override
 	protected void removeFacts(List<Fact> facts) {
 		Attribute answer = question.answer(solution).get();
 		Different contraFact = new Different(question.getTowards(), answer);
+		Collection<Fact> contraFacts = new CollectionChain<>(facts, Collections.singleton(contraFact));
+		QuestionPuzzle puzzle = toPuzzle(contraFacts);
+		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(puzzle);
+		solver.setChocoSettings(getChocoSettings());
 		for (int i = 0; i < facts.size(); ++i) {
-			List<Fact> factsCopy = new ArrayList<>(facts);
-			factsCopy.remove(i);
-			factsCopy.add(contraFact);
-			QuestionPuzzle puzzle = toPuzzle(factsCopy);
-			if (!solveToStream(puzzle).findAny().isPresent()) {
-				facts.remove(i);
+			// very fast in an array list
+			Fact f = facts.remove(i);
+			if (!solver.solveToStream().findAny().isPresent()) {
 				--i;
+			} else {
+				// this case is very rare: out of the thousands of facts, usually <10 are kept
+				facts.add(i, f);
 			}
 		}
 	}

@@ -21,8 +21,8 @@
  */
 package zebra4j;
 
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -55,7 +55,7 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 	}
 
 	@Override
-	protected Puzzle toPuzzle(List<Fact> facts) {
+	protected Puzzle toPuzzle(Collection<Fact> facts) {
 		return new Puzzle(solution.getAttributeSets(), facts);
 	}
 

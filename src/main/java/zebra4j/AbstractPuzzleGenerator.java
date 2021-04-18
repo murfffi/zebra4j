@@ -22,6 +22,7 @@
 package zebra4j;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -84,7 +85,7 @@ public abstract class AbstractPuzzleGenerator<P> {
 	 * @param facts, not empty
 	 * @return
 	 */
-	protected abstract P toPuzzle(List<Fact> facts);
+	abstract P toPuzzle(Collection<Fact> facts);
 
 	/**
 	 * If the puzzle has a unique solution
