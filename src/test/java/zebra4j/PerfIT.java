@@ -32,7 +32,7 @@ public class PerfIT {
 	@Test
 	public void testQuestion() throws Exception {
 		QSample sample = Cli.sampleQuestionPuzzle(1, 5);
-		assertEquals(3, sample.getPuzzle().getPuzzle().getFacts().size());
+		assertEquals(5, sample.getPuzzle().getPuzzle().getFacts().size());
 	}
 
 }

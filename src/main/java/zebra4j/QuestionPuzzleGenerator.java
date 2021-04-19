@@ -117,6 +117,8 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	}
 
 	private boolean rejectDifferent(Different fact) {
+		// Avoid puzzles with simple exclusion: the answer is either A, B or C and is
+		// not B or C.
 		if (fact.getLeft().equals(question.getTowards()) && fact.getRight().type().equals(question.getAbout())) {
 			return true;
 		}
@@ -126,9 +128,27 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 		return false;
 	}
 
+	/**
+	 * BothTrue facts are the most informative so many of those are rejected for
+	 * question puzzles.
+	 */
 	private boolean rejectBothTrue(BothTrue fact) {
 		if (fact.getLeft().equals(question.getTowards()) || fact.getRight().equals(question.getTowards())) {
-			return fact.attributeTypes().contains(question.getAbout());
+			// I've already gone full circle once about if only (towards, answer) is
+			// rejected or all BothTrue facts about towards or answer are rejected. So
+			// far I know:
+
+			// - BothTrue(towards, answer) should obviously be rejected
+			// - Chains like (towards, X), (X, answer) should also be rejected. Same if
+			// longer: (towards, X), (X, Y), (Y, answer).
+
+			// The implementation rejects all (towards, X) however generated puzzles may
+			// be too similar.
+			// Alternatively, the generator can select at random if all (towards, X) or all
+			// (X, answer) are rejected. The most complex option is to reject at random one
+			// of the chain elements for each chain separately.
+
+			return true;
 		}
 
 		return false;
