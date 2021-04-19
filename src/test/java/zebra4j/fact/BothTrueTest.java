@@ -53,6 +53,16 @@ public class BothTrueTest {
 		LocalizationTestUtils.testDescribe(f::describe);
 	}
 
+	@Test
+	public void testEquals() {
+		CommutativeFactUtils.testEquals(BothTrue::new);
+	}
+
+	@Test
+	public void testHashcode() {
+		CommutativeFactUtils.testHashcode(BothTrue::new);
+	}
+
 	public static void testGenerate(Fact.Type type) {
 		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
 		List<Fact> facts = type.generate(solution);

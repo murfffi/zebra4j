@@ -21,8 +21,11 @@
  */
 package zebra4j.fact;
 
+import static org.junit.Assert.assertNotEquals;
+
 import org.junit.Test;
 
+import zebra4j.Clothes;
 import zebra4j.LocalizationTestUtils;
 import zebra4j.PersonName;
 
@@ -42,6 +45,28 @@ public class NearbyHouseTest {
 	public void testDescribe() {
 		Fact f = new NearbyHouse(1, PersonName.GEORGE, PersonName.ELENA);
 		LocalizationTestUtils.testDescribe(f::describe);
+	}
+
+	@Test
+	public void testEquals_Attributes() {
+		CommutativeFactUtils.testEquals((l, r) -> new NearbyHouse(2, l, r));
+	}
+
+	@Test
+	public void testHashcode_Attributes() {
+		CommutativeFactUtils.testHashcode((l, r) -> new NearbyHouse(2, l, r));
+	}
+
+	@Test
+	public void testEquals_Distance() {
+		assertNotEquals(new NearbyHouse(1, Clothes.GREEN, PersonName.ELENA),
+				new NearbyHouse(2, Clothes.GREEN, PersonName.ELENA));
+	}
+
+	@Test
+	public void testHashcode_Distance() {
+		assertNotEquals(new NearbyHouse(1, Clothes.GREEN, PersonName.ELENA).hashCode(),
+				new NearbyHouse(2, Clothes.GREEN, PersonName.ELENA).hashCode());
 	}
 
 }

@@ -34,4 +34,14 @@ public class DifferentTest {
 	public void testPostTo() {
 		BothTrueTest.testPostTo(Different.TYPE);
 	}
+
+	@Test
+	public void testEquals() {
+		CommutativeFactUtils.testEquals(Different::new);
+	}
+
+	@Test
+	public void testHashcode() {
+		CommutativeFactUtils.testHashcode(Different::new);
+	}
 }

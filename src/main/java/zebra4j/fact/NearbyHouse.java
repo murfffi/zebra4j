@@ -31,7 +31,9 @@ import java.util.Optional;
 import org.chocosolver.solver.constraints.Constraint;
 import org.chocosolver.solver.variables.IntVar;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
 import zebra4j.AllDifferentType;
 import zebra4j.AtHouse;
 import zebra4j.Attribute;
@@ -50,8 +52,10 @@ import zebra4j.ZebraModel;
  * equals/hashCode treats NearbyHouse(PersonA, PersonB) as different from
  * NearbyHouse(B, A) even though they are semantically the same.
  */
-@Value
-public class NearbyHouse implements Fact {
+@AllArgsConstructor
+@ToString
+@Getter
+public class NearbyHouse extends CommutativeFact {
 
 	private static final int MAX_DISTANCE = 2;
 
@@ -168,6 +172,16 @@ public class NearbyHouse implements Fact {
 	@Override
 	public Collection<AttributeType> attributeTypes() {
 		return Arrays.asList(left.type(), right.type(), AtHouse.TYPE);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj) && ((NearbyHouse) obj).distance == this.distance;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() ^ distance;
 	}
 
 }

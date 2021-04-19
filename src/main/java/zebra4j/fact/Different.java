@@ -30,7 +30,9 @@ import java.util.Locale;
 import org.chocosolver.solver.constraints.Constraint;
 import org.chocosolver.solver.variables.IntVar;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import zebra4j.Attribute;
 import zebra4j.AttributeType;
@@ -39,9 +41,11 @@ import zebra4j.PuzzleSolution;
 import zebra4j.SolutionPerson;
 import zebra4j.ZebraModel;
 
-@Value
+@AllArgsConstructor
+@ToString
+@Getter
 @Slf4j
-public class Different implements Fact {
+public class Different extends CommutativeFact {
 
 	public static Fact.Type TYPE = new Fact.Type() {
 
