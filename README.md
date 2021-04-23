@@ -19,7 +19,7 @@ features:
 - It supports both puzzles that end with question like "Who owns the zebra?" and
   puzzles that require identifying all attributes of all people.
 - zebra4j is available as either 
-  [a JAR for Java 8+ applications](https://bintray.com/beta/#/marin-nozhchev/marin-nozhchev/zebra4),
+  [a JAR for Java 8+ applications](https://search.maven.org/artifact/io.github.murfffi/zebra4j/),
   a [JavaScript library](https://github.com/murfffi/zebra-apps), or a native library,
   compiled ahead-of-time with GraalVM (coming soon).
   The native library can be embedded in an app written in another
