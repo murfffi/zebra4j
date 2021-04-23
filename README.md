@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/murfffi/zebra4j.svg?branch=main)](https://travis-ci.org/murfffi/zebra4j)
 [![License](https://img.shields.io/github/license/murfffi/zebra4j)](/LICENSE)
 [![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)](https://search.maven.org/artifact/io.github.murfffi/zebra4j)
+[![DepShield Badge](https://depshield.sonatype.org/badges/murfffi/zebra4j/depshield.svg)](https://depshield.github.io)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e85598dea228465188b9e70774983532)](https://www.codacy.com/gh/murfffi/zebra4j/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=murfffi/zebra4j&amp;utm_campaign=Badge_Grade)
 
 ## Overview
