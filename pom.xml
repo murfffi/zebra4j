@@ -148,10 +148,6 @@
 					<version>2.22.2</version>
 				</plugin>
 				<plugin>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.2.0</version>
-				</plugin>
-				<plugin>
 					<artifactId>maven-install-plugin</artifactId>
 					<version>2.5.2</version>
 				</plugin>
@@ -190,10 +186,28 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			<!-- https://stackoverflow.com/questions/40446275/include-git-commit-hash-in-jar-version -->
+			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+				<version>4.0.4</version>
+				<executions>
+					<execution>
+						<id>get-the-git-infos</id>
+						<goals>
+							<goal>revision</goal>
+						</goals>
+						<phase>validate</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -204,6 +218,8 @@
 						<manifestEntries>
 							<!-- https://docs.oracle.com/javase/9/docs/api/java/lang/module/ModuleFinder.html#automatic-modules -->
 							<Automatic-Module-Name>zebra4j</Automatic-Module-Name>
+							<!-- https://maven.apache.org/plugin-developers/cookbook/add-svn-revision-to-manifest.html -->
+							<SCM-Revision>${git.commit.id.describe-short}</SCM-Revision>
 						</manifestEntries>
 					</archive>
 				</configuration>
