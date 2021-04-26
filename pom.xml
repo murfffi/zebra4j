@@ -503,7 +503,7 @@
 		<profile>
 			<id>native</id>
 			<properties>
-				<graalvm.version>21.0.0.2</graalvm.version>
+				<graalvm.version>21.1.0</graalvm.version>
 			</properties>
 			<!-- https://www.graalvm.org/reference-manual/native-image/NativeImageMavenPlugin/ -->
 			<build>
