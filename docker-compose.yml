@@ -5,9 +5,14 @@ services:
         image: murfffi/zebracli 
     native:
         # Used for native builds
-        build: ./graalvm
+        build: 
+            context: ./graalvm
+            args: 
+                GID: ${GID:-0}
+                UID: ${UID:-0}
         volumes: 
-           - ".:/src"
-           - "${HOME}/.m2:/root/.m2"
-        working_dir: /src
-        command: "./mvnw install -P native"
+           - ".:/home/mvnuser/src"
+           - "${HOME}/.m2:/home/mvnuser/.m2"
+        working_dir: /home/mvnuser/src
+        environment: 
+            MVNW_VERBOSE: "true"

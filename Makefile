@@ -16,5 +16,6 @@ target: $(JAVASRC)
 	./mvnw clean install
 
 target/zebra4j: $(JAVASRC)
-	docker-compose run --rm native
+	UID=$(shell id -u) GID=$(shell id -g) $(COMPOSE) build native
+	docker-compose run --rm native ./mvnw install -P native
 
