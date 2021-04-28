@@ -58,7 +58,7 @@ public class Cli {
 		}
 	}
 
-	@Command(name = "generate")
+	@Command(name = "generate", mixinStandardHelpOptions = true)
 	static class GenerateCli implements Runnable {
 
 		@Option(names = { "-t", "--type" }, defaultValue = "QUESTION")

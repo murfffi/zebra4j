@@ -324,6 +324,7 @@
 								<configuration>
 									<failOnNotUptodateHeader>true</failOnNotUptodateHeader>
 									<failOnMissingHeader>true</failOnMissingHeader>
+									<excludes>**/*.json</excludes>
 								</configuration>
 							</execution>
 						</executions>

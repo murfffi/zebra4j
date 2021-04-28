@@ -13,3 +13,4 @@ buildNumber.properties
 /.classpath
 /.settings
 /.factorypath
+docker/zebra4j

@@ -32,9 +32,7 @@ the library in Java.
 
 ## Download a release
 
-The library is available in the Maven Central .
-
-The artifact details are:
+The library is available in the Maven Central. The artifact details are:
 
 - groupId: zebra4j
 - artifactId: zebra4j
@@ -57,6 +55,27 @@ With Maven, you can add it as a dependency like this:
 Maven understands "RELEASE" as latest non-SNAPSHOT version. It is recommended to
 replace that with a specific version to prevent getting versions with breaking
 changes unintentionally.
+
+## Running locally
+
+You can try a JavaScript build of the library at
+<https://murfffi.github.io/zebra-apps/demo/>.
+
+You can also use zebra4j on the command line. The fastest way to do it is with Docker:
+
+```
+docker run murfffi/zebracli generate --help
+```
+
+The image download is just 40 MB. It is based on a GraalVM native-image build.
+
+If you don't have Docker locally but have java, you can download
+<https://repo1.maven.org/maven2/io/github/murfffi/zebra4j/0.7/zebra4j-0.7-shaded.jar> to
+`zebra4j-bundle.jar` and run:
+
+```
+java -jar zebra4j-bundle.jar --help
+```
 
 ## Customizing
 

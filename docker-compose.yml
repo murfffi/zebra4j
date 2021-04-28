@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+    zebracli:
+        build: docker
+        image: murfffi/zebracli 
+    native:
+        # Used for native builds
+        build: ./graalvm
+        volumes: 
+           - ".:/src"
+           - "${HOME}/.m2:/root/.m2"
+        working_dir: /src
+        command: "./mvnw install -P native"
