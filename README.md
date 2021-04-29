@@ -34,8 +34,8 @@ the library in Java.
 
 The library is available in the Maven Central. The artifact details are:
 
-- groupId: zebra4j
-- artifactId: zebra4j
+- groupId: `io.github.murfffi`
+- artifactId: `zebra4j`
 - version: ![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)
 
 With Maven, you can add it as a dependency like this:
@@ -45,7 +45,7 @@ With Maven, you can add it as a dependency like this:
   <dependencies>
    ...
     <dependency>
-      <groupId>zebra4j</groupId>
+      <groupId>io.github.murfffi</groupId>
       <artifactId>zebra4j</artifactId>
       <version>RELEASE</version>
     </dependency>

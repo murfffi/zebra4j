@@ -28,6 +28,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
 
+import com.google.gson.Gson;
+
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
@@ -44,10 +46,13 @@ import lombok.RequiredArgsConstructor;
  * 
  * @see AllDifferentType
  */
-@EqualsAndHashCode(exclude = "type", callSuper = false)
+@EqualsAndHashCode(callSuper = false)
 public class BasicAttributeType extends AllDifferentType {
 
-	private final AttributeType type = this;
+	public static BasicAttributeType fromJson(String json) {
+		return new Gson().fromJson(json, BasicAttributeType.class);
+	}
+
 	private final List<Attribute> attributes;
 	private final String questionSentencePart;
 	private final String typeName;
@@ -55,7 +60,7 @@ public class BasicAttributeType extends AllDifferentType {
 	public BasicAttributeType(Set<String> labels, String questionSentencePart, String typeName) {
 		attributes = new ArrayList<>(labels.size());
 		for (String label : labels) {
-			attributes.add(new BasicAttribute(attributes.size(), label));
+			attributes.add(new BasicAttribute(attributes.size(), label, this));
 		}
 		// The message below is passed to String.format hence % is escaped.
 		Validate.isTrue(questionSentencePart.contains("%s"),
@@ -65,11 +70,12 @@ public class BasicAttributeType extends AllDifferentType {
 	}
 
 	@RequiredArgsConstructor
-	@EqualsAndHashCode
-	class BasicAttribute implements Attribute {
+	@EqualsAndHashCode(exclude = "type")
+	static class BasicAttribute implements Attribute {
 
 		private final int id;
 		private final String description;
+		private final AttributeType type;
 
 		@Override
 		public String description(Locale locale) {
