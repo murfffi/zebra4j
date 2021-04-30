@@ -103,7 +103,12 @@ public class Question {
 	 * @return
 	 */
 	public String describe(Locale locale) {
-		return String.format(about.questionSentencePart(locale), towards.description(locale));
+		String description = towards.description(locale);
+		if (!PersonName.TYPE.equals(towards.type()) && !PersonName.TYPE.equals(about)
+				&& Locale.ENGLISH.getLanguage().equals(locale.getLanguage())) {
+			description = "the person who " + description;
+		}
+		return String.format(about.questionSentencePart(locale), description);
 	}
 
 	/**

@@ -35,12 +35,12 @@ public interface Attributes {
 	 * {@link BasicAttributeType}
 	 */
 	public static final AttributeType PET = new BasicAttributeType(SetUtils.unmodifiableSet(//
-			"with a zebra", //
-			"with a cat", //
-			"with a dog", //
-			"with a hamster", //
-			"with a snake"), //
-			"What pet are %s with?", "Pet");
+			"owns a zebra", //
+			"owns a cat", //
+			"owns a dog", //
+			"owns a hamster", //
+			"owns a snake"), //
+			"What pet does %s own?", "Pet");
 
 	/**
 	 * Clothes attribute. Serves as an example how to define attributes as an enum.

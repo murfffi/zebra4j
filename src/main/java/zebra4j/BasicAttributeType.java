@@ -54,18 +54,27 @@ public class BasicAttributeType extends AllDifferentType {
 	}
 
 	private final List<Attribute> attributes;
-	private final String questionSentencePart;
+	private final String questionPattern;
 	private final String typeName;
 
-	public BasicAttributeType(Set<String> labels, String questionSentencePart, String typeName) {
+	/**
+	 * Create a new basic type of attribute with enumerated set of attributes
+	 * 
+	 * @param labels          the labels of all attributes of this type, starting
+	 *                        with a verb e.g. "is from France", "owns a dog". See
+	 *                        also {@link Attribute#description}
+	 * @param questionPattern See {@link AttributeType#questionSentencePart}
+	 * @param typeName        Short name of the type, used in debug output
+	 */
+	public BasicAttributeType(Set<String> labels, String questionPattern, String typeName) {
 		attributes = new ArrayList<>(labels.size());
 		for (String label : labels) {
-			attributes.add(new BasicAttribute(attributes.size(), label, this));
+			attributes.add(new BasicAttribute(label, this));
 		}
 		// The message below is passed to String.format hence % is escaped.
-		Validate.isTrue(questionSentencePart.contains("%s"),
-				"questionSentencePart should contain a %%s placeholder for the person the question is about.");
-		this.questionSentencePart = questionSentencePart;
+		Validate.isTrue(questionPattern.contains("%s"),
+				"questionPattern should contain a %%s placeholder for the person the question is about.");
+		this.questionPattern = questionPattern;
 		this.typeName = typeName;
 	}
 
@@ -73,7 +82,6 @@ public class BasicAttributeType extends AllDifferentType {
 	@EqualsAndHashCode(exclude = "type")
 	static class BasicAttribute implements Attribute {
 
-		private final int id;
 		private final String description;
 		private final AttributeType type;
 
@@ -95,7 +103,7 @@ public class BasicAttributeType extends AllDifferentType {
 
 	@Override
 	public String questionSentencePart(Locale locale) {
-		return questionSentencePart;
+		return questionPattern;
 	}
 
 	@Override
