@@ -5,4 +5,4 @@ jdk:
   - openjdk8
   - openjdk11
   
-script: ./mvnw verify -P release -B  
+script: ./mvnw verify -P release -B -Dmaven.javadoc.skip=true

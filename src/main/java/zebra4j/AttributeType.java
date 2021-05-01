@@ -21,6 +21,7 @@
  */
 package zebra4j;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -78,5 +79,5 @@ public interface AttributeType {
 	 * @param locale
 	 * @return a sentence string, not null.
 	 */
-	String describeSet(Set<Attribute> subset, Locale locale);
+	String describeSet(Collection<Attribute> subset, Locale locale);
 }

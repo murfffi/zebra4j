@@ -19,15 +19,40 @@
  * <http://www.gnu.org/licenses/lgpl-3.0.html>.
  * #L%
  */
-package zebra4j;
+package zebra4j.util;
 
-import org.junit.Test;
+import java.util.function.Supplier;
 
-public class AttributesIT {
+import org.apache.commons.lang3.concurrent.ConcurrentException;
+import org.apache.commons.lang3.concurrent.LazyInitializer;
 
-	@Test
-	public void testPetDescribe_Grammar() {
-		LocalizationTestUtils.testGrammar(new Question(Clothes.GREEN, Attributes.PET)::describe);
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+
+/**
+ * {@link LazyInitializer} implementation based on {@link Supplier}
+ *
+ * @param <T> the type of results supplied
+ */
+@RequiredArgsConstructor
+public class LazyInstance<T> extends LazyInitializer<T> implements Supplier<T> {
+
+	private final Supplier<T> supplier;
+
+	@Override
+	protected T initialize() {
+		return supplier.get();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * get() can't throw because {@link #initialize()} doesn't throw.
+	 */
+	@Override
+	@SneakyThrows(ConcurrentException.class)
+	public T get() {
+		return super.get();
 	}
 
 }

@@ -22,10 +22,7 @@
 package zebra4j.fact;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 
 import org.chocosolver.solver.constraints.Constraint;
 import org.chocosolver.solver.variables.IntVar;
@@ -35,7 +32,6 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import zebra4j.Attribute;
-import zebra4j.AttributeType;
 import zebra4j.PuzzleSolution;
 import zebra4j.SolutionPerson;
 import zebra4j.ZebraModel;
@@ -71,11 +67,6 @@ public class BothTrue extends CommutativeFact {
 	private final Attribute right;
 
 	@Override
-	public String describe(Locale locale) {
-		return FactUtil.describe(getClass(), locale, left, right);
-	}
-
-	@Override
 	public void postTo(ZebraModel model) {
 		IntVar leftVar = model.getVariableFor(left);
 		IntVar rightVar = model.getVariableFor(right);
@@ -90,10 +81,5 @@ public class BothTrue extends CommutativeFact {
 	@Override
 	public boolean appliesTo(PuzzleSolution solution) {
 		return solution.findPerson(left).filter(person -> right.equals(person.findAttribute(right.type()))).isPresent();
-	}
-
-	@Override
-	public Collection<AttributeType> attributeTypes() {
-		return Arrays.asList(left.type(), right.type());
 	}
 }

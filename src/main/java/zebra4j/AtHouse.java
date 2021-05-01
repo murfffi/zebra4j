@@ -21,9 +21,9 @@
  */
 package zebra4j;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -45,7 +45,7 @@ public class AtHouse implements Attribute {
 		}
 
 		@Override
-		public String describeSet(Set<Attribute> set, Locale locale) {
+		public String describeSet(Collection<Attribute> set, Locale locale) {
 			String pattern = Localization.translate(AtHouse.class, "pattern", locale);
 			return String.format(pattern, set.size());
 		};

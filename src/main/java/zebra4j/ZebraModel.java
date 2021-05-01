@@ -24,37 +24,28 @@ package zebra4j;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.apache.commons.lang3.concurrent.ConcurrentException;
-import org.apache.commons.lang3.concurrent.LazyInitializer;
 import org.chocosolver.solver.DefaultSettings;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Settings;
 import org.chocosolver.solver.variables.IntVar;
 
 import lombok.Getter;
-import lombok.SneakyThrows;
+import zebra4j.util.LazyInstance;
 
 /**
  * Wrapper on ChocoSolver {@link Model} adding variable management
  */
 public class ZebraModel {
 
-	private static final LazyInitializer<Settings> DEFAULT_SETTINGS = new LazyInitializer<Settings>() {
-
-		@Override
-		protected Settings initialize() throws ConcurrentException {
-			return new DefaultSettings();
-		}
-
-	};
+	private static final Supplier<Settings> DEFAULT_SETTINGS = new LazyInstance<Settings>(DefaultSettings::new);
 
 	@Getter
 	private final Model chocoModel;
 
-	@SneakyThrows
 	public ZebraModel(Settings chocoSettings) {
 		chocoModel = new Model(UUID.randomUUID().toString(),
 				chocoSettings != null ? chocoSettings : DEFAULT_SETTINGS.get());

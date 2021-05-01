@@ -318,6 +318,9 @@
 						<configuration>
 							<addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
 							<licenseName>lgpl_v3</licenseName>
+							<!-- JSON does not support comments. It is not clear why license-maven-plugin 
+								adds a header by default. -->
+							<excludes>**/*.json</excludes>
 						</configuration>
 						<executions>
 							<execution>
@@ -329,7 +332,6 @@
 								<configuration>
 									<failOnNotUptodateHeader>true</failOnNotUptodateHeader>
 									<failOnMissingHeader>true</failOnMissingHeader>
-									<excludes>**/*.json</excludes>
 								</configuration>
 							</execution>
 						</executions>

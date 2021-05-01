@@ -23,6 +23,7 @@ package zebra4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -48,7 +49,7 @@ public abstract class AllDifferentType implements AttributeType {
 	}
 
 	@Override
-	public String describeSet(Set<Attribute> set, Locale locale) {
+	public String describeSet(Collection<Attribute> set, Locale locale) {
 		String[] descriptions = set.stream().map(a -> a.description(locale)).toArray(String[]::new);
 		String delimiter = String.format(" %s ", Localization.translate(AllDifferentType.class, "or", locale));
 		return Localization.translate(AllDifferentType.class, "anyPersonIs", locale) + " "

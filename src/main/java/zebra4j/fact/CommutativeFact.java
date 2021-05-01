@@ -21,9 +21,24 @@
  */
 package zebra4j.fact;
 
-import zebra4j.Attribute;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Locale;
 
-abstract class CommutativeFact implements Fact {
+import zebra4j.Attribute;
+import zebra4j.AttributeType;
+import zebra4j.Localization;
+import zebra4j.PersonName;
+
+/**
+ * A fact about a commutative relationship between people identified by two
+ * attributes, called "left" and "right"
+ * 
+ * <p>
+ * If the implementing fact has more fields than the two attributes, the methods
+ * need to be overridden.
+ */
+public abstract class CommutativeFact implements Fact {
 
 	public abstract Attribute getLeft();
 
@@ -44,8 +59,23 @@ abstract class CommutativeFact implements Fact {
 		return getLeft().hashCode() ^ getRight().hashCode();
 	}
 
+	@Override
+	public Collection<AttributeType> attributeTypes() {
+		return Arrays.asList(getLeft().type(), getRight().type());
+	}
+
+	@Override
+	public String describe(Locale locale) {
+		String patternId = "genericPattern";
+		if (getLeft() instanceof PersonName) {
+			patternId = "namePattern";
+		}
+		String pattern = Localization.translate(getClass(), patternId, locale);
+		return String.format(pattern, getLeft().description(locale), getRight().description(locale));
+	}
+
 	@FunctionalInterface
-	interface Source {
+	public interface Source {
 		CommutativeFact create(Attribute left, Attribute right);
 	}
 }

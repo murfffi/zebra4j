@@ -22,6 +22,7 @@
 package zebra4j;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -55,7 +56,7 @@ public enum Criminal implements Attribute {
 		}
 
 		@Override
-		public String describeSet(Set<Attribute> set, Locale locale) {
+		public String describeSet(Collection<Attribute> set, Locale locale) {
 			return Localization.translate(Criminal.class, "describeSet", locale);
 		}
 
