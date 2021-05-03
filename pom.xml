@@ -404,7 +404,7 @@
 					<plugin>
 						<groupId>org.revapi</groupId>
 						<artifactId>revapi-maven-plugin</artifactId>
-						<version>0.13.6</version>
+						<version>0.14.2</version>
 						<dependencies>
 							<dependency>
 								<groupId>org.revapi</groupId>
