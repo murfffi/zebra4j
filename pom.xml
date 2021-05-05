@@ -137,7 +137,7 @@
 	</dependencies>
 
 	<build>
-		<pluginManagement><!-- lock down plugins versions to avoid using Maven 
+		<pluginManagement><!-- lock down plugins versions to avoid using Maven
 				defaults (may be moved to parent pom) -->
 			<plugins>
 				<plugin>
@@ -218,13 +218,18 @@
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+							<addBuildEnvironmentEntries>true</addBuildEnvironmentEntries>
 							<mainClass>${exec.mainClass}</mainClass>
 						</manifest>
 						<manifestEntries>
 							<!-- https://docs.oracle.com/javase/9/docs/api/java/lang/module/ModuleFinder.html#automatic-modules -->
 							<Automatic-Module-Name>zebra4j</Automatic-Module-Name>
-							<!-- https://maven.apache.org/plugin-developers/cookbook/add-svn-revision-to-manifest.html -->
+							<!-- SCM-Revision seems to be the cannonical key for SCM revision id:
+							     https://maven.apache.org/plugin-developers/cookbook/add-svn-revision-to-manifest.html -->
 							<SCM-Revision>${git.commit.id.describe-short}</SCM-Revision>
+							<!-- We add it to the Implementation-Version key too because that's where we get it runtime. -->
+							<!-- Keys here override the ones added by addDefault*Entries -->
+							<Implementation-Version>${project.version}-${git.commit.id.describe-short}</Implementation-Version>
 						</manifestEntries>
 					</archive>
 				</configuration>
@@ -318,7 +323,7 @@
 						<configuration>
 							<addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
 							<licenseName>lgpl_v3</licenseName>
-							<!-- JSON does not support comments. It is not clear why license-maven-plugin 
+							<!-- JSON does not support comments. It is not clear why license-maven-plugin
 								adds a header by default. -->
 							<excludes>**/*.json</excludes>
 						</configuration>
@@ -423,7 +428,7 @@
 									<enabled>true</enabled>
 									<versionIncreaseAllows>
 										<major>breaking</major>
-										<!-- Breaking changes at minor version, allowed while major is 
+										<!-- Breaking changes at minor version, allowed while major is
 											0 -->
 										<minor>breaking</minor>
 										<patch>nonBreaking</patch>

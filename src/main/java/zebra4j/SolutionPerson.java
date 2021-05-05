@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,6 +63,10 @@ public class SolutionPerson {
 
 	public Attribute findAttribute(AttributeType type) {
 		return attributes.get(type);
+	}
+
+	public String[] describe(Locale locale) {
+		return attributes.values().stream().map(attr -> attr.description(locale)).toArray(String[]::new);
 	}
 
 	@Override

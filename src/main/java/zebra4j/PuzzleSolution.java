@@ -21,6 +21,7 @@
  */
 package zebra4j;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -41,5 +42,9 @@ public class PuzzleSolution {
 	 */
 	public Optional<SolutionPerson> findPerson(Attribute attr) {
 		return people.stream().filter(person -> person.asList().contains(attr)).findAny();
+	}
+
+	public String[][] describe(Locale locale) {
+		return people.stream().map(sp -> sp.describe(locale)).toArray(String[][]::new);
 	}
 }

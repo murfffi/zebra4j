@@ -22,9 +22,13 @@
 package zebra4j;
 
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Random;
 
 import org.apache.commons.collections4.SetUtils;
+
+import zebra4j.Cli.GeneratedBasicPuzzle;
+import zebra4j.Cli.GeneratedQuestionPuzzle;
 
 /**
  * Sample app
@@ -38,8 +42,8 @@ class Demo {
 	}
 
 	static void demo() {
-		basicPuzzle();
 		questionPuzzle();
+		basicPuzzle();
 		customQuestionPuzzle();
 	}
 
@@ -49,8 +53,9 @@ class Demo {
 	public static void basicPuzzle() {
 		System.out.println("Basic puzzle:");
 		Puzzle puzzle = PuzzleGenerator.randomPuzzle(NUM_PEOPLE);
-		System.out.println(puzzle.describeConstraints(Locale.getDefault()));
-		System.out.println(new PuzzleSolver(puzzle).solve());
+		PuzzleSolution solution = new PuzzleSolver(puzzle).solve().get(0);
+		Cli.printGeneratedBasicPuzzle(new GeneratedBasicPuzzle(Optional.empty(), puzzle, solution), Locale.getDefault(),
+				System.out);
 	}
 
 	/**
@@ -80,9 +85,9 @@ class Demo {
 
 	private static void solveAndPrint(QuestionPuzzle puzzle) {
 		Locale locale = Locale.getDefault();
-		System.out.println(puzzle.getPuzzle().describeConstraints(locale));
-		System.out.println(puzzle.getQuestion().describe(locale));
-		System.out.println("Answer:" + new QuestionPuzzleSolver(puzzle).solve().iterator().next().description(locale));
+		Attribute solution = new QuestionPuzzleSolver(puzzle).solve().iterator().next();
+		Cli.printGeneratedQuestionPuzzle(new GeneratedQuestionPuzzle(Optional.empty(), puzzle, solution), locale,
+				System.out);
 	}
 
 }

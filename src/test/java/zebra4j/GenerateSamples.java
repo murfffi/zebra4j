@@ -25,7 +25,7 @@ import java.util.Locale;
 
 import org.apache.commons.lang3.RandomUtils;
 
-import zebra4j.Cli.QSample;
+import zebra4j.Cli.GeneratedQuestionPuzzle;
 
 public class GenerateSamples {
 
@@ -33,9 +33,9 @@ public class GenerateSamples {
 		int samples = 0;
 		Locale locale = Locale.ENGLISH;
 		while (samples < 10) {
-			QSample sample = Cli.sampleQuestionPuzzle(RandomUtils.nextLong(0, Long.MAX_VALUE), 4);
-			if (sample.getPuzzle().getPuzzle().getFacts().size() > 6) {
-				Cli.printQuestionPuzzle(sample, locale, System.out);
+			GeneratedQuestionPuzzle sample = Cli.sampleQuestionPuzzle(RandomUtils.nextLong(0, Long.MAX_VALUE), 4);
+			if (sample.puzzle.getPuzzle().getFacts().size() > 6) {
+				Cli.printGeneratedQuestionPuzzle(sample, locale, System.out);
 				System.out.println("----------------------------");
 				++samples;
 			}

@@ -21,18 +21,33 @@
  */
 package zebra4j;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
-import zebra4j.Cli.GeneratedQuestionPuzzle;
+import zebra4j.Cli.GenerateCli;
 
-public class PerfIT {
+public class CliTest {
 
 	@Test
-	public void testQuestion() throws Exception {
-		GeneratedQuestionPuzzle sample = Cli.sampleQuestionPuzzle(1, 5);
-		assertEquals(5, sample.puzzle.getPuzzle().getFacts().size());
+	public void testGenerateCli_Question() throws IOException {
+		GenerateCli command = new GenerateCli();
+		command.people = 3;
+		Charset enc = StandardCharsets.UTF_8;
+		ByteArrayOutputStream outs = new ByteArrayOutputStream();
+		try {
+			command.out = new PrintStream(outs, true, enc.name());
+			command.run();
+		} finally {
+			outs.close();
+		}
+		assertTrue(new String(outs.toByteArray(), enc).contains("Question"));
 	}
 
 }

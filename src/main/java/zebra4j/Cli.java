@@ -22,11 +22,14 @@
 package zebra4j;
 
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.IVersionProvider;
@@ -49,7 +52,7 @@ public class Cli {
 		TEXT, JSON;
 	}
 
-	@Command(name = "demo")
+	@Command(name = "demo", description = "Generates a few demo puzzles.")
 	static class DemoCli implements Runnable {
 
 		@Override
@@ -58,23 +61,23 @@ public class Cli {
 		}
 	}
 
-	@Command(name = "generate", mixinStandardHelpOptions = true)
+	@Command(name = "generate", mixinStandardHelpOptions = true, showDefaultValues = true)
 	static class GenerateCli implements Runnable {
 
 		@Option(names = { "-t", "--type" }, defaultValue = "QUESTION")
-		PuzzleType type;
+		PuzzleType type = PuzzleType.QUESTION;
 
 		@Option(names = { "-o", "--output" }, defaultValue = "TEXT")
-		OutputFormat output;
+		OutputFormat output = OutputFormat.TEXT;
 
 		@Option(names = { "--seed" })
 		Long seed;
 
 		@Option(names = { "-p", "--people" }, defaultValue = "4")
-		int people;
+		int people = 4;
 
 		@Option(names = { "--locale" }, defaultValue = "en")
-		Locale locale;
+		Locale locale = Locale.ENGLISH;
 
 		PrintStream out = System.out;
 
@@ -90,31 +93,39 @@ public class Cli {
 				break;
 			case BASIC:
 				printBasicPuzzle();
+				break;
 			default:
 				break;
 			}
 		}
 
 		private void printBasicPuzzle() {
-			// TODO Auto-generated method stub
-
+			GeneratedBasicPuzzle sample = Cli.sampleBasicPuzzle(seed, people);
+			Cli.printGeneratedBasicPuzzle(sample, locale, out);
 		}
 
 		private void printQuestionPuzzle() {
-			QSample sample = sampleQuestionPuzzle(seed, people);
-			Cli.printQuestionPuzzle(sample, locale, out);
+			GeneratedQuestionPuzzle sample = Cli.sampleQuestionPuzzle(seed, people);
+			Cli.printGeneratedQuestionPuzzle(sample, locale, out);
 		}
 
 	}
 
-	@Value
-	static class QSample {
-		long seed;
-		QuestionPuzzle puzzle;
-		Attribute answer;
+	@AllArgsConstructor
+	static class GeneratedQuestionPuzzle {
+		final Optional<Long> seed;
+		final QuestionPuzzle puzzle;
+		final Attribute answer;
 	}
 
-	static QSample sampleQuestionPuzzle(long seed, int people) {
+	@AllArgsConstructor
+	static class GeneratedBasicPuzzle {
+		final Optional<Long> seed;
+		final Puzzle puzzle;
+		final PuzzleSolution answer;
+	}
+
+	static GeneratedQuestionPuzzle sampleQuestionPuzzle(long seed, int people) {
 		Random rnd = new Random(seed);
 		PuzzleSolution sampleSolution = new SolutionGenerator(Attributes.DEFAULT_TYPES, people, rnd).generate();
 		Question question = Question.generate(sampleSolution.getAttributeSets(), rnd);
@@ -122,10 +133,10 @@ public class Cli {
 				QuestionPuzzleGenerator.DEFAULT_FACT_TYPES);
 		QuestionPuzzle puzzle = generator.generate();
 		Attribute answer = puzzle.getQuestion().answer(sampleSolution).get();
-		return new QSample(seed, puzzle, answer);
+		return new GeneratedQuestionPuzzle(Optional.of(seed), puzzle, answer);
 	}
 
-	static void printQuestionPuzzle(QSample sample, Locale locale, PrintStream out) {
+	static void printGeneratedQuestionPuzzle(GeneratedQuestionPuzzle sample, Locale locale, PrintStream out) {
 		out.println("Facts:");
 		sample.puzzle.describeConstraints(locale).stream().forEach(out::println);
 		AttributeType about = sample.puzzle.getQuestion().getAbout();
@@ -134,14 +145,33 @@ public class Cli {
 		out.println("Answer options: " + sample.puzzle.getPuzzle().getAttributeSets().get(about).stream()
 				.map(a -> a.description(locale)).collect(Collectors.joining(", ")));
 		out.println("Answer: " + sample.answer.description(locale));
-		out.println("Seed: " + sample.seed);
+		sample.seed.ifPresent(seed -> out.println("Seed: " + seed));
+	}
+
+	static GeneratedBasicPuzzle sampleBasicPuzzle(long seed, int people) {
+		Random rnd = new Random(seed);
+		PuzzleSolution solution = new SolutionGenerator(Attributes.DEFAULT_TYPES, people, rnd).generate();
+		PuzzleGenerator generator = new PuzzleGenerator(rnd, solution, QuestionPuzzleGenerator.DEFAULT_FACT_TYPES);
+		Puzzle puzzle = generator.generate();
+		return new GeneratedBasicPuzzle(Optional.of(seed), puzzle, solution);
+	}
+
+	static void printGeneratedBasicPuzzle(GeneratedBasicPuzzle sample, Locale locale, PrintStream out) {
+		out.println("Facts:");
+		sample.puzzle.describeConstraints(locale).stream().forEach(out::println);
+		out.println();
+		out.println("Solution:");
+		Stream.of(sample.answer.describe(locale))
+				.forEach(solutionPerson -> out.println(Arrays.toString(solutionPerson)));
+		sample.seed.ifPresent(seed -> out.println("Seed: " + seed));
 	}
 
 	static class VersionProvider implements IVersionProvider {
 
 		@Override
 		public String[] getVersion() throws Exception {
-			return new String[] { this.getClass().getPackage().getImplementationVersion() };
+			Package pkg = this.getClass().getPackage();
+			return new String[] { pkg.getImplementationVersion() };
 		}
 
 	}
