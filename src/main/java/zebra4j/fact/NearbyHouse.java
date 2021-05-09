@@ -47,10 +47,6 @@ import zebra4j.ZebraModel;
 /**
  * Facts/clues about people with certain attributes living in adjacent or nearby
  * houses.
- * 
- * <p>
- * equals/hashCode treats NearbyHouse(PersonA, PersonB) as different from
- * NearbyHouse(B, A) even though they are semantically the same.
  */
 @AllArgsConstructor
 @ToString
@@ -164,6 +160,14 @@ public class NearbyHouse extends CommutativeFact {
 		return String.format(pattern, left.description(locale), dist, right.description(locale));
 	}
 
+	/**
+	 * Finds the position of the house of the person identified by the given
+	 * attribute
+	 * 
+	 * @param solution
+	 * @param attribute
+	 * @return
+	 */
 	private static Optional<Integer> getHousePosition(PuzzleSolution solution, Attribute attribute) {
 		return solution.findPerson(attribute).flatMap(person -> Optional.ofNullable(person.findAttribute(AtHouse.TYPE)))
 				.map(house -> ((AtHouse) house).getPosition());

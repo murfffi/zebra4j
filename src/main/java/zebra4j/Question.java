@@ -122,22 +122,32 @@ public class Question {
 	}
 
 	/**
-	 * Answers this question about the given solution, if applicable
+	 * Answers this question about the given raw solution, if applicable
 	 * 
 	 * @param rawSolution solution, as in {@link PuzzleSolver#solveChoco()}
-	 * @param puzzle      the puzzle that the solution solves, used for metadata
-	 * @return same as {@link #answer(PuzzleSolution)}
+	 * @return a stream with one element - the answer - if applicable, empty
+	 *         otherwise
 	 */
-	public Optional<Attribute> answer(Map<Attribute, Integer> rawSolution, Puzzle puzzle) {
+	Stream<Attribute> answer(Map<Attribute, Integer> rawSolution) {
 		int personId = rawSolution.get(towards);
-		Set<Attribute> attributes = puzzle.getAttributeSets().get(about);
-		return attributes.stream().filter(attr -> rawSolution.get(attr) == personId).findAny();
+		Set<Attribute> attributes = rawSolution.keySet();
+		return attributes.stream().filter(attr -> about.equals(attr.type()) && rawSolution.get(attr) == personId);
 	}
 
+	/**
+	 * @param puzzle a basic (full assignment) puzzle
+	 * @return if the question is relevant to the puzzle i.e. the puzzle includes
+	 *         the {@link AttributeType} in "about" and the {@link Attribute} in
+	 *         "towards"
+	 */
 	public boolean appliesTo(Puzzle puzzle) {
 		return appliesTo(puzzle.getAttributeSets());
 	}
 
+	/**
+	 * @param solution required
+	 * @return same as {@link #appliesTo(Puzzle)} but for the given solution
+	 */
 	public boolean appliesTo(PuzzleSolution solution) {
 		return appliesTo(solution.getAttributeSets());
 	}

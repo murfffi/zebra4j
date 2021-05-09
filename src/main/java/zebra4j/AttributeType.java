@@ -27,8 +27,18 @@ import java.util.Locale;
 import java.util.Set;
 
 /**
- * A type attribute for a person like a "name", "pet" or if the person is
+ * A type attribute for a person like a "name", "pet" or if the person is a
  * criminal
+ * 
+ * <p>
+ * AttributeType is used as members of sets and as keys in maps so
+ * implementations must implement equals and hashCode. Singleton implementations
+ * are fine because {@link Object#equals(Object)} and {@link Object#hashCode()}
+ * work correctly for singletons.
+ * 
+ * <p>
+ * When defining custom attributes, consider using {@link BasicAttributeType} or
+ * extending the abstract {@link AllDifferentType}.
  * 
  * @see Attribute
  */

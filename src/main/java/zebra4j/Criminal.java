@@ -60,6 +60,11 @@ public enum Criminal implements Attribute {
 			return Localization.translate(Criminal.class, "describeSet", locale);
 		}
 
+		@Override
+		public String toString() {
+			return Criminal.class.getName();
+		}
+
 	};
 
 	@Override

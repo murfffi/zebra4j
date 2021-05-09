@@ -100,6 +100,8 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	protected int countSolutions(QuestionPuzzle puzzle) {
 		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(puzzle);
 		solver.setChocoSettings(getChocoSettings());
+		// .solveToStream().distinct().count() may be more efficient but .distinct() is
+		// flaky in TeaVM
 		return solver.solve().size();
 	}
 

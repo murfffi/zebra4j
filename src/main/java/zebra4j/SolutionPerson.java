@@ -65,6 +65,16 @@ public class SolutionPerson {
 		return attributes.get(type);
 	}
 
+	public boolean hasAttribute(Attribute attr) {
+		return attributes.values().contains(attr);
+	}
+
+	/**
+	 * Describe the person-in-solution in natural language
+	 * 
+	 * @param locale the locale of the natural language
+	 * @return an array of attribute descriptions
+	 */
 	public String[] describe(Locale locale) {
 		return attributes.values().stream().map(attr -> attr.description(locale)).toArray(String[]::new);
 	}

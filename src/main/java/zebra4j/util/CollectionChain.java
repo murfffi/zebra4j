@@ -40,6 +40,11 @@ import lombok.AllArgsConstructor;
  * <p>
  * While no modifications can be made via the view, any changes to the
  * underlying collections will be seen through the view.
+ * 
+ * <p>
+ * This data structure is not available in either commons-collections or guava.
+ * guava community has extensively discussed adding such solution at
+ * <a href="https://github.com/google/guava/issues/1029">issue #1029</a> .
  *
  * @param <E> the collection element type
  */

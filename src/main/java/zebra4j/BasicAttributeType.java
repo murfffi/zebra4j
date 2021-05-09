@@ -83,7 +83,7 @@ public class BasicAttributeType extends AllDifferentType {
 	static class BasicAttribute implements Attribute {
 
 		private final String description;
-		private final AttributeType type;
+		private transient final AttributeType type;
 
 		@Override
 		public String description(Locale locale) {

@@ -30,11 +30,16 @@ import zebra4j.PuzzleSolution;
 import zebra4j.ZebraModel;
 
 /**
- * A fact given as clues to the players
+ * A fact given as a clue to the players
  *
  * <p>
  * Facts are used as members of sets so they must implement equals and hashCode
  * correctly.
+ * 
+ * <p>
+ * Facts are typically relationships between attributes or the people that have
+ * them. When implementing a fact about two attributes, consider extending
+ * {@link CommutativeFact}.
  */
 public interface Fact {
 
@@ -43,7 +48,9 @@ public interface Fact {
 	 * 
 	 * <p>
 	 * Implementations of this interface are used as members of sets so they must
-	 * implement equals and hashCode correctly.
+	 * implement equals and hashCode correctly. Singleton implementations are fine
+	 * because {@link Object#equals(Object)} and {@link Object#hashCode()} work
+	 * correctly for singletons.
 	 */
 	interface Type {
 

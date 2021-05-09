@@ -25,14 +25,30 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import lombok.Value;
+import org.apache.commons.lang3.tuple.Pair;
 
-@Value
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
+@EqualsAndHashCode
+@ToString
+@Getter
 public class PuzzleSolution {
 
 	private final Set<SolutionPerson> people;
 	private final Map<AttributeType, Set<Attribute>> attributeSets;
+	private final Map<Attribute, SolutionPerson> attrToPerson;
+
+	public PuzzleSolution(Set<SolutionPerson> people, Map<AttributeType, Set<Attribute>> attributeSets) {
+		this.people = people;
+		this.attributeSets = attributeSets;
+		this.attrToPerson = people.stream()
+				.flatMap(person -> person.asList().stream().map(attr -> Pair.of(attr, person)))
+				.collect(Collectors.toMap(Pair::getLeft, Pair::getRight, (a, b) -> a));
+	}
 
 	/**
 	 * Find a person based on an attribute
@@ -41,9 +57,16 @@ public class PuzzleSolution {
 	 * @return the person, if any, that has this uniquely identifying attribute
 	 */
 	public Optional<SolutionPerson> findPerson(Attribute attr) {
-		return people.stream().filter(person -> person.asList().contains(attr)).findAny();
+		return Optional.ofNullable(attrToPerson.get(attr));
 	}
 
+	/**
+	 * Describe the solution in natural language
+	 * 
+	 * @param locale the locale of the natural language
+	 * @return an array of persons; each person described as an array of attribute
+	 *         descriptions
+	 */
 	public String[][] describe(Locale locale) {
 		return people.stream().map(sp -> sp.describe(locale)).toArray(String[][]::new);
 	}

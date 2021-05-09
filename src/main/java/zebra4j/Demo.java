@@ -22,8 +22,8 @@
 package zebra4j;
 
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 
 import org.apache.commons.collections4.SetUtils;
 
@@ -54,7 +54,7 @@ class Demo {
 		System.out.println("Basic puzzle:");
 		Puzzle puzzle = PuzzleGenerator.randomPuzzle(NUM_PEOPLE);
 		PuzzleSolution solution = new PuzzleSolver(puzzle).solve().get(0);
-		Cli.printGeneratedBasicPuzzle(new GeneratedBasicPuzzle(Optional.empty(), puzzle, solution), Locale.getDefault(),
+		Cli.printGeneratedBasicPuzzle(new GeneratedBasicPuzzle(null, puzzle, solution), Locale.getDefault(),
 				System.out);
 	}
 
@@ -64,7 +64,9 @@ class Demo {
 	public static void questionPuzzle() {
 		System.out.println("Question puzzle:");
 		QuestionPuzzle puzzle = QuestionPuzzleGenerator.randomPuzzle(NUM_PEOPLE);
-		solveAndPrint(puzzle);
+		Attribute solution = new QuestionPuzzleSolver(puzzle).solveSingle();
+		Cli.printGeneratedQuestionPuzzle(new GeneratedQuestionPuzzle(null, puzzle, solution), Locale.getDefault(),
+				System.out);
 	}
 
 	/**
@@ -74,19 +76,14 @@ class Demo {
 		System.out.println("Custom question puzzle:");
 		// Check out the definition of Attributes.PET to learn the easiest way to define
 		// your own attributes.
-		PuzzleSolution sampleSolution = new SolutionGenerator(
-				SetUtils.unmodifiableSet(Attributes.PET, Attributes.NAME, Attributes.AT_HOUSE), NUM_PEOPLE,
-				new Random()).generate();
+		Set<AttributeType> attributeTypes = SetUtils.unmodifiableSet(Attributes.PET, Attributes.NAME,
+				Attributes.AT_HOUSE);
+		PuzzleSolution sampleSolution = new SolutionGenerator(attributeTypes, NUM_PEOPLE, new Random()).generate();
 		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(Question.generate(sampleSolution),
 				sampleSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES);
 		QuestionPuzzle puzzle = generator.generate();
-		solveAndPrint(puzzle);
-	}
-
-	private static void solveAndPrint(QuestionPuzzle puzzle) {
-		Locale locale = Locale.getDefault();
-		Attribute solution = new QuestionPuzzleSolver(puzzle).solve().iterator().next();
-		Cli.printGeneratedQuestionPuzzle(new GeneratedQuestionPuzzle(Optional.empty(), puzzle, solution), locale,
+		Attribute solution = new QuestionPuzzleSolver(puzzle).solveSingle();
+		Cli.printGeneratedQuestionPuzzle(new GeneratedQuestionPuzzle(null, puzzle, solution), Locale.getDefault(),
 				System.out);
 	}
 

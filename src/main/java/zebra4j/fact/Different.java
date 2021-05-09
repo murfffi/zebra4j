@@ -88,7 +88,6 @@ public class Different extends CommutativeFact {
 
 	@Override
 	public boolean appliesTo(PuzzleSolution solution) {
-		return solution.findPerson(left).filter(person -> !right.equals(person.findAttribute(right.type())))
-				.isPresent();
+		return solution.findPerson(left).filter(person -> !person.hasAttribute(right)).isPresent();
 	}
 }

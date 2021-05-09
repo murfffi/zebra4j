@@ -21,13 +21,18 @@
  */
 package zebra4j;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.io.Writer;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import lombok.AllArgsConstructor;
 import picocli.CommandLine;
@@ -43,6 +48,8 @@ import zebra4j.Cli.GenerateCli;
 @Command(name = "zebra4j", mixinStandardHelpOptions = true, description = "Generates logic grid (zebra) puzzles.", subcommands = {
 		DemoCli.class, GenerateCli.class }, versionProvider = Cli.VersionProvider.class, showDefaultValues = true)
 public class Cli {
+
+	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 	enum PuzzleType {
 		QUESTION, BASIC;
@@ -61,16 +68,16 @@ public class Cli {
 		}
 	}
 
-	@Command(name = "generate", mixinStandardHelpOptions = true, showDefaultValues = true)
+	@Command(name = "generate", mixinStandardHelpOptions = true, showDefaultValues = true, versionProvider = VersionProvider.class, description = "Generates a puzzle")
 	static class GenerateCli implements Runnable {
 
-		@Option(names = { "-t", "--type" }, defaultValue = "QUESTION")
+		@Option(names = { "-t", "--type" }, defaultValue = "QUESTION", description = "Type of puzzle to generate")
 		PuzzleType type = PuzzleType.QUESTION;
 
-		@Option(names = { "-o", "--output" }, defaultValue = "TEXT")
+		@Option(names = { "-o", "--output" }, defaultValue = "TEXT", description = "Format of output")
 		OutputFormat output = OutputFormat.TEXT;
 
-		@Option(names = { "--seed" })
+		@Option(names = { "--seed" }, description = "Seed for the random generator")
 		Long seed;
 
 		@Option(names = { "-p", "--people" }, defaultValue = "4")
@@ -79,6 +86,9 @@ public class Cli {
 		@Option(names = { "--locale" }, defaultValue = "en")
 		Locale locale = Locale.ENGLISH;
 
+		/**
+		 * out stream, modified in unit tests
+		 */
 		PrintStream out = System.out;
 
 		@Override
@@ -87,40 +97,54 @@ public class Cli {
 				seed = System.currentTimeMillis();
 			}
 
+			Object puzzle = null;
 			switch (type) {
 			case QUESTION:
-				printQuestionPuzzle();
+				puzzle = Cli.sampleQuestionPuzzle(seed, people);
 				break;
 			case BASIC:
-				printBasicPuzzle();
-				break;
-			default:
+				Random rnd = new Random(seed);
+				PuzzleSolution solution = new SolutionGenerator(Attributes.DEFAULT_TYPES, people, rnd).generate();
+				PuzzleGenerator generator = new PuzzleGenerator(rnd, solution,
+						QuestionPuzzleGenerator.DEFAULT_FACT_TYPES);
+				puzzle = new GeneratedBasicPuzzle(seed, generator.generate(), solution);
 				break;
 			}
-		}
 
-		private void printBasicPuzzle() {
-			GeneratedBasicPuzzle sample = Cli.sampleBasicPuzzle(seed, people);
-			Cli.printGeneratedBasicPuzzle(sample, locale, out);
-		}
+			if (output == OutputFormat.JSON) {
+				try (Writer wout = new OutputStreamWriter(out)) {
+					GSON.toJson(puzzle, puzzle.getClass(), wout);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+				return;
+			}
 
-		private void printQuestionPuzzle() {
-			GeneratedQuestionPuzzle sample = Cli.sampleQuestionPuzzle(seed, people);
-			Cli.printGeneratedQuestionPuzzle(sample, locale, out);
+			// OutputFormat.TEXT
+			switch (type) {
+			case QUESTION:
+				Cli.printGeneratedQuestionPuzzle((GeneratedQuestionPuzzle) puzzle, locale, out);
+				break;
+			case BASIC:
+				Cli.printGeneratedBasicPuzzle((GeneratedBasicPuzzle) puzzle, locale, out);
+				break;
+			}
 		}
 
 	}
 
 	@AllArgsConstructor
 	static class GeneratedQuestionPuzzle {
-		final Optional<Long> seed;
+		// seed might be null; we don't use Optional because it might confuse JSON
+		// serde
+		final Long seed;
 		final QuestionPuzzle puzzle;
 		final Attribute answer;
 	}
 
 	@AllArgsConstructor
 	static class GeneratedBasicPuzzle {
-		final Optional<Long> seed;
+		final Long seed;
 		final Puzzle puzzle;
 		final PuzzleSolution answer;
 	}
@@ -133,7 +157,7 @@ public class Cli {
 				QuestionPuzzleGenerator.DEFAULT_FACT_TYPES);
 		QuestionPuzzle puzzle = generator.generate();
 		Attribute answer = puzzle.getQuestion().answer(sampleSolution).get();
-		return new GeneratedQuestionPuzzle(Optional.of(seed), puzzle, answer);
+		return new GeneratedQuestionPuzzle(seed, puzzle, answer);
 	}
 
 	static void printGeneratedQuestionPuzzle(GeneratedQuestionPuzzle sample, Locale locale, PrintStream out) {
@@ -145,15 +169,9 @@ public class Cli {
 		out.println("Answer options: " + sample.puzzle.getPuzzle().getAttributeSets().get(about).stream()
 				.map(a -> a.description(locale)).collect(Collectors.joining(", ")));
 		out.println("Answer: " + sample.answer.description(locale));
-		sample.seed.ifPresent(seed -> out.println("Seed: " + seed));
-	}
-
-	static GeneratedBasicPuzzle sampleBasicPuzzle(long seed, int people) {
-		Random rnd = new Random(seed);
-		PuzzleSolution solution = new SolutionGenerator(Attributes.DEFAULT_TYPES, people, rnd).generate();
-		PuzzleGenerator generator = new PuzzleGenerator(rnd, solution, QuestionPuzzleGenerator.DEFAULT_FACT_TYPES);
-		Puzzle puzzle = generator.generate();
-		return new GeneratedBasicPuzzle(Optional.of(seed), puzzle, solution);
+		if (sample.seed != null) {
+			out.println("Seed: " + sample.seed);
+		}
 	}
 
 	static void printGeneratedBasicPuzzle(GeneratedBasicPuzzle sample, Locale locale, PrintStream out) {
@@ -163,14 +181,18 @@ public class Cli {
 		out.println("Solution:");
 		Stream.of(sample.answer.describe(locale))
 				.forEach(solutionPerson -> out.println(Arrays.toString(solutionPerson)));
-		sample.seed.ifPresent(seed -> out.println("Seed: " + seed));
+		if (sample.seed != null) {
+			out.println("Seed: " + sample.seed);
+		}
 	}
 
 	static class VersionProvider implements IVersionProvider {
 
 		@Override
-		public String[] getVersion() throws Exception {
+		public String[] getVersion() {
 			Package pkg = this.getClass().getPackage();
+			// That's Implementation-Version from MANIFEST.MF which is configured in pom.xml
+			// (maven-jar-plugin). MANIFEST.MF is included by default in native image.
 			return new String[] { pkg.getImplementationVersion() };
 		}
 
@@ -179,6 +201,7 @@ public class Cli {
 	public static void main(String[] args) {
 		CommandLine commandLine = new CommandLine(new Cli());
 		commandLine.registerConverter(Locale.class, Locale::new);
+		commandLine.setCaseInsensitiveEnumValuesAllowed(true);
 		int exitCode = commandLine.execute(args);
 		System.exit(exitCode);
 	}

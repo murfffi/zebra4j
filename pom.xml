@@ -46,6 +46,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<exec.mainClass>zebra4j.Cli</exec.mainClass>
 		<lombok.version>1.18.20</lombok.version>
+		<picocli.version>4.6.1</picocli.version>
 		<delombok.output>${project.build.directory}/generated-sources/delombok</delombok.output>
 	</properties>
 
@@ -88,11 +89,6 @@
 			<version>1.9</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.8.6</version>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.13.2</version>
@@ -120,18 +116,25 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.30</version>
 		</dependency>
+		
+		<!-- CLI and native library dependencies marked as optional -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.6</version>
+			<optional>true</optional>
+		</dependency>		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.30</version>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>		
 		<dependency>
 			<groupId>info.picocli</groupId>
 			<artifactId>picocli</artifactId>
-			<version>4.6.1</version>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.2.3</version>
-			<scope>test</scope>
+			<version>${picocli.version}</version>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
@@ -305,7 +308,7 @@
 									implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
 									<resource>.txt</resource>
 								</transformer>
-							</transformers>
+							</transformers>						
 						</configuration>
 						<executions>
 							<execution>
@@ -325,7 +328,7 @@
 							<licenseName>lgpl_v3</licenseName>
 							<!-- JSON does not support comments. It is not clear why license-maven-plugin
 								adds a header by default. -->
-							<excludes>**/*.json</excludes>
+							<excludes>**/*.json,**/package-info.java</excludes>
 						</configuration>
 						<executions>
 							<execution>
@@ -549,7 +552,7 @@
 								<path>
 									<groupId>info.picocli</groupId>
 									<artifactId>picocli-codegen</artifactId>
-									<version>4.6.1</version>
+									<version>${picocli.version}</version>
 								</path>
 								<path>
 									<groupId>org.projectlombok</groupId>
@@ -570,11 +573,6 @@
 					<artifactId>graal-sdk</artifactId>
 					<version>${graalvm.version}</version>
 					<scope>provided</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-nop</artifactId>
-					<version>1.7.30</version>
 				</dependency>
 			</dependencies>
 		</profile>
