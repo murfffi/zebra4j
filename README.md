@@ -4,11 +4,12 @@
 [![License](https://img.shields.io/github/license/murfffi/zebra4j)](/LICENSE)
 [![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)](https://search.maven.org/artifact/io.github.murfffi/zebra4j)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e85598dea228465188b9e70774983532)](https://www.codacy.com/gh/murfffi/zebra4j/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=murfffi/zebra4j&amp;utm_campaign=Badge_Grade)
+![Docker Pulls](https://img.shields.io/docker/pulls/murfffi/zebracli)
 
 ## Overview
 
 zebra4j is a generator and solver for [Zebra
-puzzles](https://en.wikipedia.org/wiki/Zebra_Puzzle), also knows as "logic grid
+puzzles](https://en.wikipedia.org/wiki/Zebra_Puzzle), also known as "logic grid
 puzzles". Such libraries are used as backend of interactive games aimed at
 children of all ages. [Try it out right in your browser!](https://murfffi.github.io/zebra-apps/demo/)
 
@@ -67,7 +68,7 @@ You can also use zebra4j on the command line. The fastest way to do it is with D
 docker run murfffi/zebracli generate --help
 ```
 
-The image download is just 40 MB. It is based on a GraalVM native-image build.
+The image download is just 40 MB. It is based on a GraalVM native-image build (for amd64 only).
 
 If you don't have Docker locally but have java, you can download
 <https://repo1.maven.org/maven2/io/github/murfffi/zebra4j/0.7/zebra4j-0.7-shaded.jar> to
@@ -76,6 +77,8 @@ If you don't have Docker locally but have java, you can download
 ```
 java -jar zebra4j-bundle.jar --help
 ```
+
+Unlike the Docker image, the JAR works on any system architecture supported by Java, not just amd64.
 
 ## Customizing
 
@@ -136,5 +139,6 @@ The library uses [slf4j-api](http://www.slf4j.org/) as logging API and does not
 include or enforce any particular backend.
 
 ## Contributing
+
 <!-- https://github.blog/2013-01-31-relative-links-in-markup-files/ -->
 See [CONTRIBUTING.md](CONTRIBUTING.md) .
