@@ -48,6 +48,13 @@ public enum PersonName implements Attribute {
 		}
 
 		@Override
+		public String describeSet(java.util.Collection<Attribute> set, Locale locale) {
+			String[] descriptions = set.stream().map(a -> a.description(locale)).toArray(String[]::new);
+			return Localization.translate(PersonName.class, "anyPersonIs", locale) + " "
+					+ String.join(", ", descriptions) + ".";
+		};
+
+		@Override
 		public String toString() {
 			return PersonName.class.getName();
 		}

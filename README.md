@@ -68,9 +68,9 @@ You can also use zebra4j on the command line. The fastest way to do it is with D
 docker run murfffi/zebracli generate --help
 ```
 
-The image download is just 40 MB. It is based on a GraalVM native-image build (for amd64 only).
+The image download is just 14 MB. It is based on a GraalVM native-image build (for amd64 only).
 
-If you don't have Docker locally but have java, you can download
+If you don't have Docker locally but have Java, you can download
 <https://repo1.maven.org/maven2/io/github/murfffi/zebra4j/0.7/zebra4j-0.7-shaded.jar> to
 `zebra4j-bundle.jar` and run:
 

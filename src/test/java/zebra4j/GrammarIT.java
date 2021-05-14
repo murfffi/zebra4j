@@ -24,20 +24,37 @@ package zebra4j;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
+import org.apache.commons.collections4.SetUtils;
 import org.junit.Test;
+import org.languagetool.AnalyzedSentence;
+import org.languagetool.AnalyzedToken;
 import org.languagetool.JLanguageTool;
+import org.languagetool.JLanguageTool.Level;
+import org.languagetool.JLanguageTool.Mode;
+import org.languagetool.JLanguageTool.ParagraphHandling;
 import org.languagetool.language.AmericanEnglish;
+import org.languagetool.markup.AnnotatedText;
+import org.languagetool.markup.AnnotatedTextBuilder;
+import org.languagetool.rules.Rule;
 import org.languagetool.rules.RuleMatch;
 
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import zebra4j.fact.BothTrue;
 import zebra4j.fact.CommutativeFact;
 import zebra4j.fact.Different;
+import zebra4j.util.LazyInstance;
 
 /**
  * Tests of the grammar of descriptions of various integrations of facts,
@@ -47,29 +64,74 @@ import zebra4j.fact.Different;
  * All grammar class are in the same test class (fixture) because the creation
  * or first usage of the language tool is slow: 2-3 secs on a fast laptop.
  */
+@Slf4j
 public class GrammarIT {
 
-	private static final Attribute EXAMPLE_PET = Attributes.PET.getAttributes(1).get(0);
-	private final JLanguageTool englishTool = new JLanguageTool(new AmericanEnglish());
+	private static class HasVerbRule extends Rule {
 
-	private String describeSet(AttributeType type) {
-		Collection<Attribute> exampleAttributes = type.getAttributes(3);
-		return type.describeSet(exampleAttributes, Locale.ENGLISH);
+		private static final Set<String> ALLOWED = SetUtils.unmodifiableSet("VBZ", "VBP");
+
+		@Override
+		public String getId() {
+			return this.getClass().getName();
+		}
+
+		@Override
+		public String getDescription() {
+			return getId();
+		}
+
+		@Override
+		public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+			Optional<?> match = Stream.of(sentence.getTokensWithoutWhitespace())
+					.flatMap(token -> token.getReadings().stream()).map(AnalyzedToken::getPOSTag)
+					.filter(ALLOWED::contains).findAny();
+			if (!match.isPresent()) {
+				return new RuleMatch[] { new RuleMatch(this, sentence, 0, sentence.getCorrectedTextLength(),
+						"No verb in " + sentence.getText()) };
+			}
+			return new RuleMatch[0];
+		}
+
+	}
+
+	private static final Attribute EXAMPLE_PET = Attributes.PET.getAttributes(1).get(0);
+	private static final LazyInstance<JLanguageTool> LAZY_TOOL = new LazyInstance<>(GrammarIT::makeTool);
+
+	private final JLanguageTool englishTool = LAZY_TOOL.get();
+
+	@SneakyThrows
+	private static JLanguageTool makeTool() {
+		JLanguageTool tool = new JLanguageTool(new AmericanEnglish());
+		String ngramsPathEnv = System.getenv("ZEBRA_NGRAMS_PATH");
+		log.info("Looking for ngrams given env var: {}", ngramsPathEnv);
+		if (ngramsPathEnv != null) {
+			Path ngramsPath = Paths.get(ngramsPathEnv);
+			if (Files.exists(ngramsPath)) {
+				log.info("Loading ngrams from {}", ngramsPath);
+				tool.activateLanguageModelRules(ngramsPath.toFile());
+			}
+		}
+		tool.addRule(new HasVerbRule());
+		return tool;
 	}
 
 	private void testGrammarDescribeSet(AttributeType type) {
-		String setDescriptions = describeSet(type);
-		testEnglishGrammar(setDescriptions);
+		Collection<Attribute> exampleAttributes = type.getAttributes(3);
+		testGrammar(locale -> type.describeSet(exampleAttributes, locale));
 	}
 
 	private void testGrammar(Function<Locale, String> describe) {
+		// This will be extended when the languages supported both by JLanguageTool and
+		// zebra4j are not just English.
 		String sentence = describe.apply(Locale.ENGLISH);
 		testEnglishGrammar(sentence);
 	}
 
 	@SneakyThrows(IOException.class)
 	private void testEnglishGrammar(String sentence) {
-		List<RuleMatch> matches = englishTool.check(sentence);
+		AnnotatedText text = new AnnotatedTextBuilder().addText(sentence).build();
+		List<RuleMatch> matches = englishTool.check(text, true, ParagraphHandling.NORMAL, null, Mode.ALL, Level.PICKY);
 		assertTrue(matches.toString(), matches.isEmpty());
 	}
 
@@ -88,6 +150,11 @@ public class GrammarIT {
 	@Test
 	public void testClothes_DescribeSet_Grammar() {
 		testGrammarDescribeSet(Clothes.TYPE);
+	}
+
+	@Test
+	public void testPersonName_DescribeSet_Grammar() {
+		testGrammarDescribeSet(Attributes.NAME);
 	}
 
 	@Test
