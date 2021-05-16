@@ -21,6 +21,7 @@
  */
 package zebra4j;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
 
+import lombok.extern.slf4j.Slf4j;
 import zebra4j.fact.BothTrue;
 import zebra4j.fact.Different;
 import zebra4j.fact.Fact;
@@ -44,6 +46,7 @@ import zebra4j.util.CollectionChain;
  * facts (clues). The generated puzzles will not contain facts the directly
  * answer the question.
  */
+@Slf4j
 public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuzzle> {
 
 	/**
@@ -183,16 +186,29 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 		QuestionPuzzle puzzle = toPuzzle(contraFacts);
 		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(puzzle);
 		solver.setChocoSettings(getChocoSettings());
-		for (int i = 0; i < facts.size(); ++i) {
+		int step = 16;
+		int iterations = 0;
+		for (int i = 0; i < facts.size();) {
+			++iterations;
+			if (i + step >= facts.size()) {
+				step = 1;
+			}
+			List<Fact> subList = facts.subList(i, i + step); // view
+			List<Fact> removed = new ArrayList<>(subList);
 			// very fast in an array list
-			Fact f = facts.remove(i);
-			if (!solver.solveToStream().findAny().isPresent()) {
-				--i;
-			} else {
-				// this case is very rare: out of the thousands of facts, usually <10 are kept
-				facts.add(i, f);
+			subList.clear();
+			if (solver.solveToStream().findAny().isPresent()) {
+				// this case is very rare if step = 1: out of the thousands of facts, usually
+				// <10 are kept
+				facts.addAll(i, removed);
+				if (step > 1) {
+					step /= 2;
+				} else {
+					++i;
+				}
 			}
 		}
+		log.debug("Solved in {} iterations.", iterations);
 	}
 
 }
