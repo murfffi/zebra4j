@@ -23,8 +23,10 @@ package zebra4j;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Random;
 
 import org.junit.Test;
@@ -35,12 +37,22 @@ import zebra4j.fact.Fact;
 public class QuestionPuzzleGeneratorTest {
 
 	@Test
-	public void testGenerate() {
+	public void testGenerate_NoExtra() {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
 		QuestionPuzzle puzzle = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution,
 				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		Collection<Attribute> result = new QuestionPuzzleSolver(puzzle).solve();
 		assertEquals(1, result.size());
+
+		Collection<Fact> facts = puzzle.getPuzzle().getFacts();
+		for (Fact f : facts) {
+			Collection<Fact> lessFacts = new HashSet<>(facts);
+			assertTrue(lessFacts.remove(f));
+			QuestionPuzzle lessPuzzle = new QuestionPuzzle(puzzle.getQuestion(),
+					new Puzzle(puzzle.getPuzzle().getAttributeSets(), lessFacts));
+			long count = new QuestionPuzzleSolver(lessPuzzle).solveToStream().distinct().limit(2).count();
+			assertEquals(2, count);
+		}
 	}
 
 	@Test
