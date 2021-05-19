@@ -67,7 +67,7 @@ public class SolutionGenerator implements Supplier<PuzzleSolution> {
 			attributesByPersonAndType.add(attributes);
 		}
 
-		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder(true);
+		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder();
 		for (int i = 0; i < numPeople; ++i) {
 			final int person = i;
 			List<Attribute> attributeList = attributesByPersonAndType.stream().map(l -> l.get(person))

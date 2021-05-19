@@ -22,39 +22,71 @@
 package zebra4j;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-@Getter
-@RequiredArgsConstructor
+/**
+ * Iterative builder for {@link PuzzleSolution}.
+ */
 public class PuzzleSolutionBuilder {
 
 	private final List<SolutionPerson> people = new ArrayList<>();
 	private final Map<AttributeType, Set<Attribute>> attributeSets = new LinkedHashMap<>();
-	private final boolean validating;
+	private final Set<Attribute> expectedAttributeTypes = new HashSet<>();
 
-	public PuzzleSolutionBuilder() {
-		this(true);
-	}
-
+	/**
+	 * Adds a new person with the given attributes to the solution
+	 * 
+	 * @param attributes may be empty
+	 * @return the builder
+	 */
 	public PuzzleSolutionBuilder add(Attribute... attributes) {
 		return add(new SolutionPerson(attributes));
 	}
 
+	/**
+	 * Adds a new person
+	 * 
+	 * @param person required
+	 * @return the builder
+	 */
 	public PuzzleSolutionBuilder add(SolutionPerson person) {
-		if (validating && !attributeSets.isEmpty() && !getAttributeTypes().equals(person.attributeTypes())) {
+		Set<AttributeType> allDifferentTypes = person.attributeTypes().stream()
+				.filter(a -> a instanceof AllDifferentType).collect(Collectors.toSet());
+		if (!expectedAttributeTypes.isEmpty() && !expectedAttributeTypes.equals(allDifferentTypes)) {
 			throw new IllegalArgumentException("People must have the same attributes.");
 		}
 		addAttributes(person.asList());
 
 		people.add(person);
 		return this;
+	}
+
+	/**
+	 * Adds a new person in the next house
+	 * 
+	 * @param attributes the attributes without {@link AtHouse#TYPE}
+	 * @return the builder
+	 */
+	public PuzzleSolutionBuilder addWithHouse(Attribute... attributes) {
+		SolutionPerson person = new SolutionPerson(attributes);
+		if (person.findAttribute(AtHouse.TYPE) != null) {
+			throw new IllegalArgumentException("AtHouse is not allowed to be pre-set in this case.");
+		}
+		SolutionPerson personWithHouse = person.withAttribute(new AtHouse(people.size() + 1));
+		return add(personWithHouse);
+	}
+
+	/**
+	 * @return the completed solution
+	 */
+	public PuzzleSolution build() {
+		return new PuzzleSolution(new LinkedHashSet<>(people), attributeSets);
 	}
 
 	private void addAttributes(List<Attribute> attributes) {
@@ -65,27 +97,6 @@ public class PuzzleSolutionBuilder {
 				throw new IllegalArgumentException("Attributes must be different.");
 			}
 		}
-
-	}
-
-	private Set<AttributeType> getAttributeTypes() {
-		return attributeSets.keySet();
-	}
-
-	public PuzzleSolutionBuilder addWithHouse(Attribute... attributes) {
-		return addWithHouse(new SolutionPerson(attributes));
-	}
-
-	public PuzzleSolutionBuilder addWithHouse(SolutionPerson person) {
-		if (person.findAttribute(AtHouse.TYPE) != null) {
-			throw new IllegalArgumentException("AtHouse is not allowed to be pre-set in this case.");
-		}
-		SolutionPerson personWithHouse = person.withAttribute(new AtHouse(people.size() + 1));
-		return add(personWithHouse);
-	}
-
-	public PuzzleSolution build() {
-		return new PuzzleSolution(new LinkedHashSet<>(people), attributeSets);
 	}
 
 }

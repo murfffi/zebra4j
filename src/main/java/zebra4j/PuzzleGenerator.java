@@ -40,6 +40,12 @@ import zebra4j.fact.Fact;
  */
 public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 
+	/**
+	 * Generate a new random puzzle using defaults
+	 * 
+	 * @param numPeople number of people in the puzzle
+	 * @return
+	 */
 	public static Puzzle randomPuzzle(int numPeople) {
 		PuzzleGenerator generator = new PuzzleGenerator(new SolutionGenerator(numPeople).generate(),
 				DEFAULT_FACT_TYPES);

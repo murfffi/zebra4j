@@ -145,7 +145,7 @@ public class PuzzleSolver {
 			allAttributes[i] = new ArrayList<>();
 		}
 		choco.entrySet().stream().forEach(e -> allAttributes[e.getValue()].add(e.getKey()));
-		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder(false);
+		PuzzleSolutionBuilder builder = new PuzzleSolutionBuilder();
 		Stream.of(allAttributes).forEach(list -> builder.add(new SolutionPerson(list)));
 		return builder.build();
 	}
