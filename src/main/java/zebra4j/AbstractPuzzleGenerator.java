@@ -67,7 +67,8 @@ public abstract class AbstractPuzzleGenerator<P> implements Supplier<P> {
 	 * Tip: one can generate several puzzles quickly with a parallel stream:
 	 * 
 	 * <pre>
-	 * Stream.generate.parallel.
+	 * Stream.generate.parallel
+	 * </pre>
 	 * 
 	 * @return a new puzzle generated from the seed solution and randomness source;
 	 *         each generated puzzle is different and has a minimal set of facts
