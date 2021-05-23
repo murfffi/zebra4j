@@ -27,6 +27,17 @@ import org.apache.commons.lang3.RandomUtils;
 
 import zebra4j.Cli.GeneratedQuestionPuzzle;
 
+/**
+ * Generates the content of SAMPLES.md in the repo root
+ * 
+ * <p>
+ * The generation is currently fast with 4-person puzzles, but if it bumped to
+ * more complex puzzles, it needs to switch to a parallel stream implementation:
+ * 
+ * <pre>
+ * Stream.generate.parallel.filter.limit.forEach
+ * </pre>
+ */
 public class GenerateSamples {
 
 	public static void main(String[] args) {

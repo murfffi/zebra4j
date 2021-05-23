@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import javax.annotation.concurrent.Immutable;
+
 import org.chocosolver.solver.constraints.Constraint;
 import org.chocosolver.solver.variables.IntVar;
 
@@ -51,6 +53,7 @@ import zebra4j.ZebraModel;
 @AllArgsConstructor
 @ToString
 @Getter
+@Immutable
 public class NearbyHouse extends CommutativeFact {
 
 	private static final int MAX_DISTANCE = 2;

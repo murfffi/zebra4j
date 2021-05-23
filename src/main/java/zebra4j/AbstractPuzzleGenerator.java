@@ -27,8 +27,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.annotation.concurrent.ThreadSafe;
 
 import org.apache.commons.collections4.SetUtils;
 import org.chocosolver.solver.Settings;
@@ -45,7 +48,8 @@ import zebra4j.fact.NearbyHouse;
 
 @RequiredArgsConstructor
 @Slf4j
-public abstract class AbstractPuzzleGenerator<P> {
+@ThreadSafe
+public abstract class AbstractPuzzleGenerator<P> implements Supplier<P> {
 
 	public static final Set<Fact.Type> DEFAULT_FACT_TYPES = SetUtils.unmodifiableSet(BothTrue.TYPE, Different.TYPE,
 			NearbyHouse.TYPE);
@@ -59,6 +63,12 @@ public abstract class AbstractPuzzleGenerator<P> {
 	private Settings chocoSettings;
 
 	/**
+	 * <p>
+	 * Tip: one can generate several puzzles quickly with a parallel stream:
+	 * 
+	 * <pre>
+	 * Stream.generate.parallel.
+	 * 
 	 * @return a new puzzle generated from the seed solution and randomness source;
 	 *         each generated puzzle is different and has a minimal set of facts
 	 */
@@ -77,6 +87,11 @@ public abstract class AbstractPuzzleGenerator<P> {
 		Collections.shuffle(facts, rnd);
 		removeFacts(facts);
 		return toPuzzle(facts);
+	}
+
+	@Override
+	public P get() {
+		return generate();
 	}
 
 	/**
@@ -121,7 +136,7 @@ public abstract class AbstractPuzzleGenerator<P> {
 	 * generated puzzle
 	 * 
 	 * <p>
-	 * Implementation typically override either this method or
+	 * Implementations typically override either this method or
 	 * {@link #uniqueSolution} with a more efficient solution.
 	 * 
 	 * @param facts initial list of facts with which the puzzle has a unique

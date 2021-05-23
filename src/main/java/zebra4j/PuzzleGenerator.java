@@ -27,6 +27,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 import zebra4j.fact.Fact;
 
 /**
@@ -38,6 +40,7 @@ import zebra4j.fact.Fact;
  * will have the same attributes and solution but will have different facts
  * (clues).
  */
+@ThreadSafe
 public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 
 	/**

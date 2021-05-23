@@ -27,15 +27,21 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.annotation.concurrent.Immutable;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * A full solution to a basic "full assignment" puzzle
+ */
 @EqualsAndHashCode
 @ToString
 @Getter
+@Immutable
 public class PuzzleSolution {
 
 	private final Set<SolutionPerson> people;

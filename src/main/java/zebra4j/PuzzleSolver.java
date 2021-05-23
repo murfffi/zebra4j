@@ -37,6 +37,7 @@ import org.chocosolver.solver.Settings;
 import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
+import org.chocosolver.solver.variables.Variable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -74,7 +75,8 @@ public class PuzzleSolver {
 		}
 		Model model = zebraModel.getChocoModel();
 		Solver solver = model.getSolver();
-		Solution solution = new Solution(model);
+		Set<Entry<Attribute, IntVar>> variables = zebraModel.getVariableMap().entrySet();
+		Solution solution = new Solution(model, zebraModel.getVariableMap().values().toArray(new Variable[0]));
 		// We don't extend AbstractSpliterator below because it is not available in
 		// TeaVM stdlib. We don't use its features anyway.
 		Spliterator<Map<Attribute, Integer>> spliterator = new Spliterator<Map<Attribute, Integer>>() {
@@ -91,7 +93,6 @@ public class PuzzleSolver {
 				// For question puzzles, this can be further improved by extracting only the
 				// attributes for towards and about, but the optimization is currently not worth
 				// the added complexity.
-				Set<Entry<Attribute, IntVar>> variables = zebraModel.getVariableMap().entrySet();
 				action.accept(variables.stream()
 						.collect(Collectors.toMap(e -> e.getKey(), e -> solution.getIntVal(e.getValue()))));
 				return true;

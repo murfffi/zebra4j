@@ -75,8 +75,20 @@ public interface Fact {
 	 */
 	boolean appliesTo(PuzzleSolution solution);
 
+	/**
+	 * Describes the facts in natural language in the given locale
+	 * 
+	 * @param locale required
+	 * @return a natural language sentence
+	 */
 	String describe(Locale locale);
 
+	/**
+	 * Collect the types of the attributes referenced by the fact
+	 * 
+	 * @return a non-empty list if the fact is a relationship between attributes,
+	 *         empty otherwise
+	 */
 	Collection<AttributeType> attributeTypes();
 
 }

@@ -31,9 +31,12 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
+@ThreadSafe
 public class SolutionGenerator implements Supplier<PuzzleSolution> {
 
 	private final Set<AttributeType> attributeTypes;

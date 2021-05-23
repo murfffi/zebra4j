@@ -22,7 +22,7 @@ features:
 - zebra4j is available as either 
   [a JAR for Java 8+ applications](https://search.maven.org/artifact/io.github.murfffi/zebra4j/),
   a [JavaScript library](https://github.com/murfffi/zebra-apps), or a native library,
-  compiled ahead-of-time with GraalVM (coming soon).
+  compiled ahead-of-time with [GraalVM](https://www.graalvm.org/reference-manual/native-image/) (coming soon).
   The native library can be embedded in an app written in another
   language like Python, Go or Rust.
 
@@ -65,13 +65,13 @@ You can try a JavaScript build of the library at
 You can also use zebra4j on the command line. The fastest way to do it is with Docker:
 
 ```
-docker run murfffi/zebracli generate --help
+docker run --rm murfffi/zebracli --help
 ```
 
 The image download is just 14 MB. It is based on a GraalVM native-image build (for amd64 only).
 
 If you don't have Docker locally but have Java, you can download
-<https://repo1.maven.org/maven2/io/github/murfffi/zebra4j/0.7/zebra4j-0.7-shaded.jar> to
+<https://repo1.maven.org/maven2/io/github/murfffi/zebra4j/0.7/zebra4j-0.8-shaded.jar> to
 `zebra4j-bundle.jar` and run:
 
 ```
@@ -111,7 +111,7 @@ above, to add support for languages that require different sentence structure.
 Requirements:
 - Java 8+ JDK with its java executable on the PATH
 
-To install, check out the code and then run:
+To install, clone the repository and then run:
 
 ```bash
 ./mvnw install

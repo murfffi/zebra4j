@@ -24,6 +24,8 @@ package zebra4j.fact;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.concurrent.Immutable;
+
 import org.chocosolver.solver.constraints.Constraint;
 import org.chocosolver.solver.variables.IntVar;
 
@@ -41,6 +43,7 @@ import zebra4j.ZebraModel;
 @ToString
 @Getter
 @Slf4j
+@Immutable
 public class Different extends CommutativeFact {
 
 	public static Fact.Type TYPE = new Fact.Type() {

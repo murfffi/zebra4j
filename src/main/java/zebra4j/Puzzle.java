@@ -38,6 +38,9 @@ import zebra4j.fact.Fact;
  * the puzzle (e.g. all people have different name and the name may be Liza,
  * John or Mary). The assignment must also satisfy the given set of
  * {@link Fact}s.
+ * 
+ * <p>
+ * The puzzle is immutable if the provided input collections are immutable.
  */
 @Value
 public class Puzzle {

@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.annotation.concurrent.Immutable;
+
 import org.apache.commons.lang3.Validate;
 
 import com.google.gson.Gson;
@@ -47,6 +49,7 @@ import lombok.RequiredArgsConstructor;
  * @see AllDifferentType
  */
 @EqualsAndHashCode(callSuper = false)
+@Immutable
 public class BasicAttributeType extends AllDifferentType {
 
 	public static BasicAttributeType fromJson(String json) {

@@ -26,11 +26,15 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.chocosolver.solver.DefaultSettings;
+import org.chocosolver.solver.IModel;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Settings;
+import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.variables.IntVar;
 
 import lombok.Getter;
@@ -39,10 +43,18 @@ import zebra4j.util.LazyInstance;
 /**
  * Wrapper on ChocoSolver {@link Model} adding variable management
  */
+@NotThreadSafe
 public class ZebraModel {
 
 	private static final Supplier<Settings> DEFAULT_SETTINGS = new LazyInstance<Settings>(DefaultSettings::new);
 
+	/**
+	 * The underlying solver {@link Model}
+	 * 
+	 * <p>
+	 * We can't use {@link IModel} here because {@link Solution#Solution} requires
+	 * {@link Model}.
+	 */
 	@Getter
 	private final Model chocoModel;
 

@@ -30,9 +30,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
 /**
  * Iterative builder for {@link PuzzleSolution}.
  */
+@NotThreadSafe
 public class PuzzleSolutionBuilder {
 
 	private final List<SolutionPerson> people = new ArrayList<>();

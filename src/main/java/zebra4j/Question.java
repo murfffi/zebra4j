@@ -40,12 +40,12 @@ import lombok.Value;
  * The question is towards the person, identified by the attribute in
  * {@link #getTowards()} and is about the attribute of type {@link #getAbout()}.
  */
-/**
- * @author mnozhchev
- *
- */
 @Value
 public class Question {
+
+	/**
+	 * Sample question: Who is the criminal?
+	 */
 	public static Question NAME_OF_CRIMINAL = new Question(Criminal.YES, PersonName.TYPE);
 
 	/**

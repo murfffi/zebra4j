@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 import org.apache.commons.lang3.Validate;
 
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +49,7 @@ import zebra4j.util.CollectionChain;
  * answer the question.
  */
 @Slf4j
+@ThreadSafe
 public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuzzle> {
 
 	/**

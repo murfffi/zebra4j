@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
 
+import javax.annotation.concurrent.Immutable;
+
 import zebra4j.Attribute;
 import zebra4j.AttributeType;
 import zebra4j.Localization;
@@ -38,6 +40,7 @@ import zebra4j.PersonName;
  * If the implementing fact has more fields than the two attributes, the methods
  * need to be overridden.
  */
+@Immutable
 public abstract class CommutativeFact implements Fact {
 
 	public abstract Attribute getLeft();

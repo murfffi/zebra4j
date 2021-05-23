@@ -21,18 +21,24 @@
  */
 package zebra4j;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Test;
-
-import zebra4j.Cli.GeneratedQuestionPuzzle;
 
 public class PerfIT {
 
 	@Test
 	public void testQuestion() throws Exception {
-		GeneratedQuestionPuzzle sample = Cli.sampleQuestionPuzzle(1, 5);
-		assertEquals(5, sample.puzzle.getPuzzle().getFacts().size());
+		PuzzleSolution sampleSolution = new SolutionGenerator(5).generate();
+		Question question = Question.generate(sampleSolution);
+		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(question, sampleSolution,
+				QuestionPuzzleGenerator.DEFAULT_FACT_TYPES);
+		int numFacts = Stream.generate(generator).parallel().limit(5)
+				.collect(Collectors.summingInt(p -> p.getPuzzle().getFacts().size()));
+		assertTrue(numFacts > 5);
 	}
 
 }
