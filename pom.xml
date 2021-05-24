@@ -8,7 +8,7 @@
 	<!-- https://central.sonatype.org/pages/choosing-your-coordinates.html -->
 	<groupId>io.github.murfffi</groupId>
 	<artifactId>zebra4j</artifactId>
-	<version>0.8</version>
+	<version>0.9-SNAPSHOT</version>
 
 	<name>zebra4j</name>
 	<url>https://github.com/murfffi/zebra4j</url>
