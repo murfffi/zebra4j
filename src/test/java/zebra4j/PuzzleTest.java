@@ -47,10 +47,10 @@ public class PuzzleTest {
 
 	@Test
 	public void testNumPeopleWithCriminal() {
-		Map<AttributeType, Set<Attribute>> sets = new LinkedHashMap<>();
-		sets.put(Criminal.TYPE, SetUtils.unmodifiableSet(Criminal.YES, Criminal.NO));
-		sets.put(Clothes.TYPE, SetUtils.unmodifiableSet(Clothes.BLUE, Clothes.RED, Clothes.GREEN));
-		Puzzle puzzle = new Puzzle(sets, Collections.emptySet());
+		PuzzleBuilder builder = new PuzzleBuilder();
+		builder.addSet(Criminal.YES, Criminal.NO);
+		builder.addSet(Clothes.BLUE, Clothes.RED, Clothes.GREEN);
+		Puzzle puzzle = builder.build();
 		assertEquals(3, puzzle.numPeople());
 	}
 
