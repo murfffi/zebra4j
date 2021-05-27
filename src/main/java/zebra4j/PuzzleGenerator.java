@@ -70,7 +70,7 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 
 	@Override
 	protected int countSolutions(Puzzle puzzle) {
-		return new PuzzleSolver(puzzle, getChocoSettings()).solve().size();
+		return newSolver(puzzle).solve().size();
 	}
 
 	@Override
@@ -89,7 +89,13 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 	}
 
 	private Stream<PuzzleSolution> solveToStream(Puzzle puzzle) {
-		return new PuzzleSolver(puzzle, getChocoSettings()).solveToStream();
+		return newSolver(puzzle).solveToStream();
+	}
+
+	private PuzzleSolver newSolver(Puzzle puzzle) {
+		PuzzleSolver solver = new PuzzleSolver(puzzle);
+		solver.setChocoSettings(getChocoSettings());
+		return solver;
 	}
 
 }

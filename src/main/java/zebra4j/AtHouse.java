@@ -29,6 +29,14 @@ import java.util.stream.IntStream;
 
 import lombok.Value;
 
+/**
+ * The house that the person lives in.
+ * 
+ * <p>
+ * A built-in attribute type
+ * 
+ * @see #getPosition()
+ */
 @Value
 public class AtHouse implements Attribute {
 

@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.apache.commons.lang3.Validate;
 import org.chocosolver.solver.IModel;
 import org.chocosolver.solver.variables.IntVar;
 
@@ -68,10 +69,11 @@ public abstract class AllDifferentType implements AttributeType {
 	 * @return a list of attributes as in {@link #getAttributes}
 	 */
 	protected static List<Attribute> toSolutionSet(Attribute[] allValues, int numPeople) {
+		Validate.isTrue(allValues.length > 0);
 		if (numPeople > allValues.length) {
 			throw new IllegalArgumentException(
 					String.format("%s has less elements - %s - then number of people requested: %s",
-							allValues.getClass().getComponentType(), allValues.length, numPeople));
+							allValues[0].type(), allValues.length, numPeople));
 		}
 		return Arrays.asList(Arrays.copyOfRange(allValues, 0, numPeople));
 	}

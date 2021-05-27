@@ -24,6 +24,12 @@ package zebra4j;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * The color of a persons clothes.
+ * 
+ * <p>
+ * A built-in attribute type.
+ */
 public enum Clothes implements Attribute {
 
 	RED, BLUE, GREEN, YELLOW, PINK;
