@@ -60,7 +60,7 @@ public class Puzzle {
 	 */
 	public int numPeople() {
 		return attributeSets.entrySet().stream().filter(e -> e.getKey() instanceof AllDifferentType)
-				.map(e -> e.getValue().size()).min(Integer::compare).orElse(0);
+				.mapToInt(e -> e.getValue().size()).min().orElse(0);
 	}
 
 	/**

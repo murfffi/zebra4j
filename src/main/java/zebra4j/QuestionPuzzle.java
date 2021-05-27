@@ -49,12 +49,16 @@ public class QuestionPuzzle {
 		this.puzzle = puzzle;
 	}
 
+	/**
+	 * Same as {@link Puzzle#describeConstraints(Locale)}
+	 * 
+	 * @param locale required
+	 * @return a list of sentences in the given locale, not null.
+	 */
 	public List<String> describeConstraints(Locale locale) {
-		return puzzle.describeConstraintsForTypes(locale, gatherFactTypes());
-	}
-
-	private Set<AttributeType> gatherFactTypes() {
-		return puzzle.getFacts().stream().flatMap(f -> f.attributeTypes().stream()).collect(Collectors.toSet());
+		Set<AttributeType> referencedTypes = puzzle.getFacts().stream().flatMap(f -> f.attributeTypes().stream())
+				.collect(Collectors.toSet());
+		return puzzle.describeConstraintsForTypes(locale, referencedTypes);
 	}
 
 }

@@ -32,6 +32,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Settings;
 import org.chocosolver.solver.Solution;
@@ -39,9 +41,7 @@ import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.solver.variables.Variable;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import zebra4j.fact.Fact;
@@ -49,12 +49,17 @@ import zebra4j.fact.Fact;
 /**
  * Solver for {@link Puzzle}
  */
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Slf4j
+@ThreadSafe
 public class PuzzleSolver {
 
 	private final Puzzle puzzle;
+	private final int numPeople;
+
+	public PuzzleSolver(Puzzle puzzle) {
+		this.puzzle = puzzle;
+		this.numPeople = puzzle.numPeople();
+	}
 
 	@Getter
 	@Setter
@@ -134,12 +139,10 @@ public class PuzzleSolver {
 	 * @return a lazy stream of all solutions with possible duplicates
 	 */
 	public Stream<PuzzleSolution> solveToStream() {
-		// 16% of the typical CPU cost of this method is in the map.
 		return solveChoco().map(this::fromChocoSolution);
 	}
 
 	private PuzzleSolution fromChocoSolution(Map<Attribute, Integer> choco) {
-		int numPeople = puzzle.numPeople();
 		@SuppressWarnings("unchecked")
 		List<Attribute>[] allAttributes = new List[numPeople];
 		for (int i = 0; i < allAttributes.length; ++i) {

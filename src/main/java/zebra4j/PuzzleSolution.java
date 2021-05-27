@@ -40,12 +40,21 @@ import lombok.ToString;
  */
 @EqualsAndHashCode
 @ToString
-@Getter
 @Immutable
 public class PuzzleSolution {
 
+	/**
+	 * The set of people with all of their attributed specified.
+	 */
+	@Getter
 	private final Set<SolutionPerson> people;
+
+	/**
+	 * The sets of attributes referenced in the solution, grouped by type.
+	 */
+	@Getter
 	private final Map<AttributeType, Set<Attribute>> attributeSets;
+
 	private final Map<Attribute, SolutionPerson> attrToPerson;
 
 	public PuzzleSolution(Set<SolutionPerson> people, Map<AttributeType, Set<Attribute>> attributeSets) {
