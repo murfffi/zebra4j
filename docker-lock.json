@@ -7,13 +7,6 @@
 				"digest": "626b5b59717e950ab122a5d706ec2e9905e86ef3a45b3e20e41b66205afcabd2",
 				"dockerfile": "graalvm/Dockerfile",
 				"service": "native"
-			},
-			{
-				"name": "gcr.io/distroless/base-debian10",
-				"tag": "latest",
-				"digest": "6ec6da1888b18dd971802c2a58a76a7702902b4c9c1be28f38e75e871cedc2df",
-				"dockerfile": "docker/Dockerfile",
-				"service": "zebracli"
 			}
 		]
 	}
