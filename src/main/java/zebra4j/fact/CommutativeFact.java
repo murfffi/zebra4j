@@ -31,6 +31,7 @@ import zebra4j.Attribute;
 import zebra4j.AttributeType;
 import zebra4j.Localization;
 import zebra4j.PersonName;
+import zebra4j.Puzzle;
 
 /**
  * A fact about a commutative relationship between people identified by two
@@ -75,6 +76,11 @@ public abstract class CommutativeFact implements Fact {
 		}
 		String pattern = Localization.translate(getClass(), patternId, locale);
 		return String.format(pattern, getLeft().description(locale), getRight().description(locale));
+	}
+
+	@Override
+	public boolean appliesTo(Puzzle puzzle) {
+		return puzzle.contains(getLeft()) && puzzle.contains(getRight());
 	}
 
 	@FunctionalInterface

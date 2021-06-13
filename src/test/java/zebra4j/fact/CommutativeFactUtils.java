@@ -22,10 +22,15 @@
 package zebra4j.fact;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
+import zebra4j.AtHouse;
 import zebra4j.Clothes;
 import zebra4j.PersonName;
+import zebra4j.Puzzle;
+import zebra4j.PuzzleBuilder;
 import zebra4j.fact.CommutativeFact.Source;
 
 public interface CommutativeFactUtils {
@@ -39,6 +44,16 @@ public interface CommutativeFactUtils {
 	public static void testHashcode(Source factSource) {
 		assertEquals(factSource.create(Clothes.GREEN, PersonName.ELENA).hashCode(),
 				factSource.create(PersonName.ELENA, Clothes.GREEN).hashCode());
+	}
+
+	public static void testAppliesToPuzzle(Source factSource) {
+		PuzzleBuilder builder = new PuzzleBuilder();
+		builder.addSet(Clothes.BLUE, Clothes.GREEN);
+		builder.addSet(PersonName.ELENA, PersonName.THEODORA);
+		Puzzle puzzle = builder.build();
+		assertTrue(factSource.create(Clothes.BLUE, PersonName.ELENA).appliesTo(puzzle));
+		assertFalse(factSource.create(Clothes.YELLOW, PersonName.ELENA).appliesTo(puzzle));
+		assertFalse(factSource.create(new AtHouse(1), PersonName.ELENA).appliesTo(puzzle));
 	}
 
 }

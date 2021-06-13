@@ -42,6 +42,7 @@ import zebra4j.Attribute;
 import zebra4j.AttributeType;
 import zebra4j.Localization;
 import zebra4j.PersonName;
+import zebra4j.Puzzle;
 import zebra4j.PuzzleSolution;
 import zebra4j.SolutionPerson;
 import zebra4j.ZebraModel;
@@ -179,6 +180,11 @@ public class NearbyHouse extends CommutativeFact {
 	@Override
 	public Collection<AttributeType> attributeTypes() {
 		return Arrays.asList(left.type(), right.type(), AtHouse.TYPE);
+	}
+
+	@Override
+	public boolean appliesTo(Puzzle puzzle) {
+		return super.appliesTo(puzzle) && puzzle.getAttributeSets().containsKey(AtHouse.TYPE);
 	}
 
 	@Override

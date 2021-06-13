@@ -71,7 +71,7 @@ docker run --rm murfffi/zebracli --help
 The image download is just 14 MB. It is based on a GraalVM native-image build (for amd64 only).
 
 If you don't have Docker locally but have Java, you can download
-<https://repo1.maven.org/maven2/io/github/murfffi/zebra4j/0.7/zebra4j-0.8-shaded.jar> to
+<https://repo1.maven.org/maven2/io/github/murfffi/zebra4j/0.8/zebra4j-0.8-shaded.jar> to
 `zebra4j-bundle.jar` and run:
 
 ```

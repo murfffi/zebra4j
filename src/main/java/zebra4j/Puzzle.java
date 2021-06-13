@@ -22,6 +22,7 @@
 package zebra4j;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -41,6 +42,11 @@ import zebra4j.fact.Fact;
  * 
  * <p>
  * The puzzle is immutable if the provided input collections are immutable.
+ * 
+ * <p>
+ * For efficiency, the puzzle constructor does not validate if the attribute
+ * sets and facts are consistent. Use {@link PuzzleBuilder} is validation is
+ * preferred.
  */
 @Value
 public class Puzzle {
@@ -61,6 +67,14 @@ public class Puzzle {
 	public int numPeople() {
 		return attributeSets.entrySet().stream().filter(e -> e.getKey() instanceof AllDifferentType)
 				.mapToInt(e -> e.getValue().size()).min().orElse(0);
+	}
+
+	/**
+	 * @param attr required
+	 * @return if the puzzle refers to the given attribute
+	 */
+	public boolean contains(Attribute attr) {
+		return attributeSets.getOrDefault(attr.type(), Collections.emptySet()).contains(attr);
 	}
 
 	/**
