@@ -24,6 +24,7 @@ package zebra4j;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.concurrent.Immutable;
@@ -85,12 +86,12 @@ public class BasicAttributeType extends AllDifferentType {
 	@EqualsAndHashCode(exclude = "type")
 	static class BasicAttribute implements Attribute {
 
-		private final String description;
+		private final String label;
 		private transient final AttributeType type;
 
 		@Override
 		public String description(Locale locale) {
-			return description;
+			return label;
 		}
 
 		@Override
@@ -100,7 +101,7 @@ public class BasicAttributeType extends AllDifferentType {
 
 		@Override
 		public String toString() {
-			return description;
+			return label;
 		}
 	}
 
@@ -117,6 +118,15 @@ public class BasicAttributeType extends AllDifferentType {
 	@Override
 	public String toString() {
 		return typeName;
+	}
+
+	/**
+	 * Finds the attribute with the given label if any, case sensitive
+	 * 
+	 * @param label required, case sensitive
+	 */
+	public Optional<Attribute> findByLabel(String label) {
+		return attributes.stream().filter(a -> ((BasicAttribute) a).label.equals(label)).findAny();
 	}
 
 }

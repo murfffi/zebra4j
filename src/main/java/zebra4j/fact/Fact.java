@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 
 import zebra4j.AttributeType;
+import zebra4j.Puzzle;
 import zebra4j.PuzzleSolution;
 import zebra4j.ZebraModel;
 
@@ -74,6 +75,13 @@ public interface Fact {
 	 * @return if the fact is true about the people in the given solution
 	 */
 	boolean appliesTo(PuzzleSolution solution);
+
+	/**
+	 * @param puzzle required
+	 * @return if the fact is relevant to the given puzzle e.g. if the fact is a
+	 *         relationship between attributes and the puzzle contains all of them
+	 */
+	boolean appliesTo(Puzzle puzzle);
 
 	/**
 	 * Describes the facts in natural language in the given locale

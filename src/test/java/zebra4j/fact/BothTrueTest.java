@@ -63,6 +63,11 @@ public class BothTrueTest {
 		CommutativeFactUtils.testHashcode(BothTrue::new);
 	}
 
+	@Test
+	public void testAppliesToPuzzle() {
+		CommutativeFactUtils.testAppliesToPuzzle(BothTrue::new);
+	}
+
 	public static void testGenerate(Fact.Type type) {
 		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
 		List<Fact> facts = type.generate(solution);

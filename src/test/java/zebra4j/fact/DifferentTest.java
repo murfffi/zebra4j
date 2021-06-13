@@ -44,4 +44,9 @@ public class DifferentTest {
 	public void testHashcode() {
 		CommutativeFactUtils.testHashcode(Different::new);
 	}
+
+	@Test
+	public void testAppliesToPuzzle() {
+		CommutativeFactUtils.testAppliesToPuzzle(Different::new);
+	}
 }

@@ -21,13 +21,20 @@
  */
 package zebra4j.fact;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import zebra4j.AtHouse;
 import zebra4j.Clothes;
+import zebra4j.Criminal;
 import zebra4j.LocalizationTestUtils;
 import zebra4j.PersonName;
+import zebra4j.Puzzle;
+import zebra4j.PuzzleBuilder;
+import zebra4j.fact.CommutativeFact.Source;
 
 public class NearbyHouseTest {
 
@@ -67,6 +74,19 @@ public class NearbyHouseTest {
 	public void testHashcode_Distance() {
 		assertNotEquals(new NearbyHouse(1, Clothes.GREEN, PersonName.ELENA).hashCode(),
 				new NearbyHouse(2, Clothes.GREEN, PersonName.ELENA).hashCode());
+	}
+
+	@Test
+	public void testAppliesToPuzzle() {
+		Source factSource = (l, r) -> new NearbyHouse(2, l, r);
+		PuzzleBuilder builder = new PuzzleBuilder();
+		builder.addSet(Clothes.BLUE, Clothes.GREEN);
+		builder.addSet(PersonName.ELENA, PersonName.THEODORA);
+		builder.addSet(new AtHouse(1), new AtHouse(2));
+		Puzzle puzzle = builder.build();
+		assertTrue(factSource.create(Clothes.BLUE, PersonName.ELENA).appliesTo(puzzle));
+		assertFalse(factSource.create(Clothes.YELLOW, PersonName.ELENA).appliesTo(puzzle));
+		assertFalse(factSource.create(Criminal.YES, PersonName.ELENA).appliesTo(puzzle));
 	}
 
 }
