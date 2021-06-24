@@ -4,16 +4,16 @@
 [![License](https://img.shields.io/github/license/murfffi/zebra4j)](/LICENSE)
 [![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)](https://search.maven.org/artifact/io.github.murfffi/zebra4j)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e85598dea228465188b9e70774983532)](https://www.codacy.com/gh/murfffi/zebra4j/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=murfffi/zebra4j&amp;utm_campaign=Badge_Grade)
+[![Docker Pulls](https://img.shields.io/docker/pulls/murfffi/zebracli)](https://hub.docker.com/r/murfffi/zebracli)
 
 ## Overview
 
 zebra4j is a generator and solver for [Zebra
-puzzles](https://en.wikipedia.org/wiki/Zebra_Puzzle), also knows as "logic grid
+puzzles](https://en.wikipedia.org/wiki/Zebra_Puzzle), also known as "logic grid
 puzzles". Such libraries are used as backend of interactive games aimed at
 children of all ages. [Try it out right in your browser!](https://murfffi.github.io/zebra-apps/demo/)
 
-While there are many available solutions there, this library has some unique
-features:
+This library has some unique features, not available in alternative solutions:
 - It can describe generated puzzles in multiple languages, not just produce data
   structures. See "Localizing" section for details.
 - It supports both puzzles that end with question like "Who owns the zebra?" and
@@ -21,12 +21,13 @@ features:
 - zebra4j is available as either 
   [a JAR for Java 8+ applications](https://search.maven.org/artifact/io.github.murfffi/zebra4j/),
   a [JavaScript library](https://github.com/murfffi/zebra-apps), or a native library,
-  compiled ahead-of-time with GraalVM (coming soon).
+  compiled ahead-of-time with [GraalVM](https://www.graalvm.org/reference-manual/native-image/)
+  [coming soon](https://github.com/murfffi/zebra4j/issues/50).
   The native library can be embedded in an app written in another
   language like Python, Go or Rust.
 
 [Demo.java](src/main/java/zebra4j/Demo.java) and unit tests demonstrate how to use
-the library in Java. Learn even more in the [javadoc](https://murfffi.github.io/zebra4j/apidocs/).
+the library in Java.
 
 [SAMPLES.md](SAMPLES.md) contain some sample generated puzzles.
 
@@ -36,7 +37,7 @@ The library is available in the Maven Central. The artifact details are:
 
 - groupId: `io.github.murfffi`
 - artifactId: `zebra4j`
-- version: ![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)
+- version: [![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)](https://search.maven.org/artifact/io.github.murfffi/zebra4j)
 
 With Maven, you can add it as a dependency like this:
 
@@ -63,19 +64,21 @@ You can try a JavaScript build of the library at
 
 You can also use zebra4j on the command line. The fastest way to do it is with Docker:
 
-```
-docker run murfffi/zebracli generate --help
+```bash
+docker run --rm murfffi/zebracli --help
 ```
 
-The image download is just 40 MB. It is based on a GraalVM native-image build.
+The image download is just 14 MB. It is based on a GraalVM native-image build (for amd64 only).
 
-If you don't have Docker locally but have java, you can download
-<https://repo1.maven.org/maven2/io/github/murfffi/zebra4j/0.7/zebra4j-0.7-shaded.jar> to
+If you don't have Docker locally but have Java, you can download
+<https://repo1.maven.org/maven2/io/github/murfffi/zebra4j/0.8/zebra4j-0.8-shaded.jar> to
 `zebra4j-bundle.jar` and run:
 
-```
+```bash
 java -jar zebra4j-bundle.jar --help
 ```
+
+Unlike the Docker image, the JAR works on any system architecture supported by Java, not just amd64.
 
 ## Customizing
 
@@ -108,7 +111,7 @@ above, to add support for languages that require different sentence structure.
 Requirements:
 - Java 8+ JDK with its java executable on the PATH
 
-To install, check out the code and then run:
+To install, clone the repository and then run:
 
 ```bash
 ./mvnw install
@@ -136,5 +139,6 @@ The library uses [slf4j-api](http://www.slf4j.org/) as logging API and does not
 include or enforce any particular backend.
 
 ## Contributing
+
 <!-- https://github.blog/2013-01-31-relative-links-in-markup-files/ -->
 See [CONTRIBUTING.md](CONTRIBUTING.md) .
