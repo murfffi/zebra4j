@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/github/license/murfffi/zebra4j)](/LICENSE)
 [![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)](https://search.maven.org/artifact/io.github.murfffi/zebra4j)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e85598dea228465188b9e70774983532)](https://www.codacy.com/gh/murfffi/zebra4j/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=murfffi/zebra4j&amp;utm_campaign=Badge_Grade)
-![Docker Pulls](https://img.shields.io/docker/pulls/murfffi/zebracli)
+[![Docker Pulls](https://img.shields.io/docker/pulls/murfffi/zebracli)](https://hub.docker.com/r/murfffi/zebracli)
 
 ## Overview
 
@@ -13,8 +13,7 @@ puzzles](https://en.wikipedia.org/wiki/Zebra_Puzzle), also known as "logic grid
 puzzles". Such libraries are used as backend of interactive games aimed at
 children of all ages. [Try it out right in your browser!](https://murfffi.github.io/zebra-apps/demo/)
 
-While there are many available solutions there, this library has some unique
-features:
+This library has some unique features, not available in alternative solutions:
 - It can describe generated puzzles in multiple languages, not just produce data
   structures. See "Localizing" section for details.
 - It supports both puzzles that end with question like "Who owns the zebra?" and
@@ -22,7 +21,8 @@ features:
 - zebra4j is available as either 
   [a JAR for Java 8+ applications](https://search.maven.org/artifact/io.github.murfffi/zebra4j/),
   a [JavaScript library](https://github.com/murfffi/zebra-apps), or a native library,
-  compiled ahead-of-time with [GraalVM](https://www.graalvm.org/reference-manual/native-image/) (coming soon).
+  compiled ahead-of-time with [GraalVM](https://www.graalvm.org/reference-manual/native-image/)
+  [coming soon](https://github.com/murfffi/zebra4j/issues/50).
   The native library can be embedded in an app written in another
   language like Python, Go or Rust.
 
@@ -37,7 +37,7 @@ The library is available in the Maven Central. The artifact details are:
 
 - groupId: `io.github.murfffi`
 - artifactId: `zebra4j`
-- version: ![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)
+- version: [![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)](https://search.maven.org/artifact/io.github.murfffi/zebra4j)
 
 With Maven, you can add it as a dependency like this:
 
@@ -64,7 +64,7 @@ You can try a JavaScript build of the library at
 
 You can also use zebra4j on the command line. The fastest way to do it is with Docker:
 
-```
+```bash
 docker run --rm murfffi/zebracli --help
 ```
 
@@ -74,7 +74,7 @@ If you don't have Docker locally but have Java, you can download
 <https://repo1.maven.org/maven2/io/github/murfffi/zebra4j/0.8/zebra4j-0.8-shaded.jar> to
 `zebra4j-bundle.jar` and run:
 
-```
+```bash
 java -jar zebra4j-bundle.jar --help
 ```
 
