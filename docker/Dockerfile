@@ -1,4 +1,7 @@
 # syntax=docker/dockerfile:1.2.1
+FROM cloudtogo4edge/upx:3.96 as upx
+COPY zebra4j zebra4j
+RUN upx --best --lzma -o zebra4j.upx zebra4j
 
 # using nonroot because of
 # https://cloud.google.com/architecture/best-practices-for-operating-containers#avoid_running_as_root
@@ -18,5 +21,5 @@ LABEL org.opencontainers.image.licenses="LGPL-3.0"
 COPY --from=debian:stable-slim /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libz.so.1
 
 WORKDIR /home/nonroot
-COPY --chmod=700 --chown=nonroot zebra4j zebra4j
+COPY --from=upx --chmod=700 --chown=nonroot zebra4j.upx zebra4j
 ENTRYPOINT [ "./zebra4j" ]

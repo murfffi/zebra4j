@@ -23,5 +23,5 @@ target/zebra4j: $(JAVASRC)
 # the Maven local repo will need to be mounted as cache -
 # https://vsupalov.com/buildkit-cache-mount-dockerfile/. 
 	UID=$(shell id -u) GID=$(shell id -g) $(COMPOSE) build native
-	docker-compose run --rm native ./mvnw install -P native
+	$(COMPOSE) run --rm native ./mvnw install -P native
 
