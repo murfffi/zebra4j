@@ -27,11 +27,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import lombok.Value;
+import zebra4j.util.JDKRandom;
+import zebra4j.util.Randomness;
 
 /**
  * A question about an attribute of a person
@@ -55,7 +56,7 @@ public class Question {
 	 * @return a question that "appliesTo" the given solution
 	 */
 	public static Question generate(PuzzleSolution solution) {
-		return generate(solution.getAttributeSets(), new Random());
+		return generate(solution.getAttributeSets(), new JDKRandom());
 	}
 
 	/**
@@ -65,7 +66,7 @@ public class Question {
 	 * @param rnd
 	 * @return a question, not null
 	 */
-	public static Question generate(Map<AttributeType, Set<Attribute>> attributeSets, Random rnd) {
+	public static Question generate(Map<AttributeType, Set<Attribute>> attributeSets, Randomness rnd) {
 		List<AttributeType> types = new ArrayList<>(attributeSets.keySet());
 		int aboutCount = (int) aboutTypeStream(types).count();
 		Optional<AttributeType> about = aboutTypeStream(types).skip(rnd.nextInt(aboutCount)).findAny();

@@ -26,24 +26,25 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
-import java.util.Random;
 
 import org.junit.Test;
+
+import zebra4j.util.JDKRandom;
 
 public class QuestionTest {
 
 	@Test
 	public void testGenerate() {
 		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
-		Question question = Question.generate(solution.getAttributeSets(), new Random(1));
+		Question question = Question.generate(solution.getAttributeSets(), new JDKRandom(1));
 		assertTrue(String.format("Solution: %s, Question: %s", solution, question), question.appliesTo(solution));
 	}
 
 	@Test
 	public void testGenerate_Stable() {
 		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
-		Question question = Question.generate(solution.getAttributeSets(), new Random(1));
-		assertEquals(question, Question.generate(solution.getAttributeSets(), new Random(1)));
+		Question question = Question.generate(solution.getAttributeSets(), new JDKRandom(1));
+		assertEquals(question, Question.generate(solution.getAttributeSets(), new JDKRandom(1)));
 	}
 
 	@Test

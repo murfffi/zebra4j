@@ -19,23 +19,14 @@
  * <http://www.gnu.org/licenses/lgpl-3.0.html>.
  * #L%
  */
-package zebra4j;
+package zebra4j.util;
 
-import static org.junit.Assert.assertEquals;
+import java.util.List;
 
-import java.util.HashSet;
+public interface Randomness {
 
-import org.junit.Test;
+	void shuffle(List<?> list);
 
-import zebra4j.util.JDKRandom;
-
-public class SolutionGeneratorTest {
-
-	@Test
-	public void testGenerate_Stable() {
-		SolutionGenerator sol1 = new SolutionGenerator(Attributes.DEFAULT_TYPES, 3, new JDKRandom(1));
-		SolutionGenerator sol2 = new SolutionGenerator(new HashSet<>(Attributes.DEFAULT_TYPES), 3, new JDKRandom(1));
-		assertEquals(sol1.generate(), sol2.generate());
-	}
+	int nextInt(int bound);
 
 }

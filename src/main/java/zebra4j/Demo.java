@@ -22,7 +22,6 @@
 package zebra4j;
 
 import java.util.Locale;
-import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.collections4.SetUtils;
@@ -31,6 +30,7 @@ import zebra4j.Cli.GeneratedBasicPuzzle;
 import zebra4j.Cli.GeneratedQuestionPuzzle;
 import zebra4j.fact.BothTrue;
 import zebra4j.fact.NearbyHouse;
+import zebra4j.util.JDKRandom;
 
 /**
  * Sample app
@@ -85,7 +85,7 @@ class Demo {
 		// your own attributes.
 		Set<AttributeType> attributeTypes = SetUtils.unmodifiableSet(Attributes.PET, Attributes.NAME,
 				Attributes.AT_HOUSE);
-		PuzzleSolution sampleSolution = new SolutionGenerator(attributeTypes, NUM_PEOPLE, new Random()).generate();
+		PuzzleSolution sampleSolution = new SolutionGenerator(attributeTypes, NUM_PEOPLE, new JDKRandom()).generate();
 		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(Question.generate(sampleSolution),
 				sampleSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES);
 		QuestionPuzzle puzzle = generator.generate();

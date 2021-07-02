@@ -26,7 +26,6 @@ import static zebra4j.Attributes.DEFAULT_TYPES;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -34,6 +33,8 @@ import java.util.stream.Collectors;
 import javax.annotation.concurrent.ThreadSafe;
 
 import lombok.AllArgsConstructor;
+import zebra4j.util.JDKRandom;
+import zebra4j.util.Randomness;
 
 @AllArgsConstructor
 @ThreadSafe
@@ -41,7 +42,7 @@ public class SolutionGenerator implements Supplier<PuzzleSolution> {
 
 	private final Set<AttributeType> attributeTypes;
 	private final int numPeople;
-	private final Random rnd;
+	private final Randomness rnd;
 
 	public SolutionGenerator() {
 		this(DEFAULT_TYPES.size());
@@ -49,7 +50,7 @@ public class SolutionGenerator implements Supplier<PuzzleSolution> {
 
 	public SolutionGenerator(int numPeople) {
 		// TODO Generate random subset of attribute typed given number of people
-		this(DEFAULT_TYPES, numPeople, new Random());
+		this(DEFAULT_TYPES, numPeople, new JDKRandom());
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class SolutionGenerator implements Supplier<PuzzleSolution> {
 
 		for (AttributeType type : attributeTypesSorted) {
 			List<Attribute> attributes = type.getAttributes(numPeople);
-			Collections.shuffle(attributes, rnd);
+			rnd.shuffle(attributes);
 			attributesByPersonAndType.add(attributes);
 		}
 

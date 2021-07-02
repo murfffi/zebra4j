@@ -23,13 +23,14 @@ package zebra4j;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.annotation.concurrent.ThreadSafe;
 
 import zebra4j.fact.Fact;
+import zebra4j.util.JDKRandom;
+import zebra4j.util.Randomness;
 
 /**
  * A generator for {@link Puzzle}
@@ -56,10 +57,10 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 	}
 
 	public PuzzleGenerator(PuzzleSolution solution, Set<Fact.Type> factTypes) {
-		this(new Random(), solution, factTypes);
+		this(new JDKRandom(), solution, factTypes);
 	}
 
-	public PuzzleGenerator(Random rnd, PuzzleSolution solution, Set<Fact.Type> factTypes) {
+	public PuzzleGenerator(Randomness rnd, PuzzleSolution solution, Set<Fact.Type> factTypes) {
 		super(rnd, solution, factTypes);
 	}
 

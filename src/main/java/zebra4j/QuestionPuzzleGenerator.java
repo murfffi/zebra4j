@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import javax.annotation.concurrent.ThreadSafe;
@@ -37,6 +36,8 @@ import zebra4j.fact.BothTrue;
 import zebra4j.fact.Different;
 import zebra4j.fact.Fact;
 import zebra4j.util.CollectionChain;
+import zebra4j.util.JDKRandom;
+import zebra4j.util.Randomness;
 
 /**
  * A generator for {@link QuestionPuzzle}
@@ -71,10 +72,10 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	/**
 	 * Creates a new generator with a default random generator
 	 * 
-	 * @see #QuestionPuzzleGenerator(Question, PuzzleSolution, Random, Set)
+	 * @see #QuestionPuzzleGenerator(Question, PuzzleSolution, Randomness, Set)
 	 */
 	public QuestionPuzzleGenerator(Question question, PuzzleSolution solution, Set<Fact.Type> factTypes) {
-		this(question, solution, new Random(), factTypes);
+		this(question, solution, new JDKRandom(), factTypes);
 	}
 
 	/**
@@ -90,7 +91,8 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	 * @param factTypes the types of facts to be generated e.g.
 	 *                  {@link AbstractPuzzleGenerator#DEFAULT_FACT_TYPES}
 	 */
-	public QuestionPuzzleGenerator(Question question, PuzzleSolution solution, Random rnd, Set<Fact.Type> factTypes) {
+	public QuestionPuzzleGenerator(Question question, PuzzleSolution solution, Randomness rnd,
+			Set<Fact.Type> factTypes) {
 		super(rnd, solution, factTypes);
 		Validate.isTrue(question.appliesTo(solution), "Question %s does not apply to solution %s", question, solution);
 		this.question = question;

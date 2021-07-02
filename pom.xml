@@ -106,13 +106,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<!-- Used for integration test with commons-rng -->
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-rng-simple</artifactId>
-			<version>1.3</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>${lombok.version}</version>

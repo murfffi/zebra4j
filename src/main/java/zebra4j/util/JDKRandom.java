@@ -19,23 +19,35 @@
  * <http://www.gnu.org/licenses/lgpl-3.0.html>.
  * #L%
  */
-package zebra4j;
+package zebra4j.util;
 
-import static org.junit.Assert.assertEquals;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
-import java.util.HashSet;
+import lombok.RequiredArgsConstructor;
 
-import org.junit.Test;
+@RequiredArgsConstructor
+public class JDKRandom implements Randomness {
 
-import zebra4j.util.JDKRandom;
+	private final Random rnd;
 
-public class SolutionGeneratorTest {
+	public JDKRandom() {
+		this(new Random());
+	}
 
-	@Test
-	public void testGenerate_Stable() {
-		SolutionGenerator sol1 = new SolutionGenerator(Attributes.DEFAULT_TYPES, 3, new JDKRandom(1));
-		SolutionGenerator sol2 = new SolutionGenerator(new HashSet<>(Attributes.DEFAULT_TYPES), 3, new JDKRandom(1));
-		assertEquals(sol1.generate(), sol2.generate());
+	public JDKRandom(long seed) {
+		this(new Random(seed));
+	}
+
+	@Override
+	public void shuffle(List<?> list) {
+		Collections.shuffle(list, rnd);
+	}
+
+	@Override
+	public int nextInt(int bound) {
+		return rnd.nextInt(bound);
 	}
 
 }

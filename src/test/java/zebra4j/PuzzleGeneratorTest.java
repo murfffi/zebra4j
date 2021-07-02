@@ -30,7 +30,6 @@ import static zebra4j.Attributes.NAME;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -42,6 +41,8 @@ import zebra4j.fact.BothTrue;
 import zebra4j.fact.Different;
 import zebra4j.fact.Fact;
 import zebra4j.fact.NearbyHouse;
+import zebra4j.util.JDKRandom;
+import zebra4j.util.Randomness;
 
 @Slf4j
 public class PuzzleGeneratorTest {
@@ -70,7 +71,7 @@ public class PuzzleGeneratorTest {
 
 	@Test
 	public void testGenerate_StableBySeed() throws Exception {
-		Random rnd = new Random(1614459213067L);
+		Randomness rnd = new JDKRandom(1614459213067L);
 		Set<AttributeType> types = SetUtils.unmodifiableSet(NAME, AT_HOUSE, CLOTHES, CRIMINAL);
 		SolutionGenerator solg = new SolutionGenerator(types, 3, rnd);
 		PuzzleSolution sol = solg.generate();

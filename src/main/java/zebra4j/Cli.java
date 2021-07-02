@@ -27,7 +27,6 @@ import java.io.PrintStream;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,6 +40,8 @@ import picocli.CommandLine.IVersionProvider;
 import picocli.CommandLine.Option;
 import zebra4j.Cli.DemoCli;
 import zebra4j.Cli.GenerateCli;
+import zebra4j.util.JDKRandom;
+import zebra4j.util.Randomness;
 
 /**
  * CLI for zebra4j
@@ -103,7 +104,7 @@ public class Cli {
 				puzzle = Cli.sampleQuestionPuzzle(seed, people);
 				break;
 			case BASIC:
-				Random rnd = new Random(seed);
+				Randomness rnd = new JDKRandom(seed);
 				PuzzleSolution solution = new SolutionGenerator(Attributes.DEFAULT_TYPES, people, rnd).generate();
 				PuzzleGenerator generator = new PuzzleGenerator(rnd, solution,
 						QuestionPuzzleGenerator.DEFAULT_FACT_TYPES);
@@ -150,7 +151,7 @@ public class Cli {
 	}
 
 	static GeneratedQuestionPuzzle sampleQuestionPuzzle(long seed, int people) {
-		Random rnd = new Random(seed);
+		Randomness rnd = new JDKRandom(seed);
 		PuzzleSolution sampleSolution = new SolutionGenerator(Attributes.DEFAULT_TYPES, people, rnd).generate();
 		Question question = Question.generate(sampleSolution.getAttributeSets(), rnd);
 		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(question, sampleSolution, rnd,

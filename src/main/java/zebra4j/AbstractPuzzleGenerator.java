@@ -23,9 +23,7 @@ package zebra4j;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -45,6 +43,7 @@ import zebra4j.fact.Different;
 import zebra4j.fact.Fact;
 import zebra4j.fact.Fact.Type;
 import zebra4j.fact.NearbyHouse;
+import zebra4j.util.Randomness;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -54,7 +53,7 @@ public abstract class AbstractPuzzleGenerator<P> implements Supplier<P> {
 	public static final Set<Fact.Type> DEFAULT_FACT_TYPES = SetUtils.unmodifiableSet(BothTrue.TYPE, Different.TYPE,
 			NearbyHouse.TYPE);
 
-	private final Random rnd;
+	private final Randomness rnd;
 	protected final PuzzleSolution solution;
 	private final Set<Fact.Type> factTypes;
 
@@ -85,7 +84,7 @@ public abstract class AbstractPuzzleGenerator<P> implements Supplier<P> {
 			log.trace("{} using {} facts.", msg, facts.size());
 			throw new IllegalArgumentException(msg);
 		}
-		Collections.shuffle(facts, rnd);
+		rnd.shuffle(facts);
 		removeFacts(facts);
 		return toPuzzle(facts);
 	}
