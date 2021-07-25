@@ -24,6 +24,8 @@ package zebra4j;
 import java.util.List;
 import java.util.Locale;
 
+import zebra4j.util.Localization;
+
 /**
  * The color of a persons clothes.
  * 

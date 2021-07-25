@@ -32,6 +32,9 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.function.Function;
 
+/**
+ * Utilities for implementing tests of localization
+ */
 public class LocalizationTestUtils {
 
 	public static final Locale BULGARIAN = new Locale("bg");

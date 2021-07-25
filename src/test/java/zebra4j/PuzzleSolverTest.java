@@ -62,6 +62,12 @@ public class PuzzleSolverTest {
 		Assert.assertEquals(result.size(), resultSet.size());
 	}
 
+	/**
+	 * Allows customizing the solver in TeaVM or native
+	 * 
+	 * @param puzzle
+	 * @return {@link PuzzleSolver} from puzzle
+	 */
 	protected PuzzleSolver createTestSolver(Puzzle puzzle) {
 		return new PuzzleSolver(puzzle);
 	}

@@ -21,25 +21,25 @@
  */
 package zebra4j;
 
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.List;
 
-import org.apache.commons.text.CaseUtils;
+import zebra4j.util.Randomness;
 
-public interface Localization {
+/**
+ * Various test utilities
+ */
+public interface TestUtils {
 
-	public static String translate(Class<?> cls, String key, Locale locale) {
-		String bundleName = cls.getName().replace("zebra4j.", "zebra4j.bundle.");
-		return ResourceBundle.getBundle(bundleName, locale).getString(key);
-	}
+	public static final Randomness NOOP_RANDOM = new Randomness() {
 
-	public static String translateEnum(Enum<?> value, Locale locale) {
-		try {
-			return translate(value.getClass(), value.name(), locale);
-		} catch (MissingResourceException e) {
-			return CaseUtils.toCamelCase(value.name(), true);
+		@Override
+		public void shuffle(List<?> list) {
 		}
-	}
+
+		@Override
+		public int nextInt(int bound) {
+			return 0;
+		}
+	};
 
 }

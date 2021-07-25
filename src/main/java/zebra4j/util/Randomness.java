@@ -23,10 +23,33 @@ package zebra4j.util;
 
 import java.util.List;
 
+/**
+ * Data randomization, as used in zebra4j
+ * 
+ * <p>
+ * This interface allows implementing the data randomization using different
+ * libraries. The built-in implementation is {@link JDKRandom}, which uses
+ * randomization from the JDK. Users of the library may prefer commons-rng, as
+ * in <a href=
+ * 'https://github.com/murfffi/zebra-apps/blob/pr/commons-rng-ness/zebrajs/src/main/java/zebra4j/apps/SeededRandom.java'>this
+ * case</a>.
+ * 
+ * <p>
+ * Some unit tests use a no-op implementation of this interface to be
+ * predictable.
+ */
 public interface Randomness {
 
+	/**
+	 * Shuffles the provided list in place
+	 * 
+	 * @param list, required
+	 */
 	void shuffle(List<?> list);
 
+	/**
+	 * Same as {@link java.util.Random#nextInt(int)}
+	 */
 	int nextInt(int bound);
 
 }

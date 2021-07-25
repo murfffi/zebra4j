@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import lombok.Value;
+import zebra4j.util.Localization;
 
 /**
  * The house that the person lives in.

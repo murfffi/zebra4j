@@ -29,9 +29,9 @@ import javax.annotation.concurrent.Immutable;
 
 import zebra4j.Attribute;
 import zebra4j.AttributeType;
-import zebra4j.Localization;
 import zebra4j.PersonName;
 import zebra4j.Puzzle;
+import zebra4j.util.Localization;
 
 /**
  * A fact about a commutative relationship between people identified by two

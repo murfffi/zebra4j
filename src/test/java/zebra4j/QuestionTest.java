@@ -36,7 +36,7 @@ public class QuestionTest {
 	@Test
 	public void testGenerate() {
 		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
-		Question question = Question.generate(solution.getAttributeSets(), new JDKRandom(1));
+		Question question = Question.generate(solution.getAttributeSets(), TestUtils.NOOP_RANDOM);
 		assertTrue(String.format("Solution: %s, Question: %s", solution, question), question.appliesTo(solution));
 	}
 

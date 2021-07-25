@@ -40,12 +40,12 @@ import zebra4j.AllDifferentType;
 import zebra4j.AtHouse;
 import zebra4j.Attribute;
 import zebra4j.AttributeType;
-import zebra4j.Localization;
 import zebra4j.PersonName;
 import zebra4j.Puzzle;
 import zebra4j.PuzzleSolution;
 import zebra4j.SolutionPerson;
 import zebra4j.ZebraModel;
+import zebra4j.util.Localization;
 
 /**
  * Facts/clues about people with certain attributes living in adjacent or nearby

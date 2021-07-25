@@ -175,13 +175,12 @@ public class QuestionPuzzleGenerator extends AbstractPuzzleGenerator<QuestionPuz
 	 * starting solution but pushes the search down to the solver which is faster.
 	 * 
 	 * <p>
-	 * A minor implementation is reducing the amount of allocations. This
-	 * implementation uses a single solver, puzzle and does one less copy of the
-	 * facts per iteration. That does not reduce - sometimes even increases - wall
-	 * clock time likely because copies are very fast, while GC runs in parallel.
-	 * However, overall CPU usage is reduced because GC has less to do. In
-	 * environments with less efficient GC, like TeaVM or native, wall clock time is
-	 * decreased.
+	 * Another minor optimization is reducing the amount of allocations. This
+	 * implementation uses a single solver/puzzle and does one less copy of the
+	 * facts per iteration. That does not reduce wall clock time - copying and
+	 * cleanup are extremely fast, while GC runs in parallel. However, overall CPU
+	 * usage is reduced because GC has less to do. In environments with less
+	 * efficient GC, like TeaVM or native, wall clock time is decreased.
 	 */
 	@Override
 	protected void removeFacts(List<Fact> facts) {

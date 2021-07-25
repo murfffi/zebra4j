@@ -21,39 +21,25 @@
  */
 package zebra4j.util;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
-import javax.annotation.concurrent.ThreadSafe;
+import org.apache.commons.text.CaseUtils;
 
-import lombok.RequiredArgsConstructor;
+public interface Localization {
 
-/**
- * Simple randomness implementation with {@link Random}
- */
-@RequiredArgsConstructor
-@ThreadSafe
-public class JDKRandom implements Randomness {
-
-	private final Random rnd;
-
-	public JDKRandom() {
-		this(new Random());
+	public static String translate(Class<?> cls, String key, Locale locale) {
+		String bundleName = cls.getName().replace("zebra4j.", "zebra4j.bundle.");
+		return ResourceBundle.getBundle(bundleName, locale).getString(key);
 	}
 
-	public JDKRandom(long seed) {
-		this(new Random(seed));
-	}
-
-	@Override
-	public void shuffle(List<?> list) {
-		Collections.shuffle(list, rnd);
-	}
-
-	@Override
-	public int nextInt(int bound) {
-		return rnd.nextInt(bound);
+	public static String translateEnum(Enum<?> value, Locale locale) {
+		try {
+			return translate(value.getClass(), value.name(), locale);
+		} catch (MissingResourceException e) {
+			return CaseUtils.toCamelCase(value.name(), true);
+		}
 	}
 
 }

@@ -32,6 +32,8 @@ import org.apache.commons.lang3.Validate;
 import org.chocosolver.solver.IModel;
 import org.chocosolver.solver.variables.IntVar;
 
+import zebra4j.util.Localization;
+
 /**
  * A type of attribute that is guaranteed to be different for all people
  */

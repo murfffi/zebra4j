@@ -29,6 +29,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
 
+import zebra4j.util.Localization;
+
 public enum Criminal implements Attribute {
 
 	NO, YES;
