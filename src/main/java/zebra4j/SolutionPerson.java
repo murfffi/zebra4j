@@ -30,41 +30,78 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.concurrent.Immutable;
+
 import lombok.EqualsAndHashCode;
 
+/**
+ * A specification of the attributes of a person in a solution of a
+ * {@link BasicPuzzle}
+ */
 @EqualsAndHashCode
+@Immutable
 public class SolutionPerson {
 
 	private final Map<AttributeType, Attribute> attributes = new LinkedHashMap<>();
 
+	/**
+	 * Defines a person from their attributes
+	 * 
+	 * @param attributeList
+	 */
 	public SolutionPerson(Attribute... attributeList) {
 		this(Arrays.asList(attributeList));
 	}
 
+	/**
+	 * Defines a person from their attributes
+	 * 
+	 * @param attributeList
+	 */
 	public SolutionPerson(List<Attribute> attributeList) {
 		for (Attribute lit : attributeList) {
 			attributes.put(lit.type(), lit);
 		}
 	}
 
+	/**
+	 * @return a copy of the attributes as a list
+	 */
 	public List<Attribute> asList() {
 		return new ArrayList<>(attributes.values());
 	}
 
+	/**
+	 * @return a unmodifiable view of the types of the attributes
+	 */
 	public Set<AttributeType> attributeTypes() {
 		return Collections.unmodifiableSet(attributes.keySet());
 	}
 
+	/**
+	 * @param attribute
+	 * @return a copy of this person with the given attribute added
+	 */
 	public SolutionPerson withAttribute(Attribute attribute) {
 		List<Attribute> newAttributes = asList();
 		newAttributes.add(attribute);
 		return new SolutionPerson(newAttributes);
 	}
 
+	/**
+	 * Finds one attributes of the person given type
+	 * 
+	 * @param type
+	 * @return the attribute if it exists, null otherwise
+	 */
 	public Attribute findAttribute(AttributeType type) {
 		return attributes.get(type);
 	}
 
+	/**
+	 * @param attr
+	 * @return if the person has the given attribute
+	 */
 	public boolean hasAttribute(Attribute attr) {
 		return attributes.values().contains(attr);
 	}

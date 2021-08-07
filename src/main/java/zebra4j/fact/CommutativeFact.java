@@ -30,7 +30,7 @@ import javax.annotation.concurrent.Immutable;
 import zebra4j.Attribute;
 import zebra4j.AttributeType;
 import zebra4j.PersonName;
-import zebra4j.Puzzle;
+import zebra4j.BasicPuzzle;
 import zebra4j.util.Localization;
 
 /**
@@ -79,7 +79,7 @@ public abstract class CommutativeFact implements Fact {
 	}
 
 	@Override
-	public boolean appliesTo(Puzzle puzzle) {
+	public boolean appliesTo(BasicPuzzle puzzle) {
 		return puzzle.contains(getLeft()) && puzzle.contains(getRight());
 	}
 

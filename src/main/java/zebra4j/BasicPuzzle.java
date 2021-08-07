@@ -49,7 +49,7 @@ import zebra4j.fact.Fact;
  * preferred.
  */
 @Value
-public class Puzzle {
+public class BasicPuzzle {
 
 	/**
 	 * The attribute types and the sub-sets of their values used in the puzzle.

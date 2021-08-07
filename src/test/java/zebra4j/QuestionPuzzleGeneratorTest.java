@@ -43,12 +43,12 @@ public class QuestionPuzzleGeneratorTest {
 		Collection<Attribute> result = new QuestionPuzzleSolver(puzzle).solve();
 		assertEquals(1, result.size());
 
-		Collection<Fact> facts = puzzle.getPuzzle().getFacts();
+		Collection<Fact> facts = puzzle.getBasicPuzzle().getFacts();
 		for (Fact f : facts) {
 			Collection<Fact> lessFacts = new HashSet<>(facts);
 			assertTrue(lessFacts.remove(f));
 			QuestionPuzzle lessPuzzle = new QuestionPuzzle(puzzle.getQuestion(),
-					new Puzzle(puzzle.getPuzzle().getAttributeSets(), lessFacts));
+					new BasicPuzzle(puzzle.getBasicPuzzle().getAttributeSets(), lessFacts));
 			long count = new QuestionPuzzleSolver(lessPuzzle).solveToStream().distinct().limit(2).count();
 			assertEquals(2, count);
 		}
@@ -60,7 +60,7 @@ public class QuestionPuzzleGeneratorTest {
 		QuestionPuzzle puzzle = new QuestionPuzzleGenerator(Question.NAME_OF_CRIMINAL, startSolution,
 				TestUtils.NOOP_RANDOM, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		Attribute nameOfCriminal = startSolution.findPerson(Criminal.YES).get().findAttribute(PersonName.TYPE);
-		Collection<Fact> facts = puzzle.getPuzzle().getFacts();
+		Collection<Fact> facts = puzzle.getBasicPuzzle().getFacts();
 		assertFalse(facts.contains(new BothTrue(nameOfCriminal, Criminal.YES)));
 		assertFalse(facts.contains(new BothTrue(Criminal.YES, nameOfCriminal)));
 	}

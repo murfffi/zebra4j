@@ -38,7 +38,7 @@ import org.apache.commons.lang3.Validate;
 import zebra4j.fact.Fact;
 
 /**
- * Builder for {@link Puzzle}
+ * Builder for {@link BasicPuzzle}
  * 
  * <p>
  * Unlike directly constructing a puzzle, the builder validates if the provided
@@ -99,11 +99,11 @@ public class PuzzleBuilder {
 	 * Add the sets of the attribute that the fact refers to in advance.
 	 * 
 	 * @param fact required, must apply to the attribute sets already added. See
-	 *             {@link Fact#appliesTo(Puzzle)}
+	 *             {@link Fact#appliesTo(BasicPuzzle)}
 	 * @return the builder itself for chaining
 	 */
 	public PuzzleBuilder addFact(Fact fact) {
-		Validate.isTrue(fact.appliesTo(new Puzzle(attributeSets, Collections.emptySet())),
+		Validate.isTrue(fact.appliesTo(new BasicPuzzle(attributeSets, Collections.emptySet())),
 				"The attributes that the fact %s refers must be part of the previously added sets.", fact);
 		facts.add(fact);
 		return this;
@@ -112,8 +112,8 @@ public class PuzzleBuilder {
 	/**
 	 * @return the constructed puzzle
 	 */
-	public Puzzle build() {
-		return new Puzzle(attributeSets, facts);
+	public BasicPuzzle build() {
+		return new BasicPuzzle(attributeSets, facts);
 	}
 
 }

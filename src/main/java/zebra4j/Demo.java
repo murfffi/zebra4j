@@ -55,11 +55,11 @@ class Demo {
 	}
 
 	/**
-	 * Generates and solves a basic {@link Puzzle} with default configuration
+	 * Generate and solve a basic {@link BasicPuzzle} with default configuration
 	 */
 	public static void generateAndSolveBasicPuzzle() {
 		System.out.println("Basic puzzle:");
-		Puzzle puzzle = PuzzleGenerator.randomPuzzle(NUM_PEOPLE);
+		BasicPuzzle puzzle = PuzzleGenerator.randomPuzzle(NUM_PEOPLE);
 		PuzzleSolution solution = new PuzzleSolver(puzzle).solve().get(0);
 		Cli.printGeneratedBasicPuzzle(new GeneratedBasicPuzzle(null, puzzle, solution), Locale.getDefault(),
 				System.out);
@@ -94,7 +94,10 @@ class Demo {
 				System.out);
 	}
 
-	private static void solvePredefinedPuzzle() {
+	/**
+	 * Solves
+	 */
+	public static void solvePredefinedPuzzle() {
 		System.out.println("Solving original zebra puzzle (see code):");
 		// Configures the original zebra puzzle from
 		// https://en.wikipedia.org/wiki/Zebra_Puzzle
@@ -178,7 +181,7 @@ class Demo {
 		builder.addFact(new NearbyHouse(1, nationality.findByLabel("is Norwegian").get(),
 				houseColor.findByLabel("lives in the blue house").get()));
 
-		Puzzle puzzle = builder.build();
+		BasicPuzzle puzzle = builder.build();
 
 		// Solve
 		PuzzleSolution solution = new PuzzleSolver(puzzle).solveToStream().findAny().get();

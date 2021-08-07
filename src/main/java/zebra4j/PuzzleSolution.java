@@ -36,7 +36,12 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * A full solution to a basic "full assignment" puzzle
+ * A full solution to a {@link BasicPuzzle}
+ * 
+ * <p>
+ * Use {@link PuzzleSolutionBuilder} to create.
+ * 
+ * @see PuzzleSolutionBuilder
  */
 @EqualsAndHashCode
 @ToString
@@ -57,7 +62,7 @@ public class PuzzleSolution {
 
 	private final Map<Attribute, SolutionPerson> attrToPerson;
 
-	public PuzzleSolution(Set<SolutionPerson> people, Map<AttributeType, Set<Attribute>> attributeSets) {
+	PuzzleSolution(Set<SolutionPerson> people, Map<AttributeType, Set<Attribute>> attributeSets) {
 		this.people = people;
 		this.attributeSets = attributeSets;
 		this.attrToPerson = people.stream()

@@ -27,6 +27,8 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javax.annotation.concurrent.Immutable;
+
 import lombok.Value;
 import zebra4j.util.Localization;
 
@@ -39,6 +41,7 @@ import zebra4j.util.Localization;
  * @see #getPosition()
  */
 @Value
+@Immutable
 public class AtHouse implements Attribute {
 
 	public static AttributeType TYPE = new AllDifferentType() {

@@ -146,7 +146,7 @@ public class Cli {
 	@AllArgsConstructor
 	static class GeneratedBasicPuzzle {
 		final Long seed;
-		final Puzzle puzzle;
+		final BasicPuzzle puzzle;
 		final PuzzleSolution answer;
 	}
 
@@ -167,7 +167,7 @@ public class Cli {
 		AttributeType about = sample.puzzle.getQuestion().getAbout();
 		out.println();
 		out.println("Question: " + sample.puzzle.getQuestion().describe(locale));
-		out.println("Answer options: " + sample.puzzle.getPuzzle().getAttributeSets().get(about).stream()
+		out.println("Answer options: " + sample.puzzle.getBasicPuzzle().getAttributeSets().get(about).stream()
 				.map(a -> a.description(locale)).collect(Collectors.joining(", ")));
 		out.println("Answer: " + sample.answer.description(locale));
 		if (sample.seed != null) {

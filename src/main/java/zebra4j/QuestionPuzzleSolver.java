@@ -36,9 +36,14 @@ public class QuestionPuzzleSolver {
 	private final QuestionPuzzle qPuzzle;
 	private final PuzzleSolver solver;
 
+	/**
+	 * Initialize a new solver with default configuration
+	 * 
+	 * @param qPuzzle the puzzle to be solved, required
+	 */
 	public QuestionPuzzleSolver(QuestionPuzzle qPuzzle) {
 		this.qPuzzle = qPuzzle;
-		this.solver = new PuzzleSolver(qPuzzle.getPuzzle());
+		this.solver = new PuzzleSolver(qPuzzle.getBasicPuzzle());
 	}
 
 	/**

@@ -41,7 +41,7 @@ public class PuzzleSolverTest {
 	@Test
 	public void testUnique() {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.sampleSolution();
-		Puzzle puzzle = new Puzzle(startSolution.getAttributeSets(),
+		BasicPuzzle puzzle = new BasicPuzzle(startSolution.getAttributeSets(),
 				new LinkedHashSet<>(BothTrue.TYPE.generate(startSolution)));
 		List<PuzzleSolution> result = createTestSolver(puzzle).solve();
 		Set<PuzzleSolution> resultSet = new HashSet<>(result);
@@ -55,7 +55,7 @@ public class PuzzleSolverTest {
 	@Test
 	public void testCriminal() {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
-		Puzzle puzzle = new Puzzle(startSolution.getAttributeSets(),
+		BasicPuzzle puzzle = new BasicPuzzle(startSolution.getAttributeSets(),
 				new LinkedHashSet<>(Different.TYPE.generate(startSolution).subList(0, 2)));
 		List<PuzzleSolution> result = createTestSolver(puzzle).solve();
 		Set<PuzzleSolution> resultSet = new HashSet<>(result);
@@ -68,7 +68,7 @@ public class PuzzleSolverTest {
 	 * @param puzzle
 	 * @return {@link PuzzleSolver} from puzzle
 	 */
-	protected PuzzleSolver createTestSolver(Puzzle puzzle) {
+	protected PuzzleSolver createTestSolver(BasicPuzzle puzzle) {
 		return new PuzzleSolver(puzzle);
 	}
 

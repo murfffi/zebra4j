@@ -40,7 +40,7 @@ public class QuestionPuzzleTest {
 		assertEquals(3, solution.getAttributeSets().size());
 		Set<Fact> facts = Collections.singleton(new BothTrue(PersonName.PETER, new AtHouse(1)));
 		QuestionPuzzle puzzle = new QuestionPuzzle(new Question(PersonName.PETER, AtHouse.TYPE),
-				new Puzzle(solution.getAttributeSets(), facts));
+				new BasicPuzzle(solution.getAttributeSets(), facts));
 		assertEquals(2 + facts.size(), puzzle.describeConstraints(Locale.getDefault()).size());
 	}
 

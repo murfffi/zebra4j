@@ -45,7 +45,7 @@ public class GenerateSamples {
 		Locale locale = Locale.ENGLISH;
 		while (samples < 10) {
 			GeneratedQuestionPuzzle sample = Cli.sampleQuestionPuzzle(RandomUtils.nextLong(0, Long.MAX_VALUE), 4);
-			if (sample.puzzle.getPuzzle().getFacts().size() > 6) {
+			if (sample.puzzle.getBasicPuzzle().getFacts().size() > 6) {
 				Cli.printGeneratedQuestionPuzzle(sample, locale, System.out);
 				System.out.println("----------------------------");
 				++samples;

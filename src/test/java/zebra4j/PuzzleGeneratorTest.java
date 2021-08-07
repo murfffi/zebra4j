@@ -50,7 +50,7 @@ public class PuzzleGeneratorTest {
 	@Test
 	public void testGenerate() {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.sampleSolution();
-		Puzzle puzzle = new PuzzleGenerator(startSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
+		BasicPuzzle puzzle = new PuzzleGenerator(startSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		Collection<PuzzleSolution> result = new PuzzleSolver(puzzle).solve();
 		assertTrue(result.contains(startSolution));
 		assertEquals(1, result.size());
@@ -59,7 +59,7 @@ public class PuzzleGeneratorTest {
 	@Test
 	public void testGenerate_Criminal() {
 		PuzzleSolution startSolution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
-		Puzzle puzzle = new PuzzleGenerator(startSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
+		BasicPuzzle puzzle = new PuzzleGenerator(startSolution, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		log.trace("Puzzle is {}", puzzle);
 		Collection<PuzzleSolution> result = new PuzzleSolver(puzzle).solve();
 		assertEquals(1, result.size());
@@ -77,7 +77,7 @@ public class PuzzleGeneratorTest {
 		PuzzleSolution sol = solg.generate();
 
 		PuzzleGenerator gen = new PuzzleGenerator(rnd, sol, AbstractPuzzleGenerator.DEFAULT_FACT_TYPES);
-		Puzzle puzzle = gen.generate();
+		BasicPuzzle puzzle = gen.generate();
 
 		Collection<Fact> expectedFacts = Arrays.asList( //
 				new BothTrue(PersonName.PETER, Clothes.BLUE), //

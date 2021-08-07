@@ -36,18 +36,37 @@ import lombok.AllArgsConstructor;
 import zebra4j.util.JDKRandom;
 import zebra4j.util.Randomness;
 
+/**
+ * Generator of {@link PuzzleSolution}
+ */
 @AllArgsConstructor
 @ThreadSafe
 public class SolutionGenerator implements Supplier<PuzzleSolution> {
 
+	/**
+	 * The types of attributes to be used in the generated puzzles
+	 */
 	private final Set<AttributeType> attributeTypes;
+
+	/**
+	 * The number of people in the generated puzzles
+	 */
 	private final int numPeople;
 	private final Randomness rnd;
 
+	/**
+	 * Creates a generator with default configuration and largest possible puzzle
+	 * size
+	 */
 	public SolutionGenerator() {
 		this(DEFAULT_TYPES.size());
 	}
 
+	/**
+	 * Creates a generator with default configuration
+	 * 
+	 * @param numPeople the number of people in the generated puzzles
+	 */
 	public SolutionGenerator(int numPeople) {
 		// TODO Generate random subset of attribute typed given number of people
 		this(DEFAULT_TYPES, numPeople, new JDKRandom());
@@ -81,6 +100,14 @@ public class SolutionGenerator implements Supplier<PuzzleSolution> {
 		return builder.build();
 	}
 
+	/**
+	 * Generates a new puzzle.
+	 * 
+	 * <p>
+	 * Same as {@link #get()}.
+	 * 
+	 * @return a new random puzzle, not null
+	 */
 	public PuzzleSolution generate() {
 		return get();
 	}

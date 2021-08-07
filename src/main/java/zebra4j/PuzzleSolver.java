@@ -47,16 +47,16 @@ import lombok.extern.slf4j.Slf4j;
 import zebra4j.fact.Fact;
 
 /**
- * Solver for {@link Puzzle}
+ * Solver for {@link BasicPuzzle}
  */
 @Slf4j
 @ThreadSafe
 public class PuzzleSolver {
 
-	private final Puzzle puzzle;
+	private final BasicPuzzle puzzle;
 	private final int numPeople;
 
-	public PuzzleSolver(Puzzle puzzle) {
+	public PuzzleSolver(BasicPuzzle puzzle) {
 		this.puzzle = puzzle;
 		this.numPeople = puzzle.numPeople();
 	}

@@ -141,13 +141,13 @@ public class Question {
 	 *         the {@link AttributeType} in "about" and the {@link Attribute} in
 	 *         "towards"
 	 */
-	public boolean appliesTo(Puzzle puzzle) {
+	public boolean appliesTo(BasicPuzzle puzzle) {
 		return appliesTo(puzzle.getAttributeSets());
 	}
 
 	/**
 	 * @param solution required
-	 * @return same as {@link #appliesTo(Puzzle)} but for the given solution
+	 * @return same as {@link #appliesTo(BasicPuzzle)} but for the given solution
 	 */
 	public boolean appliesTo(PuzzleSolution solution) {
 		return appliesTo(solution.getAttributeSets());

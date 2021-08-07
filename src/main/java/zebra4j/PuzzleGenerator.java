@@ -33,7 +33,7 @@ import zebra4j.util.JDKRandom;
 import zebra4j.util.Randomness;
 
 /**
- * A generator for {@link Puzzle}
+ * A generator for {@link BasicPuzzle}
  * 
  * <p>
  * You can use the same generator to create multiple different puzzles by
@@ -42,7 +42,7 @@ import zebra4j.util.Randomness;
  * (clues).
  */
 @ThreadSafe
-public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
+public class PuzzleGenerator extends AbstractPuzzleGenerator<BasicPuzzle> {
 
 	/**
 	 * Generate a new random puzzle using defaults
@@ -50,7 +50,7 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 	 * @param numPeople number of people in the puzzle
 	 * @return
 	 */
-	public static Puzzle randomPuzzle(int numPeople) {
+	public static BasicPuzzle randomPuzzle(int numPeople) {
 		PuzzleGenerator generator = new PuzzleGenerator(new SolutionGenerator(numPeople).generate(),
 				DEFAULT_FACT_TYPES);
 		return generator.generate();
@@ -65,17 +65,17 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 	}
 
 	@Override
-	protected Puzzle toPuzzle(Collection<Fact> facts) {
-		return new Puzzle(solution.getAttributeSets(), facts);
+	protected BasicPuzzle toPuzzle(Collection<Fact> facts) {
+		return new BasicPuzzle(solution.getAttributeSets(), facts);
 	}
 
 	@Override
-	protected int countSolutions(Puzzle puzzle) {
+	protected int countSolutions(BasicPuzzle puzzle) {
 		return newSolver(puzzle).solve().size();
 	}
 
 	@Override
-	protected boolean uniqueSolution(Puzzle puzzle) {
+	protected boolean uniqueSolution(BasicPuzzle puzzle) {
 		Iterator<PuzzleSolution> iter = solveToStream(puzzle).iterator();
 		if (!iter.hasNext()) {
 			return false;
@@ -89,11 +89,11 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<Puzzle> {
 		return true;
 	}
 
-	private Stream<PuzzleSolution> solveToStream(Puzzle puzzle) {
+	private Stream<PuzzleSolution> solveToStream(BasicPuzzle puzzle) {
 		return newSolver(puzzle).solveToStream();
 	}
 
-	private PuzzleSolver newSolver(Puzzle puzzle) {
+	private PuzzleSolver newSolver(BasicPuzzle puzzle) {
 		PuzzleSolver solver = new PuzzleSolver(puzzle);
 		solver.setChocoSettings(getChocoSettings());
 		return solver;

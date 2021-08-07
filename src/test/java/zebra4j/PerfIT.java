@@ -37,7 +37,7 @@ public class PerfIT {
 		QuestionPuzzleGenerator generator = new QuestionPuzzleGenerator(question, sampleSolution,
 				QuestionPuzzleGenerator.DEFAULT_FACT_TYPES);
 		int numFacts = Stream.generate(generator).parallel().limit(5)
-				.collect(Collectors.summingInt(p -> p.getPuzzle().getFacts().size()));
+				.collect(Collectors.summingInt(p -> p.getBasicPuzzle().getFacts().size()));
 		assertTrue(numFacts > 5);
 	}
 

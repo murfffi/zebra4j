@@ -41,7 +41,7 @@ public class PuzzleTest {
 	@Test
 	public void testNumPeople() {
 		PuzzleSolution solution = PuzzleGeneratorTest.sampleSolution();
-		Puzzle puzzle = new Puzzle(solution.getAttributeSets(), Collections.emptySet());
+		BasicPuzzle puzzle = new BasicPuzzle(solution.getAttributeSets(), Collections.emptySet());
 		assertEquals(3, puzzle.numPeople());
 	}
 
@@ -50,7 +50,7 @@ public class PuzzleTest {
 		PuzzleBuilder builder = new PuzzleBuilder();
 		builder.addSet(Criminal.YES, Criminal.NO);
 		builder.addSet(Clothes.BLUE, Clothes.RED, Clothes.GREEN);
-		Puzzle puzzle = builder.build();
+		BasicPuzzle puzzle = builder.build();
 		assertEquals(3, puzzle.numPeople());
 	}
 
@@ -59,7 +59,7 @@ public class PuzzleTest {
 		Map<AttributeType, Set<Attribute>> sets = new LinkedHashMap<>();
 		sets.put(Clothes.TYPE, SetUtils.unmodifiableSet(Clothes.BLUE, Clothes.RED, Clothes.GREEN));
 		sets.put(AtHouse.TYPE, new HashSet<>(AtHouse.TYPE.getAttributes(2)));
-		Puzzle puzzle = new Puzzle(sets, Collections.emptySet());
+		BasicPuzzle puzzle = new BasicPuzzle(sets, Collections.emptySet());
 		assertEquals(2, puzzle.numPeople());
 	}
 
@@ -67,7 +67,7 @@ public class PuzzleTest {
 	public void testDescribeContstraints() throws Exception {
 		PuzzleSolution solution = PuzzleGeneratorTest.sampleSolution();
 		Set<Fact> facts = Collections.singleton(new BothTrue(PersonName.PETER, new AtHouse(1)));
-		Puzzle puzzle = new Puzzle(solution.getAttributeSets(), facts);
+		BasicPuzzle puzzle = new BasicPuzzle(solution.getAttributeSets(), facts);
 		assertEquals(puzzle.getAttributeSets().size() + facts.size(),
 				puzzle.describeConstraints(Locale.getDefault()).size());
 	}

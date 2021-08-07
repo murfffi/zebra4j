@@ -32,7 +32,7 @@ import zebra4j.Clothes;
 import zebra4j.Criminal;
 import zebra4j.LocalizationTestUtils;
 import zebra4j.PersonName;
-import zebra4j.Puzzle;
+import zebra4j.BasicPuzzle;
 import zebra4j.PuzzleBuilder;
 import zebra4j.fact.CommutativeFact.Source;
 
@@ -83,7 +83,7 @@ public class NearbyHouseTest {
 		builder.addSet(Clothes.BLUE, Clothes.GREEN);
 		builder.addSet(PersonName.ELENA, PersonName.THEODORA);
 		builder.addSet(new AtHouse(1), new AtHouse(2));
-		Puzzle puzzle = builder.build();
+		BasicPuzzle puzzle = builder.build();
 		assertTrue(factSource.create(Clothes.BLUE, PersonName.ELENA).appliesTo(puzzle));
 		assertFalse(factSource.create(Clothes.YELLOW, PersonName.ELENA).appliesTo(puzzle));
 		assertFalse(factSource.create(Criminal.YES, PersonName.ELENA).appliesTo(puzzle));

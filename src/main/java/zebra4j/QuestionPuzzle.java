@@ -33,32 +33,49 @@ import zebra4j.fact.Fact;
 
 /**
  * A puzzle that looks for answer to the given question given rules defined by
- * the attribute sets used in the puzzle (e.g. all people have different name
- * and the name may be Liza, John or Mary) and a set of {@link Fact}s known
- * about the people in the puzzle.
+ * the attribute sets used in the underlying basic puzzle (e.g. all people have
+ * different name and the name may be Liza, John or Mary) and a set of
+ * {@link Fact}s known about the people in the puzzle.
  */
 @Value
 public class QuestionPuzzle {
 
+	/**
+	 * A question about the people and their attributes, defined in the underlying
+	 * basic puzzle.
+	 */
 	private final Question question;
-	private final Puzzle puzzle;
 
-	public QuestionPuzzle(Question question, Puzzle puzzle) {
+	/**
+	 * The basic puzzle that defines the constraints to the people and their
+	 * attributes that question is about.
+	 */
+	private final BasicPuzzle basicPuzzle;
+
+	/**
+	 * Creates a new instance by attaching a question to a basic puzzle
+	 * 
+	 * @param question
+	 * @param puzzle
+	 * 
+	 * @see QuestionPuzzleGenerator
+	 */
+	public QuestionPuzzle(Question question, BasicPuzzle puzzle) {
 		Validate.isTrue(question.appliesTo(puzzle), "Question %s does not apply to puzzle %s", question, puzzle);
 		this.question = question;
-		this.puzzle = puzzle;
+		this.basicPuzzle = puzzle;
 	}
 
 	/**
-	 * Same as {@link Puzzle#describeConstraints(Locale)}
+	 * Same as {@link BasicPuzzle#describeConstraints(Locale)}
 	 * 
 	 * @param locale required
 	 * @return a list of sentences in the given locale, not null.
 	 */
 	public List<String> describeConstraints(Locale locale) {
-		Set<AttributeType> referencedTypes = puzzle.getFacts().stream().flatMap(f -> f.attributeTypes().stream())
+		Set<AttributeType> referencedTypes = basicPuzzle.getFacts().stream().flatMap(f -> f.attributeTypes().stream())
 				.collect(Collectors.toSet());
-		return puzzle.describeConstraintsForTypes(locale, referencedTypes);
+		return basicPuzzle.describeConstraintsForTypes(locale, referencedTypes);
 	}
 
 }

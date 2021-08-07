@@ -42,7 +42,7 @@ public class QuestionPuzzleSolverTest {
 
 	@Test
 	public void testSolve() {
-		Puzzle basicPuzzle = new PuzzleGenerator(PuzzleGeneratorTest.simpleSolutionWithCriminal(),
+		BasicPuzzle basicPuzzle = new PuzzleGenerator(PuzzleGeneratorTest.simpleSolutionWithCriminal(),
 				AbstractPuzzleGenerator.DEFAULT_FACT_TYPES).generate();
 		QuestionPuzzle questionPuzzle = new QuestionPuzzle(Question.NAME_OF_CRIMINAL, basicPuzzle);
 		QuestionPuzzleSolver solver = new QuestionPuzzleSolver(questionPuzzle);
@@ -59,7 +59,7 @@ public class QuestionPuzzleSolverTest {
 		sets.put(Criminal.TYPE, SetUtils.unmodifiableSet(Criminal.YES, Criminal.NO));
 		sets.put(PersonName.TYPE, SetUtils.unmodifiableSet(PersonName.ELENA, PersonName.IVAN, PersonName.PETER));
 		sets.put(AtHouse.TYPE, new HashSet<>(AtHouse.TYPE.getAttributes(3)));
-		Puzzle puzzle = new Puzzle(sets, SetUtils.<Fact>unmodifiableSet(new BothTrue(PersonName.PETER, Clothes.BLUE),
+		BasicPuzzle puzzle = new BasicPuzzle(sets, SetUtils.<Fact>unmodifiableSet(new BothTrue(PersonName.PETER, Clothes.BLUE),
 				new Different(PersonName.IVAN, Clothes.GREEN)));
 		Collection<Attribute> solutions = new QuestionPuzzleSolver(new QuestionPuzzle(question, puzzle)).solve();
 		assertEquals(Arrays.asList(PersonName.ELENA), new ArrayList<>(solutions));

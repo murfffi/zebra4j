@@ -30,7 +30,7 @@ import org.junit.Test;
 
 import zebra4j.LocalizationTestUtils;
 import zebra4j.PersonName;
-import zebra4j.Puzzle;
+import zebra4j.BasicPuzzle;
 import zebra4j.PuzzleGeneratorTest;
 import zebra4j.PuzzleSolution;
 import zebra4j.PuzzleSolver;
@@ -85,7 +85,7 @@ public class BothTrueTest {
 
 	public static void testPostTo(Fact fact, PuzzleSolution solution) {
 		assertTrue(fact.appliesTo(solution));
-		Puzzle puzzle = new Puzzle(solution.getAttributeSets(), Collections.singleton(fact));
+		BasicPuzzle puzzle = new BasicPuzzle(solution.getAttributeSets(), Collections.singleton(fact));
 		new PuzzleSolver(puzzle).solve().stream().forEach(
 				anySolution -> assertTrue(fact + " \n " + anySolution.toString(), fact.appliesTo(anySolution)));
 	}
