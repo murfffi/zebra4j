@@ -55,7 +55,7 @@ class Demo {
 	}
 
 	/**
-	 * Generate and solve a basic {@link BasicPuzzle} with default configuration
+	 * Generates and solves a basic {@link BasicPuzzle} with default configuration
 	 */
 	public static void generateAndSolveBasicPuzzle() {
 		System.out.println("Basic puzzle:");
@@ -95,7 +95,8 @@ class Demo {
 	}
 
 	/**
-	 * Solves
+	 * Solves a custom puzzle defined using the Java API. The example uses the
+	 * original Zebra puzzle
 	 */
 	public static void solvePredefinedPuzzle() {
 		System.out.println("Solving original zebra puzzle (see code):");

@@ -48,7 +48,7 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<BasicPuzzle> {
 	 * Generate a new random puzzle using defaults
 	 * 
 	 * @param numPeople number of people in the puzzle
-	 * @return
+	 * @return a random puzzle
 	 */
 	public static BasicPuzzle randomPuzzle(int numPeople) {
 		PuzzleGenerator generator = new PuzzleGenerator(new SolutionGenerator(numPeople).generate(),
@@ -56,6 +56,12 @@ public class PuzzleGenerator extends AbstractPuzzleGenerator<BasicPuzzle> {
 		return generator.generate();
 	}
 
+	/**
+	 * Generate a new random puzzle using default randomness source
+	 * 
+	 * @param solution  the generated puzzle will have this as a single solution
+	 * @param factTypes
+	 */
 	public PuzzleGenerator(PuzzleSolution solution, Set<Fact.Type> factTypes) {
 		this(new JDKRandom(), solution, factTypes);
 	}

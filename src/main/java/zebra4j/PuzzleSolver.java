@@ -56,11 +56,19 @@ public class PuzzleSolver {
 	private final BasicPuzzle puzzle;
 	private final int numPeople;
 
+	/**
+	 * Initialize a new solver with default configuration
+	 * 
+	 * @param puzzle the puzzle to be solved, required
+	 */
 	public PuzzleSolver(BasicPuzzle puzzle) {
 		this.puzzle = puzzle;
 		this.numPeople = puzzle.numPeople();
 	}
 
+	/**
+	 * The settings for the underlying SAT solver
+	 */
 	@Getter
 	@Setter
 	private Settings chocoSettings;

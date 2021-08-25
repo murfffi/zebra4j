@@ -38,10 +38,15 @@ import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.variables.IntVar;
 
 import lombok.Getter;
+import zebra4j.fact.Fact;
 import zebra4j.util.LazyInstance;
 
 /**
  * Wrapper on ChocoSolver {@link Model} adding variable management
+ * 
+ * <p>
+ * This is part of the advanced API of zebra4j used when defining new kinds of
+ * {@link Fact} or {@link AttributeType}.
  */
 @NotThreadSafe
 public class ZebraModel {
@@ -58,6 +63,11 @@ public class ZebraModel {
 	@Getter
 	private final Model chocoModel;
 
+	/**
+	 * Initializes a new Zebra ChocoSolver model
+	 * 
+	 * @param chocoSettings optional, the model uses {@link DefaultSettings} if null
+	 */
 	public ZebraModel(Settings chocoSettings) {
 		chocoModel = new Model(UUID.randomUUID().toString(),
 				chocoSettings != null ? chocoSettings : DEFAULT_SETTINGS.get());
@@ -99,10 +109,6 @@ public class ZebraModel {
 		return uniqueAttributeVariables.get(uniqueAttribute);
 	}
 
-	public Map<Attribute, IntVar> getVariableMap() {
-		return uniqueAttributeVariables;
-	}
-
 	/**
 	 * Checks if a variable is for person for some attribute
 	 * 
@@ -115,6 +121,10 @@ public class ZebraModel {
 	 */
 	public Optional<Attribute> toOptionalAttribute(IntVar var) {
 		return Optional.ofNullable(uniqueAttributeVariables.getKey(var));
+	}
+
+	Map<Attribute, IntVar> getVariableMap() {
+		return uniqueAttributeVariables;
 	}
 
 	private String varName() {

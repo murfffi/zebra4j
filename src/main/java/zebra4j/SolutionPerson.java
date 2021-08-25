@@ -47,7 +47,7 @@ public class SolutionPerson {
 	/**
 	 * Defines a person from their attributes
 	 * 
-	 * @param attributeList
+	 * @param attributeList all attributes of the person, required
 	 */
 	public SolutionPerson(Attribute... attributeList) {
 		this(Arrays.asList(attributeList));
@@ -56,7 +56,7 @@ public class SolutionPerson {
 	/**
 	 * Defines a person from their attributes
 	 * 
-	 * @param attributeList
+	 * @param attributeList all attributes of the person, required
 	 */
 	public SolutionPerson(List<Attribute> attributeList) {
 		for (Attribute lit : attributeList) {
@@ -79,7 +79,7 @@ public class SolutionPerson {
 	}
 
 	/**
-	 * @param attribute
+	 * @param attribute required
 	 * @return a copy of this person with the given attribute added
 	 */
 	public SolutionPerson withAttribute(Attribute attribute) {
@@ -99,7 +99,7 @@ public class SolutionPerson {
 	}
 
 	/**
-	 * @param attr
+	 * @param attr required
 	 * @return if the person has the given attribute
 	 */
 	public boolean hasAttribute(Attribute attr) {
