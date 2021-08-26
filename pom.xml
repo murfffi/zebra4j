@@ -8,7 +8,7 @@
 	<!-- https://central.sonatype.org/pages/choosing-your-coordinates.html -->
 	<groupId>io.github.murfffi</groupId>
 	<artifactId>zebra4j</artifactId>
-	<version>0.9-SNAPSHOT</version>
+	<version>0.9</version>
 
 	<name>zebra4j</name>
 	<url>https://github.com/murfffi/zebra4j</url>
@@ -273,6 +273,7 @@
 	<scm>
 		<url>https://github.com/murfffi/zebra4j</url>
 		<connection>scm:git:ssh://git@github.com/murfffi/zebra4j.git</connection>
+		<tag>v0.9</tag>
 	</scm>
 	<distributionManagement>
 		<!-- https://issues.sonatype.org/browse/OSSRH-65855 -->
