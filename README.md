@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/murfffi/zebra4j.svg?branch=main)](https://travis-ci.org/murfffi/zebra4j)
 [![License](https://img.shields.io/github/license/murfffi/zebra4j)](/LICENSE)
 [![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)](https://search.maven.org/artifact/io.github.murfffi/zebra4j)
+[![public javadoc](https://javadoc.io/badge2/io.github.murfffi/zebra4j/javadoc.svg)](https://javadoc.io/doc/io.github.murfffi/zebra4j)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e85598dea228465188b9e70774983532)](https://www.codacy.com/gh/murfffi/zebra4j/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=murfffi/zebra4j&amp;utm_campaign=Badge_Grade)
 [![Docker Pulls](https://img.shields.io/docker/pulls/murfffi/zebracli)](https://hub.docker.com/r/murfffi/zebracli)
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/murfffi/zebra4j)
@@ -28,7 +29,7 @@ This library has some unique features, not available in alternative solutions:
   language like Python, Go or Rust.
 
 [Demo.java](src/main/java/zebra4j/Demo.java) and unit tests demonstrate how to use
-the library in Java.
+the library in Java. The complete API is searchable in [the javadoc](https://murfffi.github.io/zebra4j/apidocs/).
 
 [SAMPLES.md](SAMPLES.md) contain some sample generated puzzles.
 
@@ -72,7 +73,7 @@ docker run --rm murfffi/zebracli --help
 The image download is just 14 MB. It is based on a GraalVM native-image build (for amd64 only).
 
 If you don't have Docker locally but have Java, you can download
-<https://repo1.maven.org/maven2/io/github/murfffi/zebra4j/0.8/zebra4j-0.8-shaded.jar> to
+<https://repo.maven.apache.org/maven2/io/github/murfffi/zebra4j/0.9/zebra4j-0.9-shaded.jar> to
 `zebra4j-bundle.jar` and run:
 
 ```bash
