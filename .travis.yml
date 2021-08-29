@@ -6,3 +6,6 @@ jdk:
   - openjdk11
   
 script: ./mvnw verify -P release -B -Dmaven.javadoc.skip=true
+
+# travis doesn't support ignoring files: https://github.com/travis-ci/travis-ci/issues/6301
+# add [ci-skip] instead.
