@@ -31,7 +31,7 @@ import java.util.List;
  * libraries. The built-in implementation is {@link JDKRandom}, which uses
  * randomization from the JDK. Users of the library may prefer commons-rng, as
  * in <a href=
- * 'https://github.com/murfffi/zebra-apps/blob/pr/commons-rng-ness/zebrajs/src/main/java/zebra4j/apps/SeededRandom.java'>this
+ * 'https://github.com/murfffi/zebra-apps/blob/main/zebrajs/src/main/java/zebra4j/apps/SeededRandom.java'>this
  * case</a>.
  * 
  * <p>

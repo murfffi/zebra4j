@@ -36,6 +36,9 @@ import zebra4j.PuzzleSolution;
 import zebra4j.SolutionPerson;
 import zebra4j.ZebraModel;
 
+/**
+ * A fact that two attributes apply to the same person
+ */
 @Slf4j
 @AllArgsConstructor
 @ToString

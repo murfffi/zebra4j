@@ -27,13 +27,34 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.text.CaseUtils;
 
+/**
+ * Localization utilities for zebra4j
+ */
 public interface Localization {
 
+	/**
+	 * Translates the attribute, identified by the key, belonging to the given class
+	 * 
+	 * @param cls    the class, required
+	 * @param key    the attribute key, required
+	 * @param locale the target locale, required
+	 * @return text or label in the given locale
+	 * 
+	 * @throws MissingResourceException if the locale is not supported
+	 */
 	public static String translate(Class<?> cls, String key, Locale locale) {
 		String bundleName = cls.getName().replace("zebra4j.", "zebra4j.bundle.");
 		return ResourceBundle.getBundle(bundleName, locale).getString(key);
 	}
 
+	/**
+	 * Translates an enum value, falling back to value name if the locale is not
+	 * supported
+	 * 
+	 * @param value  required
+	 * @param locale the target locale, required
+	 * @return text or label in the given locale or the enum name
+	 */
 	public static String translateEnum(Enum<?> value, Locale locale) {
 		try {
 			return translate(value.getClass(), value.name(), locale);
