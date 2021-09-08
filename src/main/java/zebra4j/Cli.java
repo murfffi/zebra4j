@@ -32,6 +32,7 @@ import java.util.stream.Stream;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 
 import lombok.AllArgsConstructor;
 import picocli.CommandLine;
@@ -110,13 +111,15 @@ public class Cli {
 						QuestionPuzzleGenerator.DEFAULT_FACT_TYPES);
 				puzzle = new GeneratedBasicPuzzle(seed, generator.generate(), solution);
 				break;
+			default:
+				throw new UnsupportedOperationException("Unsupported enum value: " + type);
 			}
 
 			if (output == OutputFormat.JSON) {
 				try (Writer wout = new OutputStreamWriter(out)) {
 					GSON.toJson(puzzle, puzzle.getClass(), wout);
 				} catch (IOException e) {
-					throw new RuntimeException(e);
+					throw new JsonIOException("Failed to close the JSON output stream.", e);
 				}
 				return;
 			}
@@ -129,6 +132,8 @@ public class Cli {
 			case BASIC:
 				Cli.printGeneratedBasicPuzzle((GeneratedBasicPuzzle) puzzle, locale, out);
 				break;
+			default:
+				throw new UnsupportedOperationException("Unsupported enum value: " + type);
 			}
 		}
 

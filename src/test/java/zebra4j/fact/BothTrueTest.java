@@ -21,6 +21,7 @@
  */
 package zebra4j.fact;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
@@ -28,9 +29,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import zebra4j.BasicPuzzle;
 import zebra4j.LocalizationTestUtils;
 import zebra4j.PersonName;
-import zebra4j.BasicPuzzle;
 import zebra4j.PuzzleGeneratorTest;
 import zebra4j.PuzzleSolution;
 import zebra4j.PuzzleSolver;
@@ -71,7 +72,7 @@ public class BothTrueTest {
 	public static void testGenerate(Fact.Type type) {
 		PuzzleSolution solution = PuzzleGeneratorTest.simpleSolutionWithCriminal();
 		List<Fact> facts = type.generate(solution);
-		assertTrue(!facts.isEmpty());
+		assertFalse(facts.isEmpty());
 		facts.stream().forEach(f -> assertTrue(f.appliesTo(solution)));
 	}
 
@@ -79,7 +80,7 @@ public class BothTrueTest {
 		// must not contain Criminal
 		PuzzleSolution solution = PuzzleGeneratorTest.sampleSolution();
 		List<Fact> facts = type.generate(solution);
-		assertTrue(!facts.isEmpty());
+		assertFalse(facts.isEmpty());
 		facts.stream().forEach(fact -> testPostTo(fact, solution));
 	}
 
