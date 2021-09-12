@@ -2,7 +2,7 @@
  * #%L
  * zebra4j
  * %%
- * Copyright (C) 2020 Marin Nozhchev
+ * Copyright (C) 2020 - 2021 Marin Nozhchev
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -19,16 +19,35 @@
  * <http://www.gnu.org/licenses/lgpl-3.0.html>.
  * #L%
  */
-package zebra4j;
+package zebra4j.cli;
+
+import static org.junit.Assert.assertTrue;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
-public class DemoTest {
+import zebra4j.cli.Cli.GenerateCli;
+
+public class CliTest {
 
 	@Test
-	public void testMain() {
-		// Just check it doesn't throw.
-		Demo.main(new String[0]);
+	public void testGenerateCli_Question() throws IOException {
+		GenerateCli command = new GenerateCli();
+		command.people = 3;
+		Charset enc = StandardCharsets.UTF_8;
+		ByteArrayOutputStream outs = new ByteArrayOutputStream();
+		try {
+			command.out = new PrintStream(outs, true, enc.name());
+			command.run();
+		} finally {
+			outs.close();
+		}
+		assertTrue(new String(outs.toByteArray(), enc).contains("Question"));
 	}
 
 }

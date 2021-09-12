@@ -19,7 +19,7 @@
  * <http://www.gnu.org/licenses/lgpl-3.0.html>.
  * #L%
  */
-package zebra4j;
+package zebra4j.cli;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -39,8 +39,18 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.IVersionProvider;
 import picocli.CommandLine.Option;
-import zebra4j.Cli.DemoCli;
-import zebra4j.Cli.GenerateCli;
+import zebra4j.Attribute;
+import zebra4j.AttributeType;
+import zebra4j.Attributes;
+import zebra4j.BasicPuzzle;
+import zebra4j.PuzzleGenerator;
+import zebra4j.PuzzleSolution;
+import zebra4j.Question;
+import zebra4j.QuestionPuzzle;
+import zebra4j.QuestionPuzzleGenerator;
+import zebra4j.SolutionGenerator;
+import zebra4j.cli.Cli.DemoCli;
+import zebra4j.cli.Cli.GenerateCli;
 import zebra4j.util.JDKRandom;
 import zebra4j.util.Randomness;
 

@@ -4,7 +4,7 @@
  * type of "logic grid puzzles". Such libraries are used as backend of
  * interactive games aimed at children of all ages.
  * 
- * {@link zebra4j.Demo} and unit tests demonstrate how to use the library. Learn
+ * {@link zebra4j.cli.Demo} and unit tests demonstrate how to use the library. Learn
  * even more about the library in README.md.
  */
 package zebra4j;

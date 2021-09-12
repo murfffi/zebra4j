@@ -19,15 +19,31 @@
  * <http://www.gnu.org/licenses/lgpl-3.0.html>.
  * #L%
  */
-package zebra4j;
+package zebra4j.cli;
 
 import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.collections4.SetUtils;
 
-import zebra4j.Cli.GeneratedBasicPuzzle;
-import zebra4j.Cli.GeneratedQuestionPuzzle;
+import zebra4j.AbstractPuzzleGenerator;
+import zebra4j.AtHouse;
+import zebra4j.Attribute;
+import zebra4j.AttributeType;
+import zebra4j.Attributes;
+import zebra4j.BasicAttributeType;
+import zebra4j.BasicPuzzle;
+import zebra4j.PuzzleBuilder;
+import zebra4j.PuzzleGenerator;
+import zebra4j.PuzzleSolution;
+import zebra4j.PuzzleSolver;
+import zebra4j.Question;
+import zebra4j.QuestionPuzzle;
+import zebra4j.QuestionPuzzleGenerator;
+import zebra4j.QuestionPuzzleSolver;
+import zebra4j.SolutionGenerator;
+import zebra4j.cli.Cli.GeneratedBasicPuzzle;
+import zebra4j.cli.Cli.GeneratedQuestionPuzzle;
 import zebra4j.fact.BothTrue;
 import zebra4j.fact.NearbyHouse;
 import zebra4j.util.JDKRandom;

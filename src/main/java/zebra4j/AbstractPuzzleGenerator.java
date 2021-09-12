@@ -57,6 +57,9 @@ public abstract class AbstractPuzzleGenerator<P> implements Supplier<P> {
 	protected final PuzzleSolution solution;
 	private final Set<Fact.Type> factTypes;
 
+	/**
+	 * Optional: configuration for the underlying SAT solver
+	 */
 	@Getter
 	@Setter
 	private Settings chocoSettings;

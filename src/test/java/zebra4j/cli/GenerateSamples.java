@@ -19,13 +19,13 @@
  * <http://www.gnu.org/licenses/lgpl-3.0.html>.
  * #L%
  */
-package zebra4j;
+package zebra4j.cli;
 
 import java.util.Locale;
 
 import org.apache.commons.lang3.RandomUtils;
 
-import zebra4j.Cli.GeneratedQuestionPuzzle;
+import zebra4j.cli.Cli.GeneratedQuestionPuzzle;
 
 /**
  * Generates the content of SAMPLES.md in the repo root

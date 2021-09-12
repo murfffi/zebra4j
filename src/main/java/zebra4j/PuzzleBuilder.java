@@ -44,7 +44,7 @@ import zebra4j.fact.Fact;
  * Unlike directly constructing a puzzle, the builder validates if the provided
  * attribute sets and facts are consistent and valid.
  * 
- * @see Demo Demo for example usage
+ * @see zebra4j.cli.Demo Demo for example usage
  */
 @NotThreadSafe
 public class PuzzleBuilder {

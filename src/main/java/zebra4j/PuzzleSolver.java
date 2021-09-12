@@ -113,7 +113,7 @@ public class PuzzleSolver {
 
 			@Override
 			public Spliterator<Map<Attribute, Integer>> trySplit() {
-				// Splitting not possible
+				// null means "splitting not possible" per API.
 				return null;
 			}
 

@@ -67,8 +67,18 @@ import zebra4j.util.LazyInstance;
 @Slf4j
 public class GrammarIT {
 
+	/**
+	 * LanguageTool validation rule: all sentences must have at least one verb.
+	 */
 	private static class HasVerbRule extends Rule {
 
+		/**
+		 * Acceptable kinds of verbs, using standard POS (part-of-speech) tags.
+		 * 
+		 * <p>
+		 * Only present tense is accepted. POS tags reference:
+		 * https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
+		 */
 		private static final Set<String> ALLOWED = SetUtils.unmodifiableSet("VBZ", "VBP");
 
 		@Override

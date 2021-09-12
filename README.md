@@ -28,7 +28,7 @@ This library has some unique features, not available in alternative solutions:
   The native library can be embedded in an app written in another
   language like Python, Go or Rust.
 
-[Demo.java](src/main/java/zebra4j/Demo.java) and unit tests demonstrate how to use
+[Demo.java](src/main/java/zebra4j/cli/Demo.java) and unit tests demonstrate how to use
 the library in Java. The complete API is searchable in [the javadoc](https://murfffi.github.io/zebra4j/apidocs/).
 
 [SAMPLES.md](SAMPLES.md) contain some sample generated puzzles.
@@ -93,7 +93,7 @@ from the predefined implementations or implement yourself the Java interfaces
 with the same names.
 
 `customQuestionPuzzle()` in
-[Demo.java](src/main/java/zebra4j/Demo.java)
+[Demo.java](src/main/java/zebra4j/cli/Demo.java)
 demonstrates how to select specific types of Attributes and Facts when
 generating puzzles.
 

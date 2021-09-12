@@ -8,7 +8,7 @@
 	<!-- https://central.sonatype.org/pages/choosing-your-coordinates.html -->
 	<groupId>io.github.murfffi</groupId>
 	<artifactId>zebra4j</artifactId>
-	<version>0.9.1-SNAPSHOT</version>
+	<version>0.10-SNAPSHOT</version>
 
 	<name>zebra4j</name>
 	<url>https://github.com/murfffi/zebra4j</url>
@@ -44,7 +44,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<exec.mainClass>zebra4j.Cli</exec.mainClass>
+		<exec.mainClass>zebra4j.cli.Cli</exec.mainClass>
 		<lombok.version>1.18.20</lombok.version>
 		<picocli.version>4.6.1</picocli.version>
 		<delombok.output>${project.build.directory}/generated-sources/delombok</delombok.output>
