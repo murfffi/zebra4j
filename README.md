@@ -1,6 +1,6 @@
 # zebra4j - Zebra puzzle generator and solver
 
-[![Build Status](https://travis-ci.org/murfffi/zebra4j.svg?branch=main)](https://travis-ci.org/murfffi/zebra4j)
+[![Build Status](https://app.travis-ci.com/murfffi/zebra4j.svg?branch=main)](https://app.travis-ci.com/murfffi/zebra4j)
 [![License](https://img.shields.io/github/license/murfffi/zebra4j)](/LICENSE)
 [![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)](https://search.maven.org/artifact/io.github.murfffi/zebra4j)
 [![public javadoc](https://javadoc.io/badge2/io.github.murfffi/zebra4j/javadoc.svg)](https://javadoc.io/doc/io.github.murfffi/zebra4j)
