@@ -102,7 +102,7 @@
 		<dependency>
 			<groupId>org.languagetool</groupId>
 			<artifactId>language-en</artifactId>
-			<version>5.4</version>
+			<version>5.5</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
