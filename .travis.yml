@@ -1,10 +1,12 @@
+# focal does not support openjdk8
 dist: bionic
 language: java
 
 jdk:
   - openjdk8
   - openjdk11
-  
+  - openjdk17
+
 script: ./mvnw verify -P release -B -Dmaven.javadoc.skip=true
 
 # travis doesn't support ignoring files: https://github.com/travis-ci/travis-ci/issues/6301
