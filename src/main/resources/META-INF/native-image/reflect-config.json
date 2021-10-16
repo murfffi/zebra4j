@@ -26,7 +26,7 @@
 {
   "name":"java.sql.DriverManager",
   "methods":[
-    {"name":"getConnection","parameterTypes":["java.lang.String"] }, 
+    {"name":"getConnection","parameterTypes":["java.lang.String"] },
     {"name":"getDriver","parameterTypes":["java.lang.String"] }
   ]
 },
@@ -114,23 +114,23 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"zebra4j.Cli",
+  "name":"zebra4j.cli.Cli",
   "allDeclaredFields":true,
   "allDeclaredMethods":true
 },
 {
-  "name":"zebra4j.Cli$DemoCli",
+  "name":"zebra4j.cli.Cli$DemoCli",
   "allDeclaredFields":true,
   "allDeclaredMethods":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"zebra4j.Cli$GenerateCli",
+  "name":"zebra4j.cli.Cli$GenerateCli",
   "allDeclaredFields":true,
   "allDeclaredMethods":true
 },
 {
-  "name":"zebra4j.Cli$VersionProvider",
+  "name":"zebra4j.cli.Cli$VersionProvider",
   "allDeclaredFields":true,
   "allDeclaredMethods":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
