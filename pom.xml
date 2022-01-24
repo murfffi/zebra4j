@@ -587,7 +587,7 @@
 					<groupId>org.graalvm.sdk</groupId>
 					<artifactId>graal-sdk</artifactId>
 					<!-- Must be the same as or similar to version in graalvm/Dockerfile -->
-					<version>21.2.0</version>
+					<version>22.0.0</version>
 					<scope>provided</scope>
 				</dependency>
 			</dependencies>
