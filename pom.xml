@@ -55,7 +55,7 @@
 		<dependency>
 			<groupId>org.choco-solver</groupId>
 			<artifactId>choco-solver</artifactId>
-			<version>4.10.6</version>
+			<version>4.10.9</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.knowm.xchart</groupId>
