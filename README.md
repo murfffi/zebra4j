@@ -1,6 +1,6 @@
 # zebra4j - Zebra puzzle generator and solver
 
-[![Build Status](https://app.travis-ci.com/murfffi/zebra4j.svg?branch=main)](https://app.travis-ci.com/murfffi/zebra4j)
+[![Build Status](https://github.com/murfffi/zebra4j/actions/workflows/maven.yml/badge.svg)](https://github.com/murfffi/zebra4j/actions/workflows/maven.yml)
 [![License](https://img.shields.io/github/license/murfffi/zebra4j)](/LICENSE)
 [![Maven Central release](https://maven-badges.herokuapp.com/maven-central/io.github.murfffi/zebra4j/badge.svg)](https://search.maven.org/artifact/io.github.murfffi/zebra4j)
 [![public javadoc](https://javadoc.io/badge2/io.github.murfffi/zebra4j/javadoc.svg)](https://javadoc.io/doc/io.github.murfffi/zebra4j)
@@ -20,7 +20,7 @@ This library has some unique features, not available in alternative solutions:
   structures. See "Localizing" section for details.
 - It supports both puzzles that end with question like "Who owns the zebra?" and
   puzzles that require identifying all attributes of all people.
-- zebra4j is available as either 
+- zebra4j is available as either
   [a JAR for Java 8+ applications](https://search.maven.org/artifact/io.github.murfffi/zebra4j/),
   a [JavaScript library](https://github.com/murfffi/zebra-apps), or a native library,
   compiled ahead-of-time with [GraalVM](https://www.graalvm.org/reference-manual/native-image/)
