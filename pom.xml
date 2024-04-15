@@ -47,7 +47,7 @@
 		<exec.mainClass>zebra4j.cli.Cli</exec.mainClass>
 		<lombok.version>1.18.20</lombok.version>
 		<picocli.version>4.7.5</picocli.version>
-		<slf4j.version>2.0.12</slf4j.version>
+		<slf4j.version>2.0.13</slf4j.version>
 		<delombok.output>${project.build.directory}/generated-sources/delombok</delombok.output>
 	</properties>
 
